@@ -114,12 +114,8 @@ const Registro = () => {
           {errors.contraseña && <Alert variant="danger">{errors.contraseña}</Alert>}
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit"disabled={!formData.nombre || !formData.apellido || !formData.email || !formData.contraseña}>
           Registrarme
-        </Button>
-
-        <Button variant="primary" type="submit" disabled={!formData.nombre || !formData.apellido || !formData.email || !formData.contraseña}>
-        Registrarme
         </Button>
 
       </Form>
