@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import './Registro.css';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const Registro = () => {
   const [formData, setFormData] = useState({
@@ -41,8 +42,26 @@ const Registro = () => {
   return (
     <Container fluid className="mt-5">
       <Row>
-        <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <h2 className="text-center mb-4">Formulario de Registro</h2>
+      <Col md={6} className="p-5 bg-light shadow-sm rounded">
+          
+          <Button variant="link" className="text-decoration-none text-dark d-flex align-items-center mb-3">
+            <FaArrowLeft className="me-2" /> 
+            Atrás
+          </Button>
+
+          <img
+            src="/naikii.svg" // Reemplaza con la ruta correcta a tu archivo SVG
+            alt="Logo"
+            style={{ width: '80px', height: '80px', display: 'block', marginBottom: '20px' }}
+          />
+
+          <h2 className="text-start mb-4">Te damos la bienvenida</h2>
+          
+          {/* Texto adicional */}
+          <p className="text-start" style={{ fontSize: '16pt' }}>
+            Regístrate y conseguí las zapas que van con vos.
+          </p>
+
           {isSubmitted && <Alert variant="success">Registro exitoso</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3 text-start">
