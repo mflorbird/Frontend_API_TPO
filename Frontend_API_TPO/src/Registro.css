@@ -2,7 +2,14 @@
     background-image: url('login_background.png'); 
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    background-attachment: fixed; 
+    min-height: 100vh;
+    display: flex;
+  }
+  
+  body {
+    margin: 0; /* Elimina el margen del body */
+    padding: 0; /* Elimina el padding del body */
   }
   
   @media (max-width: 768px) {

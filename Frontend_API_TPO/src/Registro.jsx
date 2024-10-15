@@ -40,7 +40,7 @@ const Registro = () => {
   };
 
   return (
-    <Container fluid className="mt-5">
+    <Container fluid className="mt-0 p-0">
       <Row>
       <Col md={6} className="p-5 bg-light shadow-sm rounded">
           
@@ -50,14 +50,14 @@ const Registro = () => {
           </Button>
 
           <img
-            src="/naikii.svg" // Reemplaza con la ruta correcta a tu archivo SVG
+            src="/naikii.svg" 
             alt="Logo"
             style={{ width: '80px', height: '80px', display: 'block', marginBottom: '20px' }}
           />
 
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
           
-          {/* Texto adicional */}
+          
           <p className="text-start" style={{ fontSize: '16pt' }}>
             Regístrate y conseguí las zapas que van con vos.
           </p>
@@ -150,9 +150,22 @@ const Registro = () => {
             >
               Registrarme
             </Button>
+
+            <div className="d-flex align-items-center justify-content-center mt-4">
+              <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
+              <div className="px-3">¿Ya tenés una cuenta?</div>
+              <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
+            </div>
+
+            <div className="mt-3">
+              <Button variant="outline-secondary" href="/login" className="w-100">
+                Iniciar sesión
+              </Button>
+            </div>
+
           </Form>
         </Col>
-        <Col md={6} className="d-none d-md-block bg-image">
+        <Col md={6} className="bg-image">
 
         </Col>
       </Row>
