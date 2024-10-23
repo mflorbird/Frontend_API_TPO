@@ -1,34 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import 'bootstrap/dist/css/bootstrap.min.css' // Añadimos Bootstrap
 import './App.css'
+import Destacados from './components/Destacados'  
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="container"> {/* Contenedor principal con Bootstrap */}
+      <header className="my-4"> {/* Añadimos margen arriba y abajo */}
+        <h1 className="text-center">Mi Sitio Web</h1>
+      </header>
+
+      <main>
+        {/* Carrusel */}
+        <section className="mb-5"> {/* Margen inferior */}
+          <Destacados />
+        </section>
+
+        {/* Área de contenido adicional */}
+        <section className="content-area">
+          {/* Aquí puedes agregar más contenido */}
+        </section>
+      </main>
+
+      <footer className="mt-4 text-center"> {/* Footer con margen superior */}
+        <p>© 2024 Mi Sitio Web</p>
+      </footer>
+    </div>
   )
 }
 
