@@ -1,12 +1,9 @@
-// src/App.js
-import React from 'react';
-import Cart from './components/Cart';
+// cambio todo lo que habia por el approutes
+import AppRoutes from './routes/AppRoutes.jsx'; 
 
 const App = () => {
   return (
-    <div>
-      <Cart />
-    </div>
+    <AppRoutes /> 
   );
 };
 
