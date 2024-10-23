@@ -1,8 +1,27 @@
+
+* { /*para dejar todo en 0*/
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;  
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Asegura que ocupen todo el ancho */
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: auto;
   padding: 2rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #191c32;
+  color: #fff;
 }
 
 .logo {
@@ -39,4 +58,11 @@
 
 .read-the-docs {
   color: #888;
+}
+
+
+.main-content {
+  padding-top: 20px;  /* (ajustar según la altura de la navbar) */
+  padding-bottom: 70px; /* (ajustar según la altura del footer) */
+  min-height: 100vh; /*ocupa toda la altura de la ventana*/
 }

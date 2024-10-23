@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import CartItem from './CartItem';
 import DiscountForm from './DiscountForm';
@@ -7,6 +8,9 @@ import "../styles/cart.css";
 const Cart = () => {
   const { cartItems, totalAmount, shippingCost } = useContext(AppContext);
 
+  if (!cartItems || cartItems.length ===0){
+    return <p>No hay productos en el carrito.</p>;
+  }
   return (
     <div className="cart-container">
       <h1>Hola [Nombre]</h1>

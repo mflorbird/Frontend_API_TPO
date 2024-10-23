@@ -9,11 +9,13 @@ const AppRoutes = () => {
   return (
     <div>
       <Navbar />
+      <div className='main-content'>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         {/* agregar mas rutas*/}
       </Routes>
+      </div>
       <Footer />
     </div>
   );
