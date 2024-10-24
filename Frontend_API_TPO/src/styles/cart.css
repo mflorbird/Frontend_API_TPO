@@ -1,36 +1,97 @@
 /* segun el figma de carrito */
 
-.cart-container {
+  .cart-container {
     padding: 2rem;
+    font-family: 'Arial', sans-serif;
   }
-  
+
   .cart-content {
     display: flex;
     justify-content: space-between;
   }
-  
+
   .cart-items {
     width: 60%;
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 10px;
   }
-  
+
   .cart-summary {
-    width: 30%;
-    background-color: #f1f1f1;
-    padding: 1rem;
+    width: 35%;
+    background-color: #e0f0ff;
+    padding: 1.5rem;
+    border-radius: 10px;
+  }   
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
   }
   
-  .cart-item {
+  .cart-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+  }
+
+  /* Estilos de los items del carrito */
+
+  .item-details {
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+
+  .item-quantity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Estilos del resumen del pedido */
+
+  .summary-item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
   }
-  
-  .cart-item img {
-    width: 50px;
-    height: 50px;
+
+  .coupon-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
   }
-  
-  .item-details {
-    margin-left: 1rem;
+
+  .apply-discount-btn {
+    background-color: #0056b3;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    width: 100%;
   }
-  
+
+  .checkout-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  /* Botón de eliminar item (basurero) */
+  .delete-item-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
