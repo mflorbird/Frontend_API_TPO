@@ -6,23 +6,25 @@ import React, { createContext, useState } from 'react';
 export const AppContext = createContext();
 
 // Proveedor del contexto
-const AppProvider = ({ children }) => { 
-    const [cartItems, setCartItems] = useState([]); // Estado del carrito . es el que me va a dar las funciones de agregar, eliminar y impiar elementos del carrito
+export const AppProvider = ({ children }) => { 
+    //estado de carrito para que se pueda usar globalmente
+    const [cartItems, setCartItems] = useState([]); 
 
     const addItemToCart = (item) => {
         setCartItems((prevItems) => {
             const itemExists = prevItems.find((prevItem) => prevItem.id === item.id);
             if (itemExists) {
+                /*const newQuantity = prevItem.quantity + 1;*/
                 return prevItems.map((prevItem) =>
                     prevItem.id === item.id
-                        ? { ...prevItem, quantity: prevItem.quantity + 1 }
+                        ? { ...prevItem, quantity: Math.min(prevItem.quantity + 1, item.stock) }
                         : prevItem
                 );
             }
             return [...prevItems, { ...item, quantity: 1 }];
         });
     };
-
+    
     const removeItemFromCart = (itemId) => {
         setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
     };
@@ -31,8 +33,11 @@ const AppProvider = ({ children }) => {
         setCartItems([]);
     };
 
+    //Calcular la cantidad total de items en el carrito
+    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+
     return (
-        <AppContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, clearCart }}>
+        <AppContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, clearCart, totalItems }}>
             {children}
         </AppContext.Provider>
     );

@@ -127,3 +127,21 @@ html, body {
   height: 100%;
   width: 100%; /* Asegura que ocupen todo el ancho */
 }
+
+
+/* esto es para el globo del carrito */
+.cart-container {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #646cffaa;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
