@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react"; // Importar useContext desde React
 import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
 import userPhoto from '../assets/user-photo.jpeg';
 import arrowIcon from '../assets/arrow.svg';
+import { AppContext } from '../context/AppContext.jsx'; // Importar el contexto
 
 const Navbar = () => {
+    const { cartItems } = useContext(AppContext); // Obtener los ítems del carrito desde el contexto
+    const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+
     return (
       <nav className="navbar">
         <img src={logo} alt="Logo" className="navbar-logo" />
@@ -16,8 +21,9 @@ const Navbar = () => {
           <li><a href="/contacto">Contacto</a></li>
         </ul>
         <div className="navbar-user">
-          <a href="/cart">
+          <a href="/cart" className="cart-container">
             <img src={cartIcon} alt="Carrito" className="navbar-cart" />
+            <span className="cart-badge">{cartItemCount}</span>  
           </a>
           <div className="navbar-profile">
             <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
