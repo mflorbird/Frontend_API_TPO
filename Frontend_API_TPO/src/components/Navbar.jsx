@@ -21,10 +21,12 @@ const Navbar = () => {
           <li><a href="/contacto">Contacto</a></li>
         </ul>
         <div className="navbar-user">
-          <a href="/cart" className="cart-container">
-            <img src={cartIcon} alt="Carrito" className="navbar-cart" />
-            <span className="cart-badge">{cartItemCount}</span>  
-          </a>
+          <div class="container-icon"> 
+            <a href="/cart" className="cart-container">
+              <img src={cartIcon} alt="Carrito" className="navbar-cart" />
+              <span className="cart-badge">{cartItemCount}</span>  
+            </a>
+          </div>
           <div className="navbar-profile">
             <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
             <img src={arrowIcon} alt="Opciones" className="navbar-arrow" />

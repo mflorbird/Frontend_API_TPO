@@ -38,9 +38,34 @@
   align-items: center;
 }
 
+
+.container-icon{
+  position: relative;
+}
+
+.cart-container {
+  position: relative;
+
+}
+
 .navbar-cart {
   width: 32px; /* Ajusta el tamaño del ícono del carrito */
   height: 32px; /* Añade espacio entre el carrito y la foto de usuario */
+}
+.cart-badge {
+  position: relative;
+  margin-top: 50px;
+  margin-right: 40px;
+
+  background-color: #5a228f;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 }
 
 .navbar-profile {
@@ -60,30 +85,5 @@
   margin-right: 0.8rem;
 }
 
-.cart-container {
-  position: relative;
-  display: flexbox;
-  margin-right: 0.8rem;
-}
-
-.cart-badge {
-  position: absolute;
-  top: 9px; /* Ajusta para mover el número sobre el carrito */
-  right: 8px; /* Ajusta para moverlo hacia la derecha */
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1.5rem;
-}
-
-.cart-badge::after {
-  content: attr(data-count);
-}
 
 
