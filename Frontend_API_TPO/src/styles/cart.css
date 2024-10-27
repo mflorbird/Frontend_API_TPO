@@ -5,6 +5,11 @@
     font-family: 'Arial', sans-serif;
   }
 
+  .cart-container-body{
+    margin-top: 100px;
+  }
+
+
   .cart-content {
     display: flex;
     justify-content: space-between;
