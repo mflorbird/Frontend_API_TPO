@@ -1,4 +1,4 @@
-.navbar {
+.custom-navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,8 +7,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px; /* Ajusta la altura */
-  padding: 10px 20px;
+  height: 120px; /* Ajusta la altura */
+  padding: 10px 20px !important;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Añade un sombreado */
 }
@@ -167,8 +167,10 @@
 }
 
 .navbar-profile {
+  cursor: pointer;
   display: flex;
   align-items: center;
+  background: white;
 }
 
 .navbar-user-photo {
@@ -183,5 +185,27 @@
   margin-right: 0.8rem;
 }
 
+.dropdown-toggle-white {
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 
+.dropdown-toggle-white:hover {
+  background-color: #f8f9fa !important;
+  color: black !important;
+}
 
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ced4da;
+}
+
+.dropdown-item {
+  color: black;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}

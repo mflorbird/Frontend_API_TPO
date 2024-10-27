@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa';
+import BackButton from '../components/BackButton';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
 import './Registro.css';
@@ -46,9 +46,7 @@ const RegistroPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <Button variant="link" className="text-decoration-none text-dark d-flex align-items-center mb-3">
-            <FaArrowLeft className="me-2" /> Volver al inicio
-          </Button>
+        <BackButton />
 
           <img
             src="/naikii.svg"
