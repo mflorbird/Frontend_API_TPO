@@ -47,7 +47,7 @@ const RegistroPage = () => {
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
           <Button variant="link" className="text-decoration-none text-dark d-flex align-items-center mb-3">
-            <FaArrowLeft className="me-2" /> Atrás
+            <FaArrowLeft className="me-2" /> Volver al inicio
           </Button>
 
           <img
@@ -148,7 +148,7 @@ const RegistroPage = () => {
             </div>
           </Form>
         </Col>
-        <Col md={6} className="bg-image"></Col>
+        <Col md={6} className="bg-image-register"></Col>
       </Row>
     </Container>
   );

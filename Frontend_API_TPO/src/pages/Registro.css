@@ -1,5 +1,5 @@
-.bg-image {
-    background-image: url('login_background.png'); 
+.bg-image-register {
+    background-image: url('../assets/Register_background.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 

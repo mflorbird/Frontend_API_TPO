@@ -1,5 +1,5 @@
 .bg-image {
-    background-image: url('login_background.png'); /* Ajusta el nombre si es necesario */
+    background-image: url('../assets/login_background.png'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
