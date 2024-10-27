@@ -42,7 +42,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar">
+    <nav className="custom-navbar">
       <img src={logo} alt="Logo" className="navbar-logo" />
       <ul className="navbar-links">
         <li><a href="/">Inicio</a></li>
