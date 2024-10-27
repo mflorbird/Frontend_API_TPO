@@ -167,8 +167,10 @@
 }
 
 .navbar-profile {
+  cursor: pointer;
   display: flex;
   align-items: center;
+  background: white;
 }
 
 .navbar-user-photo {
@@ -183,5 +185,27 @@
   margin-right: 0.8rem;
 }
 
+.dropdown-toggle-white {
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 
+.dropdown-toggle-white:hover {
+  background-color: #f8f9fa !important;
+  color: black !important;
+}
 
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ced4da;
+}
+
+.dropdown-item {
+  color: black;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
