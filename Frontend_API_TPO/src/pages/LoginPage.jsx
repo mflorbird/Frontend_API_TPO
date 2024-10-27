@@ -3,15 +3,11 @@ import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
-import './Registro.css';
+import './Login.css';
 
-const RegistroPage = () => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    fechaNacimiento: '',
-    usuario: '',
+    usuarioOEmail: '',
     contraseña: '',
   });
   const [errors, setErrors] = useState({});
@@ -24,8 +20,8 @@ const RegistroPage = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.email.includes('@')) {
-      newErrors.email = 'El correo electrónico no es válido';
+    if (!formData.usuarioOEmail.includes('@') && formData.usuarioOEmail.length < 3) {
+      newErrors.usuarioOEmail = 'Ingresa un usuario o correo válido';
     }
     if (formData.contraseña.length < 8) {
       newErrors.contraseña = 'La contraseña debe tener al menos 8 caracteres';
@@ -46,7 +42,8 @@ const RegistroPage = () => {
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
           <Button variant="link" className="text-decoration-none text-dark d-flex align-items-center mb-3">
-            <FaArrowLeft className="me-2" /> Atrás
+            <FaArrowLeft className="me-2" />
+            Volver al inicio
           </Button>
 
           <img
@@ -56,60 +53,22 @@ const RegistroPage = () => {
           />
 
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
+
           <p className="text-start" style={{ fontSize: '16pt' }}>
-            Regístrate y conseguí las zapas que van con vos.
+            Iniciá sesión y conseguí las zapas que van con vos.
           </p>
 
-          {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Empezá a disfrutar de la experiencia NAIKII</Alert>}
+          {isSubmitted && <Alert variant="success">Inicio de sesión exitoso. ¡Bienvenido a NAIKII!</Alert>}
 
           <Form onSubmit={handleSubmit}>
             <FormField
-              label="Nombre"
+              label="Usuario o correo electrónico"
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="usuarioOEmail"
+              value={formData.usuarioOEmail}
               onChange={handleChange}
-              placeholder="Ingresa tu nombre"
-              error={errors.nombre}
-            />
-
-            <FormField
-              label="Apellido"
-              type="text"
-              name="apellido"
-              value={formData.apellido}
-              onChange={handleChange}
-              placeholder="Ingresa tu apellido"
-              error={errors.apellido}
-            />
-
-            <FormField
-              label="Correo Electrónico"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Ingresa tu correo electrónico"
-              error={errors.email}
-            />
-
-            <FormField
-              label="Fecha de Nacimiento"
-              type="date"
-              name="fechaNacimiento"
-              value={formData.fechaNacimiento}
-              onChange={handleChange}
-              error={errors.fechaNacimiento}
-            />
-
-            <FormField
-              label="Nombre de Usuario"
-              type="text"
-              name="usuario"
-              value={formData.usuario}
-              onChange={handleChange}
-              placeholder="Ingresa un nombre de usuario"
-              error={errors.usuario}
+              placeholder="Ingresa tu usuario o correo electrónico"
+              error={errors.usuarioOEmail}
             />
 
             <FormField
@@ -118,37 +77,33 @@ const RegistroPage = () => {
               name="contraseña"
               value={formData.contraseña}
               onChange={handleChange}
-              placeholder="Ingresa una contraseña"
+              placeholder="Ingresa tu contraseña"
               error={errors.contraseña}
             />
 
             <FormSubmitButton
-              label="Registrarme"
-              disabled={
-                !formData.nombre ||
-                !formData.apellido ||
-                !formData.email ||
-                !formData.contraseña
-              }
+              label="Iniciar sesión"
+              disabled={!formData.usuarioOEmail || !formData.contraseña}
             />
 
             <div className="d-flex align-items-center justify-content-center mt-4">
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
-              <div className="px-3">¿Ya tenés una cuenta?</div>
+              <div className="px-3">¿Necesitás una cuenta?</div>
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
             </div>
 
             <div className="mt-3">
-              <Button variant="outline-secondary" href="/login" className="w-100">
-                Iniciar sesión
+              <Button variant="outline-secondary" href="/register" className="w-100">
+                Registrarme
               </Button>
             </div>
           </Form>
         </Col>
-        <Col md={6} className="bg-image"></Col>
+        <Col md={6} className="bg-image">
+        </Col>
       </Row>
     </Container>
   );
 };
 
-export default RegistroPage;
+export default LoginPage;
