@@ -1,0 +1,20 @@
+.bg-image-register {
+    background-image: url('../assets/Register_background.png'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    min-height: 100vh;
+    display: flex;
+  }
+  
+  body {
+    margin: 0; 
+    padding: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .bg-image {
+      display: none;
+    }
+  }
+  
