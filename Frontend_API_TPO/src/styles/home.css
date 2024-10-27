@@ -1,0 +1,41 @@
+/* ver en figma */
+.home-content {
+    padding: 20px;
+  }
+  
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-item {
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+
+.carousel {
+  margin-top: 20px; /* Ajusta el espacio por encima del carrusel */
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto; /* Ajusta la altura de las imágenes */
+  object-fit: cover; /* Asegura que las imágenes mantengan su proporción */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente para el texto */
+  padding: 10px;
+}
+
+.carousel-inner img {
+  max-height: 500px;
+  object-fit: cover;
+}

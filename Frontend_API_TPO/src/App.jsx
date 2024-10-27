@@ -1,19 +1,13 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Registro from './pages/Registro';
-import Login from './pages/LoginPage';
+// cambio todo lo que habia por el approutes
+import AppRoutes from './routes/AppRoutes.jsx'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+//estos import no estoy segura que sean aca. 
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Registro />} />
-        </Routes>
-      </div>
-    </Router>
+    <AppRoutes /> 
   );
-}
+};
 
 export default App;
