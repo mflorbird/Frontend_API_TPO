@@ -1,27 +1,27 @@
-// para ver 
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home.jsx'; 
 import Cart from '../pages/Cart.jsx'; 
 import Login from '../pages/LoginPage.jsx'; 
 import Register from '../pages/Registro.jsx'; 
-import Navbar from '../components/Navbar.jsx'; 
-import Footer from '../components/Footer.jsx'; 
+import MainLayout from '../layouts/MainLayout.jsx';
+import SimpleLayout from '../layouts/SimpleLayout.jsx';
 
 const AppRoutes = () => {
   return (
-    <div>
-      <Navbar />
-      <div className='main-content'>
-      <Routes>
+    <Routes>
+      
+      <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
+      </Route>
+
+      <Route element={<SimpleLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* agregar mas rutas*/}
-      </Routes>
-      </div>
-      <Footer />
-    </div>
+      </Route>
+
+      {/* agregar mas rutas*/}
+    </Routes>
   );
 };
 

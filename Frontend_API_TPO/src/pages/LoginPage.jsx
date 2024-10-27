@@ -43,7 +43,7 @@ const LoginPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-        <BackButton text="Volver al inicio" />
+          <BackButton text="Volver al inicio" />
           <img
             src="/naikii.svg"
             alt="Logo"
@@ -91,10 +91,10 @@ const LoginPage = () => {
             </div>
 
             <div className="mt-3">
-                <Link to="/register">
-                    <Button variant="outline-secondary"  className="w-100">
-                        Registrarme
-                    </Button>
+              <Link to="/register">
+                <Button variant="outline-secondary" className="w-100">
+                  Registrarme
+                </Button>
               </Link>
             </div>
           </Form>
