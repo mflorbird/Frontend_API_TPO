@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
 import { FaArrowLeft } from 'react-icons/fa';
 import FormField from '../components/FormField';
@@ -93,9 +94,11 @@ const LoginPage = () => {
             </div>
 
             <div className="mt-3">
-              <Button variant="outline-secondary" href="/register" className="w-100">
-                Registrarme
-              </Button>
+                <Link to="/register">
+                    <Button variant="outline-secondary"  className="w-100">
+                        Registrarme
+                    </Button>
+              </Link>
             </div>
           </Form>
         </Col>
