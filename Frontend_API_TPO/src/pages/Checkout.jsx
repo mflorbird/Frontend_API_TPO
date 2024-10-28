@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 
-const Checkout = () => {
+const Checkout = ({ cartItems, subtotal, discount }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    country: '',
-    paymentMethod: 'creditCard',
+    nombre: '',
+    apellido: '',
+    cuitDni: '',
+    direccionCalle: '',
+    direccionNumero: '',
+    direccionPisoDepto: '',
+    localidad: '',
+    provincia: '',
+    codigoPostal: '',
+    telefono: '',
+    email: '',
+    notaPedido: '',
+    metodoPago: 'transferenciaBancaria'
   });
 
   const handleChange = (e) => {
@@ -18,86 +26,230 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica para manejar el envío del formulario
     console.log('Datos del formulario:', formData);
   };
 
+  const total = subtotal - discount;
+
+
   return (
-    <div className="checkout-container">
-      <h1>Checkout</h1>
-      <form onSubmit={handleSubmit} className="checkout-form">
-        <div className="form-group">
-          <label htmlFor="name">Nombre Completo</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+    <Container fluid className="checkout-container">
+      <Row>
+        {/* Columna izquierda: Detalles de Facturación */}
+        <Col md={8} className="p-5">
+          <h2>Detalles de Facturación</h2>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="nombre">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="apellido">
+                  <Form.Label>Apellido</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="apellido"
+                    value={formData.apellido}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group controlId="cuitDni">
+              <Form.Label>CUIT/DNI</Form.Label>
+              <Form.Control
+                type="text"
+                name="cuitDni"
+                value={formData.cuitDni}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="direccionCalle">
+              <Form.Label>Dirección - Calle</Form.Label>
+              <Form.Control
+                type="text"
+                name="direccionCalle"
+                value={formData.direccionCalle}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Row>
+              <Col md={4}>
+                <Form.Group controlId="direccionNumero">
+                  <Form.Label>Número</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccionNumero"
+                    value={formData.direccionNumero}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group controlId="direccionPisoDepto">
+                  <Form.Label>Piso/Depto</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccionPisoDepto"
+                    value={formData.direccionPisoDepto}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group controlId="localidad">
+              <Form.Label>Localidad</Form.Label>
+              <Form.Control
+                type="text"
+                name="localidad"
+                value={formData.localidad}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="provincia">
+              <Form.Label>Provincia</Form.Label>
+              <Form.Control
+                type="text"
+                name="provincia"
+                value={formData.provincia}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="codigoPostal">
+              <Form.Label>Código Postal</Form.Label>
+              <Form.Control
+                type="text"
+                name="codigoPostal"
+                value={formData.codigoPostal}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="telefono">
+              <Form.Label>Teléfono</Form.Label>
+              <Form.Control
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="email">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="notaPedido">
+              <Form.Label>Nota de Pedido</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="notaPedido"
+                value={formData.notaPedido}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Form>
+        </Col>
+        
+        {/* Columna derecha: Detalle del Pedido */}
+        <Col md={4} className="p-5 bg-light">
+          <h3>Tu Pedido</h3>
+          <div className="order-summary">
+            <ul>
+            {(cartItems || []).map((item, index) => (
+              <li key={index} className="d-flex justify-content-between">
+                <span>{item.producto}</span>
+                <span>${item.subtotal}</span>
+              </li>
+            ))}
+            </ul>
+            <hr />
+            <div className="d-flex justify-content-between">
+              <span>Subtotal</span>
+              <span>${subtotal}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Envío</span>
+              <span>Gratis</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Descuento</span>
+              <span>${discount}</span>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-between">
+              <strong>Total</strong>
+              <strong>${total}</strong>
+            </div>
+          </div>
+
+          <h5 className="mt-4">Método de Pago</h5>
+          <Form.Check
+            type="radio"
+            label="Transferencia bancaria directa"
+            name="metodoPago"
+            value="transferenciaBancaria"
             onChange={handleChange}
-            required
+            checked={formData.metodoPago === 'transferenciaBancaria'}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="address">Dirección</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
+          <Form.Check
+            type="radio"
+            label="Tarjeta de crédito"
+            name="metodoPago"
+            value="tarjetaCredito"
             onChange={handleChange}
-            required
+            checked={formData.metodoPago === 'tarjetaCredito'}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="city">Ciudad</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={formData.city}
+          <Form.Check
+            type="radio"
+            label="Billetera digital"
+            name="metodoPago"
+            value="billeteraDigital"
             onChange={handleChange}
-            required
+            checked={formData.metodoPago === 'billeteraDigital'}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="postalCode">Código Postal</label>
-          <input
-            type="text"
-            id="postalCode"
-            name="postalCode"
-            value={formData.postalCode}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="country">País</label>
-          <input
-            type="text"
-            id="country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="paymentMethod">Método de Pago</label>
-          <select
-            id="paymentMethod"
-            name="paymentMethod"
-            value={formData.paymentMethod}
-            onChange={handleChange}
-            required
-          >
-            <option value="creditCard">Tarjeta de Crédito</option>
-            <option value="paypal">PayPal</option>
-            <option value="bankTransfer">Transferencia Bancaria</option>
-          </select>
-        </div>
-        <button type="submit" className="checkout-btn">Realizar Pedido</button>
-      </form>
-    </div>
+
+          <p className="mt-3 text-muted">
+            Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
+          </p>
+
+          <Button variant="primary" type="submit" className="checkout-btn" onClick={handleSubmit}>
+            Realizar el Pedido
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
