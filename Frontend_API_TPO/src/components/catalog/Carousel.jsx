@@ -3,7 +3,6 @@ const Carousel = ({ images }) => {
     return (
         <div>
             <main className="content">
-                {/* Carrusel de imágenes */}
                 <div id="carouselMain" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-indicators">
                         {images.map((image, index) => (
