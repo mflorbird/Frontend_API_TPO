@@ -1,0 +1,211 @@
+.custom-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px; /* Ajusta la altura */
+  padding: 10px 20px !important;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Añade un sombreado */
+}
+
+.navbar-logo {
+  height: 40px; /* Ajusta la altura del logo */
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem; /* Controla el espacio entre los enlaces */
+  margin: 0;
+  padding: 0;
+  flex-grow: 1; /* Asegura que los enlaces ocupen el espacio del medio */
+  justify-content: center; /* Centra los enlaces */
+}
+
+.navbar-links li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem; /* Ajusta el tamaño de la fuente */
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+}
+
+.container-icon{
+  position: relative;
+}
+
+.cart-container {
+  position: relative;
+
+}
+
+.navbar-cart {
+  width: 32px; /* Ajusta el tamaño del ícono del carrito */
+  height: 32px; /* Añade espacio entre el carrito y la foto de usuario */
+}
+.cart-badge {
+  position: relative;
+  margin-top: 50px;
+  margin-right: 40px;
+
+  background-color: #5a228f;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.container-cart-products{
+  position: absolute;
+  top: 60px;
+  right: 0;
+
+  background-color: #fff;
+  width: 400px;
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
+  border-radius: 10px;
+  
+}
+
+.cart-product{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+
+}
+
+.info-cart-product{
+  display: flex;
+  justify-content: space-between;
+  flex: 0.8;
+}
+
+.titulo-producto-carrito{
+  font-size: 15px;
+}
+
+.precio-producto-carrito{
+  font-weight: 700;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.cantidad-producto-carrito{
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.close-product{
+  width: 25px;
+  height: 25px;
+}
+
+.close-product:hover{
+  stroke: #224e8f;
+  cursor: pointer;
+}
+
+.cart-total-hiden{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  gap: 20px;
+  font-size: 15px;
+}
+
+.total-pagar{
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.hidden-cart{
+  display: none;
+}
+
+.cart-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
+.cart-button-ver,
+.cart-button-checkout {
+  width: 80%;
+  padding: 10px 15px;
+  border: none;
+  color: #224e8f;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+
+.cart-button-ver:hover,
+.cart-button-checkout:hover {
+  background-color: #224e8f;
+  color: #fff;
+}
+
+.navbar-profile {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: white;
+}
+
+.navbar-user-photo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0.8rem; /* Espacio entre la foto y la flecha */
+}
+
+.navbar-arrow {
+  height: 8px; /* Ajusta el tamaño del ícono de la flecha */
+  margin-right: 0.8rem;
+}
+
+.dropdown-toggle-white {
+  background-color: white !important;
+  color: black !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown-toggle-white:hover {
+  background-color: #f8f9fa !important;
+  color: black !important;
+}
+
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ced4da;
+}
+
+.dropdown-item {
+  color: black;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
