@@ -3,8 +3,9 @@ import zapatillas1 from '../assets/01ZAPATILLAS.png';
 import zapatillas2 from '../assets/05ZAPATILLAS.png';
 import zapatillas3 from '../assets/08ZAPATILLAS.png';
 import "../styles/cart.css";
-
+import { useNavigate } from 'react-router-dom';
 const Cart = () => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -122,7 +123,7 @@ const Cart = () => {
             <p>Total (IVA incluido): ${totalAmount}</p>
             <input type="text" placeholder="Ingresá tu cupón" className="coupon-input" />
             <button className="apply-discount-btn">Aplicar descuento</button>
-            <button className="checkout-btn">Ir a pagar</button>
+            <button className="checkout-btn" onClick={() => navigate('/Checkout')} >Ir a pagar</button>
           </div>
         </div>
       </div>
