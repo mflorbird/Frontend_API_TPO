@@ -1,125 +1,252 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Alert, Button } from 'react-bootstrap';
-import BackButton from '../components/BackButton';
-import FormField from '../components/FormField';
-import FormSubmitButton from '../components/FormSubmitButton';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 
-const Checkout = () => {
+const Checkout = ({ cartItems, subtotal, discount }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    country: '',
-    paymentMethod: 'creditCard',
+    nombre: '',
+    apellido: '',
+    cuitDni: '',
+    direccionCalle: '',
+    direccionNumero: '',
+    direccionPisoDepto: '',
+    localidad: '',
+    provincia: '',
+    codigoPostal: '',
+    telefono: '',
+    email: '',
+    notaPedido: '',
+    metodoPago: 'transferenciaBancaria'
   });
-  const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.name) newErrors.name = 'El nombre completo es obligatorio';
-    if (!formData.address) newErrors.address = 'La dirección es obligatoria';
-    if (!formData.city) newErrors.city = 'La ciudad es obligatoria';
-    if (!formData.postalCode) newErrors.postalCode = 'El código postal es obligatorio';
-    if (!formData.country) newErrors.country = 'El país es obligatorio';
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
-      setIsSubmitted(true);
-      console.log('Datos del formulario:', formData);
-    }
+    console.log('Datos del formulario:', formData);
   };
 
+  const total = subtotal - discount;
+
+
   return (
-    <Container fluid className="mt-0 p-0">
+    <Container fluid className="checkout-container">
       <Row>
-        <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <BackButton text="Volver al carrito" />
-          <h2 className="text-start mb-4">Datos de Facturacion</h2>
+        {/* Columna izquierda: Detalles de Facturación */}
+        <Col md={8} className="p-5">
+          <h2>Detalles de Facturación</h2>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="nombre">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group controlId="apellido">
+                  <Form.Label>Apellido</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="apellido"
+                    value={formData.apellido}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
 
-          {isSubmitted && <Alert variant="success">Pedido realizado exitosamente. ¡Gracias por tu compra!</Alert>}
-
-          <Form onSubmit={handleSubmit} className="checkout-form">
-            <FormField
-              label="Nombre Completo"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Ingresa tu nombre completo"
-              error={errors.name}
-            />
-
-            <FormField
-              label="Dirección"
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Ingresa tu dirección"
-              error={errors.address}
-            />
-
-            <FormField
-              label="Ciudad"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="Ingresa tu ciudad"
-              error={errors.city}
-            />
-
-            <FormField
-              label="Código Postal"
-              type="text"
-              name="postalCode"
-              value={formData.postalCode}
-              onChange={handleChange}
-              placeholder="Ingresa tu código postal"
-              error={errors.postalCode}
-            />
-
-            <FormField
-              label="País"
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              placeholder="Ingresa tu país"
-              error={errors.country}
-            />
-
-            <Form.Group className="mb-3">
-              <Form.Label>Método de Pago</Form.Label>
-              <Form.Select
-                id="paymentMethod"
-                name="paymentMethod"
-                value={formData.paymentMethod}
+            <Form.Group controlId="cuitDni">
+              <Form.Label>CUIT/DNI</Form.Label>
+              <Form.Control
+                type="text"
+                name="cuitDni"
+                value={formData.cuitDni}
                 onChange={handleChange}
-              >
-                <option value="creditCard">Tarjeta de Crédito</option>
-                <option value="paypal">PayPal</option>
-                <option value="bankTransfer">Transferencia Bancaria</option>
-              </Form.Select>
+                required
+              />
             </Form.Group>
 
-            <FormSubmitButton
-              label="Realizar Pedido"
-              disabled={!formData.name || !formData.address || !formData.city || !formData.postalCode || !formData.country}
-            />
+            <Form.Group controlId="direccionCalle">
+              <Form.Label>Dirección - Calle</Form.Label>
+              <Form.Control
+                type="text"
+                name="direccionCalle"
+                value={formData.direccionCalle}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Row>
+              <Col md={4}>
+                <Form.Group controlId="direccionNumero">
+                  <Form.Label>Número</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccionNumero"
+                    value={formData.direccionNumero}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group controlId="direccionPisoDepto">
+                  <Form.Label>Piso/Depto</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="direccionPisoDepto"
+                    value={formData.direccionPisoDepto}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group controlId="localidad">
+              <Form.Label>Localidad</Form.Label>
+              <Form.Control
+                type="text"
+                name="localidad"
+                value={formData.localidad}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="provincia">
+              <Form.Label>Provincia</Form.Label>
+              <Form.Control
+                type="text"
+                name="provincia"
+                value={formData.provincia}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="codigoPostal">
+              <Form.Label>Código Postal</Form.Label>
+              <Form.Control
+                type="text"
+                name="codigoPostal"
+                value={formData.codigoPostal}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="telefono">
+              <Form.Label>Teléfono</Form.Label>
+              <Form.Control
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="email">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group controlId="notaPedido">
+              <Form.Label>Nota de Pedido</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="notaPedido"
+                value={formData.notaPedido}
+                onChange={handleChange}
+              />
+            </Form.Group>
           </Form>
+        </Col>
+        
+        {/* Columna derecha: Detalle del Pedido */}
+        <Col md={4} className="p-5 bg-light">
+          <h3>Tu Pedido</h3>
+          <div className="order-summary">
+            <ul>
+            {(cartItems || []).map((item, index) => (
+              <li key={index} className="d-flex justify-content-between">
+                <span>{item.producto}</span>
+                <span>${item.subtotal}</span>
+              </li>
+            ))}
+            </ul>
+            <hr />
+            <div className="d-flex justify-content-between">
+              <span>Subtotal</span>
+              <span>${subtotal}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Envío</span>
+              <span>Gratis</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Descuento</span>
+              <span>${discount}</span>
+            </div>
+            <hr />
+            <div className="d-flex justify-content-between">
+              <strong>Total</strong>
+              <strong>${total}</strong>
+            </div>
+          </div>
+
+          <h5 className="mt-4">Método de Pago</h5>
+          <Form.Check
+            type="radio"
+            label="Transferencia bancaria directa"
+            name="metodoPago"
+            value="transferenciaBancaria"
+            onChange={handleChange}
+            checked={formData.metodoPago === 'transferenciaBancaria'}
+          />
+          <Form.Check
+            type="radio"
+            label="Tarjeta de crédito"
+            name="metodoPago"
+            value="tarjetaCredito"
+            onChange={handleChange}
+            checked={formData.metodoPago === 'tarjetaCredito'}
+          />
+          <Form.Check
+            type="radio"
+            label="Billetera digital"
+            name="metodoPago"
+            value="billeteraDigital"
+            onChange={handleChange}
+            checked={formData.metodoPago === 'billeteraDigital'}
+          />
+
+          <p className="mt-3 text-muted">
+            Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
+          </p>
+
+          <Button variant="primary" type="submit" className="checkout-btn" onClick={handleSubmit}>
+            Realizar el Pedido
+          </Button>
         </Col>
       </Row>
     </Container>
