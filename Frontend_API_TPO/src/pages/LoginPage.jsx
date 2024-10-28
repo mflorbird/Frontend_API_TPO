@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
-import { FaArrowLeft } from 'react-icons/fa';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
 import BackButton from '../components/BackButton';
+import useAuth from '../hooks/useAuth';
 import './Login.css';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    usuarioOEmail: '',
-    contraseña: '',
-  });
+  const { authenticate, error } = useAuth();
+  const [formData, setFormData] = useState({ usuarioOEmail: '', contraseña: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -34,7 +32,10 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitted(false);
+
     if (validate()) {
+      authenticate(formData.usuarioOEmail, formData.contraseña);
       setIsSubmitted(true);
     }
   };
@@ -44,19 +45,13 @@ const LoginPage = () => {
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
           <BackButton text="Volver al inicio" />
-          <img
-            src="/naikii.svg"
-            alt="Logo"
-            style={{ width: '80px', height: '80px', display: 'block', marginBottom: '20px' }}
-          />
+          <img src="/naikii.svg" alt="Logo" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
 
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
+          <p className="text-start" style={{ fontSize: '16pt' }}>Iniciá sesión y conseguí las zapas que van con vos.</p>
 
-          <p className="text-start" style={{ fontSize: '16pt' }}>
-            Iniciá sesión y conseguí las zapas que van con vos.
-          </p>
-
-          {isSubmitted && <Alert variant="success">Inicio de sesión exitoso. ¡Bienvenido a NAIKII!</Alert>}
+          {isSubmitted && !error && <Alert variant="success">Inicio de sesión exitoso. ¡Bienvenido a NAIKII!</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
             <FormField
@@ -79,10 +74,7 @@ const LoginPage = () => {
               error={errors.contraseña}
             />
 
-            <FormSubmitButton
-              label="Iniciar sesión"
-              disabled={!formData.usuarioOEmail || !formData.contraseña}
-            />
+            <FormSubmitButton label="Iniciar sesión" disabled={!formData.usuarioOEmail || !formData.contraseña} />
 
             <div className="d-flex align-items-center justify-content-center mt-4">
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
@@ -92,15 +84,12 @@ const LoginPage = () => {
 
             <div className="mt-3">
               <Link to="/register">
-                <Button variant="outline-secondary" className="w-100">
-                  Registrarme
-                </Button>
+                <Button variant="outline-secondary" className="w-100">Registrarme</Button>
               </Link>
             </div>
           </Form>
         </Col>
-        <Col md={6} className="bg-image">
-        </Col>
+        <Col md={6} className="bg-image"></Col>
       </Row>
     </Container>
   );

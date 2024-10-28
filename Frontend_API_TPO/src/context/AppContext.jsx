@@ -10,6 +10,8 @@ export const AppProvider = ({ children }) => {
     //estado de carrito para que se pueda usar globalmente
     const [cartItems, setCartItems] = useState([]); 
 
+    const [user, setUser] = useState(null);
+
     const addItemToCart = (item) => {
         setCartItems((prevItems) => {
             const itemExists = prevItems.find((prevItem) => prevItem.id === item.id);
@@ -36,8 +38,26 @@ export const AppProvider = ({ children }) => {
     //Calcular la cantidad total de items en el carrito
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+    const login = (userData) => {
+        setUser(userData);
+    };
+
+    const logout = () => {
+        setUser(null);
+        clearCart(); 
+    };
+
     return (
-        <AppContext.Provider value={{ cartItems, addItemToCart, removeItemFromCart, clearCart, totalItems }}>
+        <AppContext.Provider value={{ 
+            cartItems, 
+            addItemToCart, 
+            removeItemFromCart, 
+            clearCart, 
+            totalItems,
+            user,
+            login,
+            logout
+        }}>
             {children}
         </AppContext.Provider>
     );
