@@ -11,6 +11,8 @@ const Home = () => {
         { src: 'carousel2.png', alt: 'Carousel 2' },
         { src: 'carousel3.png', alt: 'Carousel 3' }
     ]);
+    // mock data for destacados
+
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -21,18 +23,14 @@ const Home = () => {
         <>
             <Carousel images={carouselImages} />
             <div className="container mt-3">
-                {/* Product Lists */}
-                <h2>Destacados de la semana</h2>
-                <ProductList getProducts={getDestacados} title="Featured Products" layout="list" />
 
-                <h2>Productos en Matriz</h2>
-                <ProductList getProducts={getFavoritos} title="Favorite Products" layout="grid" />
+                <ProductList getProducts={getDestacados} title="Imperdibles de la semana" />
 
-                {/* Conditional Components for Logged-in User */}
+                <ProductList getProducts={getDestacados} title="Calzado" />
+
                 {user && (
                     <>
-                        <h2>Productos Recientes</h2>
-                        <ProductList getProducts={getRecientes} title="Featured Products" layout="list" />
+                        <ProductList getProducts={getRecientes} title="Productos Recientes" layout="list" />
                     </>
                 )}
             </div>
