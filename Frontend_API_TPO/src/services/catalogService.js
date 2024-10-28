@@ -23,7 +23,7 @@ export const getDestacados = async () => {
     const response = await axios.get(`${API_URL}/productos/destacados`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener los productos destacados');
+    throw new Error('Error al obtener los productos destacados', error);
   }
 };
 
@@ -33,7 +33,7 @@ export const getFavoritos = async () => {
     const response = await axiosWithInterceptor.get(`${API_URL}/productos/favoritos`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener los productos favoritos');
+    throw new Error('Error al obtener los productos favoritos', error);
   }
 };
 
@@ -43,7 +43,7 @@ export const getCategoria = async (categoria) => {
     const response = await axios.get(`${API_URL}/productos/categoria/${categoria}`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener los productos por categoria');
+    throw new Error('Error al obtener los productos por categoria', error);
   }
 };
 
@@ -53,7 +53,7 @@ export const getTodos = async () => {
     const response = await axios.get(`${API_URL}/productos`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener todos los productos');
+    throw new Error('Error al obtener todos los productos', error);
   }
 };
 
@@ -63,7 +63,7 @@ export const getDetalle = async (productoId) => {
     const response = await axiosWithInterceptor.get(`${API_URL}/productos/${productoId}`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener el detalle del producto');
+    throw new Error('Error al obtener el detalle del producto', error);
   }
 };
 
@@ -74,7 +74,7 @@ export const getDetalleSinLogin = async (productoId) => {
     const response = await axios.get(`${API_URL}/productos/${productoId}`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener el detalle del producto');
+    throw new Error('Error al obtener el detalle del producto', error);
   }
 };
 
@@ -85,7 +85,7 @@ export const agregarFavorito = async (productoId) => {
     const response = await axiosWithInterceptor.put(`${API_URL}/productos/favoritos/${productoId}`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al agregar producto a favoritos');
+    throw new Error('Error al agregar producto a favoritos', error);
   }
 }
 
@@ -95,7 +95,7 @@ export const eliminiarFavorito = async (productoId) => {
     const response = await axiosWithInterceptor.delete(`${API_URL}/productos/favoritos/${productoId}`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al quitar producto de favoritos');
+    throw new Error('Error al quitar producto de favoritos', error);
   }
 }
 
@@ -105,6 +105,6 @@ export const getRecientes = async () => {
     const response = await axios.get(`${API_URL}/productos/recientes`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener los productos recientes');
+    throw new Error('Error al obtener los productos recientes', error);
   }
 };
