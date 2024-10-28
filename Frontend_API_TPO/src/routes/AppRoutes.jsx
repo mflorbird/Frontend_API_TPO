@@ -23,7 +23,9 @@ const AppRoutes = () => {
       <Route element={<SimpleLayout />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
       </Route>
+
 
       {/* agregar mas rutas*/}
     </Routes>
