@@ -5,12 +5,11 @@ import cartIcon from '../assets/cart.svg';
 import userPhoto from '../assets/user-photo.jpeg';
 import closeProduct from '../assets/x.svg'; // Asegúrate de que esta línea esté presente
 import { AppContext } from '../context/AppContext.jsx';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 
 const Navbar = () => {
-  const { cartItems } = useContext(AppContext);
+  const { cartItems, user, logout } = useContext(AppContext);
   const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,15 +81,24 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <Dropdown>
-          <Dropdown.Toggle className="navbar-profile dropdown-toggle-white" id="dropdown-basic">
-            <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
-          </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => navigate("/login")}>Cerrar Sesión</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        {user ? (
+          <Dropdown>
+            <Dropdown.Toggle className="navbar-profile dropdown-toggle-white" id="dropdown-basic">
+              <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => { logout(); navigate("/login"); }}>
+                Cerrar Sesión
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <button onClick={() => navigate("/login")} className="login-button">
+            Iniciar Sesión
+          </button>
+        )}
       </div>
     </nav>
   );

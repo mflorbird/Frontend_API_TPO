@@ -4,6 +4,7 @@ import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
 import BackButton from '../components/BackButton';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
+import { registerUser } from '../services/authService';
 import './Registro.css';
 
 const RegistroPage = () => {
@@ -17,6 +18,8 @@ const RegistroPage = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,10 +38,19 @@ const RegistroPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      setIsSubmitted(true);
+      setLoading(true);
+      setError(null);
+      try {
+        await registerUser(formData);
+        setIsSubmitted(true);
+      } catch (error) {
+        setError('Error al crear la cuenta. Inténtalo de nuevo.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -46,20 +58,19 @@ const RegistroPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-        <BackButton />
-
+          <BackButton />
           <img
             src="/naikii.svg"
             alt="Logo"
             style={{ width: '80px', height: '80px', display: 'block', marginBottom: '20px' }}
           />
-
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
           <p className="text-start" style={{ fontSize: '16pt' }}>
             Regístrate y conseguí las zapas que van con vos.
           </p>
 
           {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Empezá a disfrutar de la experiencia NAIKII</Alert>}
+          {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
             <FormField
@@ -123,20 +134,14 @@ const RegistroPage = () => {
 
             <FormSubmitButton
               label="Registrarme"
-              disabled={
-                !formData.nombre ||
-                !formData.apellido ||
-                !formData.email ||
-                !formData.contraseña
-              }
+              loading={loading}
+              disabled={loading || !formData.nombre || !formData.apellido || !formData.email || !formData.contraseña}
             />
-
             <div className="d-flex align-items-center justify-content-center mt-4">
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
               <div className="px-3">¿Ya tenés una cuenta?</div>
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
             </div>
-
             <div className="mt-3">
               <Link to="/login">
                 <Button variant="outline-secondary"  className="w-100">
