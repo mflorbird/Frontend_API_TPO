@@ -4,14 +4,14 @@
         "id": 1,
         "username": "usuario1",
         "email": "usuario1@example.com",
-        "password": "contraseña123",
+        "password": "Contraseña123",
         "role": "user"
       },
       {
         "id": 2,
         "username": "usuario2",
         "email": "usuario2@example.com",
-        "password": "contraseña456",
+        "password": "Contraseña456",
         "role": "admin"
       } 
     ]

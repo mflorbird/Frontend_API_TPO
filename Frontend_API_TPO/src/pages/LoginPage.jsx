@@ -5,7 +5,7 @@ import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
 import BackButton from '../components/BackButton';
 import useAuth from '../hooks/useAuth';
-import './Login.css';
+import '../styles/Login.css';
 
 const LoginPage = () => {
   const { authenticate, error } = useAuth();
