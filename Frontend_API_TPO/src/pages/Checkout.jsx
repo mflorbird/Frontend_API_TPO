@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -213,7 +215,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               <strong>${total}</strong>
             </div>
           </div>
-
+            {/* Agrego boton para modificar pedido */}
+            <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
+              Modificar Pedido
+            </Button>
           <h5 className="mt-4">Método de Pago</h5>
           <Form.Check
             type="radio"
