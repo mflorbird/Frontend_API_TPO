@@ -1,0 +1,57 @@
+.product-management {
+  padding: 20px;
+}
+
+.product-management h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.table td img {
+  border-radius: 4px;
+}
+
+/* Botones de acción */
+.btn-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0 5px;
+}
+
+.btn-action.edit {
+  color: #007bff;
+}
+
+.btn-action.delete {
+  color: #dc3545;
+}
+
+.btn-action.edit:hover {
+  color: #0056b3;
+}
+
+.btn-action.delete:hover {
+  color: #c82333;
+}
+
+/* Estilos para filtros y barra de búsqueda */
+.filters {
+  gap: 10px;
+}
+
+.search-bar .form-control {
+  border-right: none;
+}
+
+.search-bar .btn-outline-secondary {
+  border-left: none;
+}
+
+/* Estilos para botones en la tabla */
+.btn-outline-primary,
+.btn-outline-danger {
+  padding: 0.25rem 0.5rem;
+  font-size: 1.1rem;
+}
