@@ -3,7 +3,7 @@ import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
 import userPhoto from '../assets/user-photo.jpeg';
-import closeProduct from '../assets/x.svg'; // Asegúrate de que esta línea esté presente
+import closeProduct from '../assets/x.svg'; 
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
@@ -14,11 +14,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Referencias para los elementos
+  
   const btnCartRef = useRef(null);
   const containerCartProductsRef = useRef(null);
 
-  // Añadir el evento de click para mostrar/ocultar el carrito
+  
   useEffect(() => {
     const btnCart = btnCartRef.current;
     const containerCartProducts = containerCartProductsRef.current;
@@ -31,7 +31,7 @@ const Navbar = () => {
       btnCart.addEventListener('click', toggleCart);
     }
 
-    // Limpiar el evento al desmontar el componente
+    
     return () => {
       if (btnCart) {
         btnCart.removeEventListener('click', toggleCart);
@@ -55,11 +55,11 @@ const Navbar = () => {
             <span className="cart-badge">{cartItemCount}</span>
           </div>
 
-          {/* Menú emergente del carrito, solo se muestra si no estás en /cart */}
+          
           {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
             <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
 
-              {/* Productos en el carrito (ejemplo) */}
+              
               <div className="cart-product">
                 <div className="info-cart-product">
                   <span className="cantidad-producto-carrito">1</span>
@@ -73,7 +73,7 @@ const Navbar = () => {
                 <span className="total-pagar-hidden">$150</span>
               </div>
 
-              {/* Botones de navegación */}
+             
               <div className="cart-buttons">
                 <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
                 <button onClick={() => navigate("/checkout")} className="cart-button-checkout">Pagar</button>
