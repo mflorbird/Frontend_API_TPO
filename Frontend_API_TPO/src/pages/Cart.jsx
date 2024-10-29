@@ -49,13 +49,13 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart-container-body">
         <h1>Hola [Nombre]</h1>
-        <p>Visualizá los productos que tienes en tu carrito</p>
+        <p>Visualizá los productos que tenes en tu carrito</p>
 
         <button onClick={() => {
           // Función para agregar un artículo de prueba
           const newItem = {
             id: 3,
-            name: "Zapatillas Urbanas",
+            name: "Otras Zapatillas de prueba",
             size: "38",
             color: "Negro",
             quantity: 1,

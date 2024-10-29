@@ -2,8 +2,21 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 import { useNavigate } from 'react-router-dom';
+import MetodosDePago from '../components/MetodosDePago.jsx';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
+  const [metodoPago, setMetodoPago] = useState('transferenciaBancaria');
+
+    // para manejar la selección del método de pago
+    const handleMetodoPagoChange = (metodo) => {
+      setMetodoPago(metodo);
+    };
+  
+    // para manejar el clic en "Realizar el Pedido"
+    const handleCheckout = () => {
+      navigate('/FinalizarCompra', { state: { metodoPago } });
+    };
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '',
@@ -219,32 +232,11 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
             <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
               Modificar Pedido
             </Button>
-          <h5 className="mt-4">Método de Pago</h5>
-          <Form.Check
-            type="radio"
-            label="Transferencia bancaria directa"
-            name="metodoPago"
-            value="transferenciaBancaria"
-            onChange={handleChange}
-            checked={formData.metodoPago === 'transferenciaBancaria'}
+            <p></p>
+          <MetodosDePago
+            metodoPagoSeleccionado={metodoPago}
+            setMetodoPagoSeleccionado={handleMetodoPagoChange}
           />
-          <Form.Check
-            type="radio"
-            label="Tarjeta de crédito"
-            name="metodoPago"
-            value="tarjetaCredito"
-            onChange={handleChange}
-            checked={formData.metodoPago === 'tarjetaCredito'}
-          />
-          <Form.Check
-            type="radio"
-            label="Billetera digital"
-            name="metodoPago"
-            value="billeteraDigital"
-            onChange={handleChange}
-            checked={formData.metodoPago === 'billeteraDigital'}
-          />
-
           <p className="mt-3 text-muted">
             Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
           </p>
