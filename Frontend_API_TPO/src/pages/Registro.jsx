@@ -5,7 +5,7 @@ import BackButton from '../components/BackButton';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
 import { registerUser } from '../services/authService';
-import './Registro.css';
+import '../styles/Registro.css'
 
 const RegistroPage = () => {
   const [formData, setFormData] = useState({

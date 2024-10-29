@@ -15,7 +15,11 @@ const useAuth = () => {
       const user = await loginUser(usuarioOEmail, contraseña);
       if (user) {
         login(user);
-        navigate('/'); 
+        if (user.role === 'admin') {
+          navigate('/product-management');
+        } else {
+          navigate('/');
+        }
       } else {
         setError('Credenciales incorrectas');
       }
