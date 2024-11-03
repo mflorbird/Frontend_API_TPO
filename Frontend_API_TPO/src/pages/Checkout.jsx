@@ -5,19 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import MetodosDePago from '../components/MetodosDePago.jsx';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
-  const [metodoPago, setMetodoPago] = useState('transferenciaBancaria');
-
-    // para manejar la selección del método de pago
-    const handleMetodoPagoChange = (metodo) => {
-      setMetodoPago(metodo);
-    };
-  
-    // para manejar el clic en "Realizar el Pedido"
-    const handleCheckout = () => {
-      navigate('/FinalizarCompra', { state: { metodoPago } });
-    };
-
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  const [metodoPago, setMetodoPago] = useState('');
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -31,21 +20,31 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
     telefono: '',
     email: '',
     notaPedido: '',
-    metodoPago: 'transferenciaBancaria'
   });
+
+  const [errors, setErrors] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Datos del formulario:', formData);
+  const validateForm = () => {
+    const newErrors = {};
+    Object.keys(formData).forEach((field) => {
+      if (field !== 'direccionPisoDepto' && field !== 'notaPedido' && !formData[field]) {
+        newErrors[field] = true;
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const total = subtotal - discount;
-
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      navigate('/FinalizarCompra', { state: { metodoPago, formData, subtotal, discount } });
+    }
+  };
 
   return (
     <Container fluid className="checkout-container">
@@ -53,7 +52,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
         {/* Columna izquierda: Detalles de Facturación */}
         <Col md={8} className="p-5">
           <h2>Detalles de Facturación</h2>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleCheckout}>
             <Row>
               <Col md={6}>
                 <Form.Group controlId="nombre">
@@ -63,8 +62,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     name="nombre"
                     value={formData.nombre}
                     onChange={handleChange}
+                    className={errors.nombre ? 'input-error' : ''}
                     required
                   />
+                  {errors.nombre && <div className="error-text">{errors.nombre}</div>}
                 </Form.Group>
               </Col>
               <Col md={6}>
@@ -75,8 +76,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     name="apellido"
                     value={formData.apellido}
                     onChange={handleChange}
+                    className={errors.apellido ? 'input-error' : ''}
                     required
                   />
+                  {errors.apellido && <div className="error-text">{errors.apellido}</div>}
                 </Form.Group>
               </Col>
             </Row>
@@ -88,8 +91,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="cuitDni"
                 value={formData.cuitDni}
                 onChange={handleChange}
+                className={errors.cuitDni ? 'input-error' : ''}
                 required
               />
+              {errors.cuitDni && <div className="error-text">{errors.cuitDni}</div>}
             </Form.Group>
 
             <Form.Group controlId="direccionCalle">
@@ -99,8 +104,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="direccionCalle"
                 value={formData.direccionCalle}
                 onChange={handleChange}
+                className={errors.direccionCalle ? 'input-error' : ''}
                 required
               />
+              {errors.direccionCalle && <div className="error-text">{errors.direccionCalle}</div>}
             </Form.Group>
 
             <Row>
@@ -112,8 +119,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     name="direccionNumero"
                     value={formData.direccionNumero}
                     onChange={handleChange}
+                    className={errors.direccionNumero ? 'input-error' : ''}
                     required
                   />
+                  {errors.direccionNumero && <div className="error-text">{errors.direccionNumero}</div>}
                 </Form.Group>
               </Col>
               <Col md={4}>
@@ -136,8 +145,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="localidad"
                 value={formData.localidad}
                 onChange={handleChange}
+                className={errors.localidad ? 'input-error' : ''}
                 required
               />
+              {errors.localidad && <div className="error-text">{errors.localidad}</div>}
             </Form.Group>
 
             <Form.Group controlId="provincia">
@@ -147,8 +158,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="provincia"
                 value={formData.provincia}
                 onChange={handleChange}
+                className={errors.provincia ? 'input-error' : ''}
                 required
               />
+              {errors.provincia && <div className="error-text">{errors.provincia}</div>}
             </Form.Group>
 
             <Form.Group controlId="codigoPostal">
@@ -158,8 +171,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="codigoPostal"
                 value={formData.codigoPostal}
                 onChange={handleChange}
+                className={errors.codigoPostal ? 'input-error' : ''}
                 required
               />
+              {errors.codigoPostal && <div className="error-text">{errors.codigoPostal}</div>}
             </Form.Group>
 
             <Form.Group controlId="telefono">
@@ -169,8 +184,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="telefono"
                 value={formData.telefono}
                 onChange={handleChange}
+                className={errors.telefono ? 'input-error' : ''}
                 required
               />
+              {errors.telefono && <div className="error-text">{errors.telefono}</div>}
             </Form.Group>
 
             <Form.Group controlId="email">
@@ -180,8 +197,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                className={errors.email ? 'input-error' : ''}
                 required
               />
+              {errors.email && <div className="error-text">{errors.email}</div>}
             </Form.Group>
 
             <Form.Group controlId="notaPedido">
@@ -193,21 +212,22 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 value={formData.notaPedido}
                 onChange={handleChange}
               />
+              
             </Form.Group>
           </Form>
         </Col>
-        
+
         {/* Columna derecha: Detalle del Pedido */}
         <Col md={4} className="p-5 bg-light">
           <h3>Tu Pedido</h3>
           <div className="order-summary">
             <ul>
-            {(cartItems || []).map((item, index) => (
-              <li key={index} className="d-flex justify-content-between">
-                <span>{item.producto}</span>
-                <span>${item.subtotal}</span>
-              </li>
-            ))}
+              {(cartItems || []).map((item, index) => (
+                <li key={index} className="d-flex justify-content-between">
+                  <span>{item.producto}</span>
+                  <span>${item.subtotal}</span>
+                </li>
+              ))}
             </ul>
             <hr />
             <div className="d-flex justify-content-between">
@@ -225,26 +245,45 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
             <hr />
             <div className="d-flex justify-content-between">
               <strong>Total</strong>
-              <strong>${total}</strong>
+              <strong>${subtotal - discount}</strong>
             </div>
           </div>
-            {/* Agrego boton para modificar pedido */}
-            <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
-              Modificar Pedido
-            </Button>
-            <p></p>
-          <MetodosDePago
-            metodoPagoSeleccionado={metodoPago}
-            setMetodoPagoSeleccionado={handleMetodoPagoChange}
-          />
+          <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
+            Modificar Pedido
+          </Button>
+          <p></p>
+          <h5>Seleccione Método de Pago</h5>
+            <Form.Check
+              type="radio"
+              label="Transferencia Bancaria"
+              name="metodoPago"
+              value="transferenciaBancaria"
+              onChange={(e) => setMetodoPago(e.target.value)}
+              checked={metodoPago === 'transferenciaBancaria'}
+            />
+            <Form.Check
+              type="radio"
+              label="Tarjeta de Crédito"
+              name="metodoPago"
+              value="tarjetaCredito"
+              onChange={(e) => setMetodoPago(e.target.value)}
+              checked={metodoPago === 'tarjetaCredito'}
+            />
+            <Form.Check
+              type="radio"
+              label="Billetera Digital"
+              name="metodoPago"
+              value="billeteraDigital"
+              onChange={(e) => setMetodoPago(e.target.value)}
+              checked={metodoPago === 'billeteraDigital'}
+            />
           <p className="mt-3 text-muted">
             Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
           </p>
-
-          <Button variant="primary" type="submit" className="checkout-btn" onClick={handleSubmit}>
-            Realizar el Pedido
-          </Button>
-        </Col>
+            <Button variant="primary" type="submit" className="mt-3" onClick={handleCheckout}>
+            Continuar a Finalizar Compra
+            </Button>
+         </Col>
       </Row>
     </Container>
   );

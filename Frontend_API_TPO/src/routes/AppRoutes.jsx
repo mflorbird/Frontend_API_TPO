@@ -7,6 +7,7 @@ import Register from '../pages/Registro.jsx';
 import MainLayout from '../layouts/MainLayout.jsx';
 import SimpleLayout from '../layouts/SimpleLayout.jsx';
 import Checkout from '../pages/Checkout.jsx';
+import FinalizarCompra from '../pages/FinalizarCompra.jsx';
 
 
 const AppRoutes = () => {
@@ -18,6 +19,7 @@ const AppRoutes = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/cartEmpty" element={<CartEmpty />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/finalizarCompra" element={<FinalizarCompra />} />
       </Route>
 
       <Route element={<SimpleLayout />}>
