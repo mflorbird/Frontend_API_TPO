@@ -27,14 +27,29 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  
+    // Quitar errores en tiempo real si el campo es válido
+    if (value && errors[name]) {
+      setErrors((prevErrors) => {
+        const updatedErrors = { ...prevErrors };
+        delete updatedErrors[name];
+        return updatedErrors;
+      });
+    }
   };
+
   const validateForm = () => {
     const newErrors = {};
     Object.keys(formData).forEach((field) => {
       if (field !== 'direccionPisoDepto' && field !== 'notaPedido' && !formData[field]) {
-        newErrors[field] = true;
+        newErrors[field] = '*Obligatorio';
       }
     });
+
+    if (!metodoPago) {
+      newErrors.metodoPago = '*Selecciona un método de pago';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -49,7 +64,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
   return (
     <Container fluid className="checkout-container">
       <Row>
-        {/* Columna izquierda: Detalles de Facturación */}
         <Col md={8} className="p-5">
           <h2>Detalles de Facturación</h2>
           <Form onSubmit={handleCheckout}>
@@ -260,6 +274,8 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               value="transferenciaBancaria"
               onChange={(e) => setMetodoPago(e.target.value)}
               checked={metodoPago === 'transferenciaBancaria'}
+              className={errors.metodoPago ? 'input-error' : ''}
+              
             />
             <Form.Check
               type="radio"
@@ -268,6 +284,8 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               value="tarjetaCredito"
               onChange={(e) => setMetodoPago(e.target.value)}
               checked={metodoPago === 'tarjetaCredito'}
+              className={errors.metodoPago ? 'input-error' : ''}
+              
             />
             <Form.Check
               type="radio"
@@ -276,7 +294,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               value="billeteraDigital"
               onChange={(e) => setMetodoPago(e.target.value)}
               checked={metodoPago === 'billeteraDigital'}
+              className={errors.metodoPago ? 'input-error' : ''}
+              
             />
+            {errors.metodoPago && <div className="error-text">{errors.metodoPago}</div>}
           <p className="mt-3 text-muted">
             Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
           </p>
@@ -287,6 +308,5 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
       </Row>
     </Container>
   );
-};
-
+}
 export default Checkout;

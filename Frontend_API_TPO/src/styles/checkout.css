@@ -46,7 +46,8 @@
     background-color: #0056b3;
   }
   
-  .input-errors {
-    border: 2px solid #b22222; 
-    }
-  
+  .input-error {
+  border: 2px solid #b22222; /* rojo para indicar el error */
+  color: #b22222;
+  background-color: #ffe6e6; /* agrega un fondo para resaltar el campo */
+  }
