@@ -46,3 +46,7 @@
     background-color: #0056b3;
   }
   
+  .input-errors {
+    border: 2px solid #b22222; 
+    }
+  
