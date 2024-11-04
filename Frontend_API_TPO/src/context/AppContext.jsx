@@ -7,6 +7,10 @@ export const AppContext = createContext();
 
 // Proveedor del contexto
 export const AppProvider = ({ children }) => { 
+    
+    //aca agrego lo de la 29/10 y el AppProvider al AppRoutes
+    const [token, setToken]=useState(null);
+    
     //estado de carrito para que se pueda usar globalmente
     const [cartItems, setCartItems] = useState([]); 
 
@@ -56,7 +60,9 @@ export const AppProvider = ({ children }) => {
             totalItems,
             user,
             login,
-            logout
+            logout,
+            token,
+            setToken
         }}>
             {children}
         </AppContext.Provider>

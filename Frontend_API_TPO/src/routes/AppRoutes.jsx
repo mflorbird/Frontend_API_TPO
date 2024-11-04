@@ -7,36 +7,37 @@ import Register from '../pages/Registro.jsx';
 import MainLayout from '../layouts/MainLayout.jsx';
 import SimpleLayout from '../layouts/SimpleLayout.jsx';
 import Checkout from '../pages/Checkout.jsx';
-
 import FinalizarCompra from '../pages/FinalizarCompra.jsx';
-
 import ProductManagementPage from '../pages/ProductManagementPage.jsx';
+import AppProvider from '../context/AppContext.jsx';
 
 
 
 const AppRoutes = () => {
   return (
-    <Routes>
-      
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/cartEmpty" element={<CartEmpty />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/finalizarCompra" element={<FinalizarCompra />} />
-      </Route>
+    <AppProvider>
+      <Routes>
+        
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/cartEmpty" element={<CartEmpty />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/finalizarCompra" element={<FinalizarCompra />} />
+        </Route>
 
-      <Route element={<SimpleLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route element={<SimpleLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-      </Route>
+        </Route>
 
-      <Route path="/product-management" element={<ProductManagementPage />} />
+        <Route path="/product-management" element={<ProductManagementPage />} />
 
 
-      {/* agregar mas rutas*/}
-    </Routes>
+        {/* agregar mas rutas*/}
+      </Routes>
+    </AppProvider>
   );
 };
 
