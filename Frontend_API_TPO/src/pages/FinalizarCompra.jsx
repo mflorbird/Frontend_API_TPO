@@ -18,7 +18,14 @@ const FinalizarCompra = () => {
     };
   
     return (
+    
       <Container className="finalizar-compra-container">
+        <div class="progress-steps">
+          <span class="step completed">Paso 1: Completa tu carrito</span>
+          <span class="step completed">Paso 2: Verifica tus datos</span>
+          <span class="step current">Paso 3: Pagar Compra</span>
+        </div>
+
         <Row>
           <Col md={8}>
             <h2>Confirmación del Pedido</h2>

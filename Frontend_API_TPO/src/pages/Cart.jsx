@@ -47,7 +47,12 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart-container-body">
         <h1>Hola [Nombre]</h1>
-        <p>Visualizá los productos que tenes en tu carrito</p>
+        <div class="progress-steps">
+          <span class="step current">Paso 1: Completa tu carrito</span>
+          <span class="step pending">Paso 2: Verifica tus datos</span>
+          <span class="step pending">Paso 3: Pagar Compra</span>
+        </div>
+
 
         {/* <button onClick={() => {
           // Función para agregar un artículo de prueba
@@ -64,7 +69,7 @@ const Cart = () => {
         }}>
           Agregar un producto de prueba
         </button> */}
-
+        <p>Visualizá los productos que tenes en tu carrito</p>
         <div className="cart-content">
           <div className="cart-items">
             {cartItems.length === 0 ? (

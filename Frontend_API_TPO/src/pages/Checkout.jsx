@@ -63,6 +63,11 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
 
   return (
     <Container fluid className="checkout-container">
+        <div class="progress-steps">
+          <span class="step completed">Paso 1: Completa tu carrito</span>
+          <span class="step current">Paso 2: Verifica tus datos</span>
+          <span class="step pending">Paso 3: Pagar Compra</span>
+        </div>
       <Row>
         <Col md={8} className="p-5">
           <h2>Detalles de Facturación</h2>
