@@ -11,7 +11,6 @@ const Cart = () => {
       id: 1,
       name: "Zapatillas deportivas",
       size: "37",
-      color: "Rojo",
       quantity: 1,
       price: 120,
       image: zapatillas1,
@@ -20,7 +19,6 @@ const Cart = () => {
       id: 2,
       name: "Zapatillas urbanas",
       size: "42",
-      color: "Azul",
       quantity: 2,
       price: 35,
       image: zapatillas2,
@@ -51,7 +49,7 @@ const Cart = () => {
         <h1>Hola [Nombre]</h1>
         <p>Visualizá los productos que tenes en tu carrito</p>
 
-        <button onClick={() => {
+        {/* <button onClick={() => {
           // Función para agregar un artículo de prueba
           const newItem = {
             id: 3,
@@ -65,7 +63,7 @@ const Cart = () => {
           setCartItems([...cartItems, newItem]);
         }}>
           Agregar un producto de prueba
-        </button>
+        </button> */}
 
         <div className="cart-content">
           <div className="cart-items">
@@ -77,7 +75,7 @@ const Cart = () => {
                   <img src={item.image} alt={item.name} />
                   <div className="item-details">
                     <p><strong>{item.name}</strong></p>
-                    <p>Talle: {item.size}, Color: {item.color}</p>
+                    <p>Talle: {item.size}</p>
                   </div>
                   <div className="item-quantity">
                     <label htmlFor={`quantity-${item.id}`}>Cantidad</label>
