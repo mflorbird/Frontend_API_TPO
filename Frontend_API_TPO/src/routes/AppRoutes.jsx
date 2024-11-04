@@ -10,6 +10,7 @@ import Checkout from '../pages/Checkout.jsx';
 import FinalizarCompra from '../pages/FinalizarCompra.jsx';
 import ProductManagementPage from '../pages/ProductManagementPage.jsx';
 import AppProvider from '../context/AppContext.jsx';
+import CartEnvio from '../pages/CartEnvio.jsx';
 
 
 
@@ -22,6 +23,7 @@ const AppRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cartEmpty" element={<CartEmpty />} />
+          <Route path="/cartEnvio" element={<CartEnvio />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/finalizarCompra" element={<FinalizarCompra />} />
         </Route>
