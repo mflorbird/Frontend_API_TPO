@@ -5,7 +5,7 @@ import logo from '../assets/logo.svg';
 const Footer = () => {
   return (
     <footer className="footer">
-      <div class="footer-row">
+      <div className="footer-row">
       <img src={logo} alt="Logo" className="footer-logo" />
         <ul className="footer-links">
           <a href="/terminos-y-condiciones">Términos y Condiciones</a>

@@ -1,0 +1,64 @@
+.finalizar-compra-container {
+    border-radius: 8px;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+.finalizar-compra-container h2,
+.finalizar-compra-container h3 {
+    color: #333;
+    font-weight: 600;
+}
+
+.finalizar-compra-container p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.bg-light {
+    background-color: #f4f4f4 !important;
+    border-radius: 8px;
+}
+
+.bg-light h3 {
+    color: #333;
+    font-weight: 600;
+}
+
+.bg-light p {
+    font-size: 16px;
+    color: #666;
+}
+
+.mt-4 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.input-errors {
+    border: 2px solid #b22222; 
+    }
+  

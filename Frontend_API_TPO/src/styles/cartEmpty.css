@@ -1,0 +1,41 @@
+.cart-empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    height: 100vh;
+    text-align: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin-top: 150px;
+  }
+  
+  .cart-empty-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .cart-empty-message {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+    max-width: 600px;
+  }
+  
+  .cart-empty-button {
+    background-color: #1a528f;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cart-empty-button:hover {
+    background-color: #0056b3;
+  }
+  
