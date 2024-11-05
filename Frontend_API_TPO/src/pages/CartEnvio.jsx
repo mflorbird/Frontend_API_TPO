@@ -73,7 +73,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
 
         <div className='FormDatos'>
           <h2>Datos de Envío</h2>
-          <Form onSubmit={handleCartEnvio}> {/* Aquí se usa handleCartEnvio */}
+          <Form onSubmit={handleCartEnvio}> 
             <Row>
               <Col md={6}>
                 <Form.Group controlId="nombre">
@@ -209,7 +209,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
               />
             </Form.Group>
 
-            {/* Eliminar el onClick aquí, ya que se usa onSubmit del Form */}
+           
             <Button variant="primary" type="submit" className="mt-3" >
               Continuar
             </Button>
