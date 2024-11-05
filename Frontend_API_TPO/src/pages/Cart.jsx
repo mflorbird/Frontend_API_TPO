@@ -11,7 +11,6 @@ const Cart = () => {
       id: 1,
       name: "Zapatillas deportivas",
       size: "37",
-      color: "Rojo",
       quantity: 1,
       price: 120,
       image: zapatillas1,
@@ -20,7 +19,6 @@ const Cart = () => {
       id: 2,
       name: "Zapatillas urbanas",
       size: "42",
-      color: "Azul",
       quantity: 2,
       price: 35,
       image: zapatillas2,
@@ -49,9 +47,17 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart-container-body">
         <h1>Hola [Nombre]</h1>
-        <p>Visualizá los productos que tenes en tu carrito</p>
+        <div className="steps-container">
+        <ul className="progress-steps">
+          <li className="step current">Paso 1: Completa tu carrito</li>
+          <li className="step current">Paso 2: Datos de Envío</li>
+          <li className="step pending">Paso 3: Detalle de Facturación</li>
+          <li className="step pending">Paso 4: Realizar Pago</li>
+        </ul>
+      </div>
 
-        <button onClick={() => {
+
+        {/* <button onClick={() => {
           // Función para agregar un artículo de prueba
           const newItem = {
             id: 3,
@@ -65,8 +71,8 @@ const Cart = () => {
           setCartItems([...cartItems, newItem]);
         }}>
           Agregar un producto de prueba
-        </button>
-
+        </button> */}
+        <p>Visualizá los productos que tenes en tu carrito</p>
         <div className="cart-content">
           <div className="cart-items">
             {cartItems.length === 0 ? (
@@ -77,7 +83,7 @@ const Cart = () => {
                   <img src={item.image} alt={item.name} />
                   <div className="item-details">
                     <p><strong>{item.name}</strong></p>
-                    <p>Talle: {item.size}, Color: {item.color}</p>
+                    <p>Talle: {item.size}</p>
                   </div>
                   <div className="item-quantity">
                     <label htmlFor={`quantity-${item.id}`}>Cantidad</label>
@@ -123,7 +129,7 @@ const Cart = () => {
             <p>Total (IVA incluido): ${totalAmount}</p>
             <input type="text" placeholder="Ingresá tu cupón" className="coupon-input" />
             <button className="apply-discount-btn">Aplicar descuento</button>
-            <button className="checkout-btn" onClick={() => navigate('/Checkout')} >Ir a pagar</button>
+            <button className="datosEnvio-btn" onClick={() => navigate('/CartEnvio')} >Siguiente</button>
           </div>
         </div>
       </div>
