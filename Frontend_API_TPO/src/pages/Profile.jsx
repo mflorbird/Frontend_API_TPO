@@ -2,12 +2,17 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/profile.css';
+import { AppContext } from '../context/AppContext';
 
 function Profile() {
+    const { user } = useContext(AppContext);
   return (
     <div>
       <Navbar />
       <main className="profile-container">
+      <section className="profile-welcome">
+          <h1>Hola, {user ? user.name : "Invitado"}</h1>
+        </section>
         <h1 className="profile-header">Mi Perfil</h1>
         <form className="profile-form">
           <div className="form-group">
