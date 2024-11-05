@@ -11,15 +11,10 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
     nombre: '',
     apellido: '',
     cuitDni: '',
-    direccionCalle: '',
-    direccionNumero: '',
-    direccionPisoDepto: '',
-    localidad: '',
     provincia: '',
     codigoPostal: '',
-    telefono: '',
     email: '',
-    notaPedido: '',
+    
   });
 
   const [errors, setErrors] = useState('');
@@ -63,13 +58,14 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
 
   return (
     <Container fluid className="checkout-container">
-        <div class="steps-container">
-          <ul class="progress-steps">
-            <li class="step completed">Paso 1: Completa tu carrito</li>
-            <li class="step current">Paso 2: Datos de Facturación</li>
-            <li class="step pending">Paso 3: Pagar Compra</li>
-          </ul>
-        </div>
+      <div className="steps-container">
+        <ul className="progress-steps">
+          <li className="step completed">Paso 1: Completa tu carrito</li>
+          <li className="step completed">Paso 2: Datos de Envío</li>
+          <li className="step current">Paso 3: Detalle de Facturación</li>
+          <li className="step pending">Paso 4: Realizar Pago</li>
+        </ul>
+      </div>
 
       <Row>
         <Col md={8} className="p-5">
@@ -119,60 +115,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               {errors.cuitDni && <div className="error-text">{errors.cuitDni}</div>}
             </Form.Group>
 
-            <Form.Group controlId="direccionCalle">
-              <Form.Label>Dirección - Calle</Form.Label>
-              <Form.Control
-                type="text"
-                name="direccionCalle"
-                value={formData.direccionCalle}
-                onChange={handleChange}
-                className={errors.direccionCalle ? 'input-error' : ''}
-                required
-              />
-              {errors.direccionCalle && <div className="error-text">{errors.direccionCalle}</div>}
-            </Form.Group>
-
-            <Row>
-              <Col md={4}>
-                <Form.Group controlId="direccionNumero">
-                  <Form.Label>Número</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="direccionNumero"
-                    value={formData.direccionNumero}
-                    onChange={handleChange}
-                    className={errors.direccionNumero ? 'input-error' : ''}
-                    required
-                  />
-                  {errors.direccionNumero && <div className="error-text">{errors.direccionNumero}</div>}
-                </Form.Group>
-              </Col>
-              <Col md={4}>
-                <Form.Group controlId="direccionPisoDepto">
-                  <Form.Label>Piso/Depto</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="direccionPisoDepto"
-                    value={formData.direccionPisoDepto}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Form.Group controlId="localidad">
-              <Form.Label>Localidad</Form.Label>
-              <Form.Control
-                type="text"
-                name="localidad"
-                value={formData.localidad}
-                onChange={handleChange}
-                className={errors.localidad ? 'input-error' : ''}
-                required
-              />
-              {errors.localidad && <div className="error-text">{errors.localidad}</div>}
-            </Form.Group>
-
+           
             <Form.Group controlId="provincia">
               <Form.Label>Provincia</Form.Label>
               <Form.Control
@@ -199,19 +142,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               {errors.codigoPostal && <div className="error-text">{errors.codigoPostal}</div>}
             </Form.Group>
 
-            <Form.Group controlId="telefono">
-              <Form.Label>Teléfono</Form.Label>
-              <Form.Control
-                type="text"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleChange}
-                className={errors.telefono ? 'input-error' : ''}
-                required
-              />
-              {errors.telefono && <div className="error-text">{errors.telefono}</div>}
-            </Form.Group>
-
             <Form.Group controlId="email">
               <Form.Label>Correo Electrónico</Form.Label>
               <Form.Control
@@ -225,17 +155,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               {errors.email && <div className="error-text">{errors.email}</div>}
             </Form.Group>
 
-            <Form.Group controlId="notaPedido">
-              <Form.Label>Nota de Pedido</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                name="notaPedido"
-                value={formData.notaPedido}
-                onChange={handleChange}
-              />
-              
-            </Form.Group>
           </Form>
         </Col>
 
