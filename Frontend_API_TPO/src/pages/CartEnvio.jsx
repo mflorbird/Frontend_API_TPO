@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 const CartEnvio = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
-  const [metodoPago, setMetodoPago] = useState('');
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -43,19 +42,14 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
       }
     });
 
-    // Validar si se ha seleccionado un método de pago
-    if (!metodoPago) {
-      newErrors.metodoPago = '*Selecciona un método de pago';
-    }
-
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleCartEnvio = (e) => {
     e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
     if (validateForm()) {
-      navigate('/CartEnvio', { state: { metodoPago, formData, subtotal, discount } });
+      navigate('/Checkout');
     }
   };
 
@@ -79,7 +73,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
 
         <div className='FormDatos'>
           <h2>Datos de Envío</h2>
-          <Form onSubmit={handleCartEnvio}> {/* Aquí se usa handleCartEnvio */}
+          <Form onSubmit={handleCartEnvio}> 
             <Row>
               <Col md={6}>
                 <Form.Group controlId="nombre">
@@ -215,15 +209,15 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
               />
             </Form.Group>
 
-            {/* Eliminar el onClick aquí, ya que se usa onSubmit del Form */}
-            <Button variant="primary" type="submit" className="mt-3" onClick={() => navigate('/Checkout')}>
+           
+            <Button variant="primary" type="submit" className="mt-3" >
               Continuar
             </Button>
           </Form>
         
         
         </div>
-    </div>
+     </div>
       
     </Container>
   );
