@@ -47,11 +47,14 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart-container-body">
         <h1>Hola [Nombre]</h1>
-        <div class="progress-steps">
-          <span class="step current">Paso 1: Completa tu carrito</span>
-          <span class="step pending">Paso 2: Verifica tus datos</span>
-          <span class="step pending">Paso 3: Pagar Compra</span>
-        </div>
+        <div className="steps-container">
+        <ul className="progress-steps">
+          <li className="step current">Paso 1: Completa tu carrito</li>
+          <li className="step current">Paso 2: Datos de Envío</li>
+          <li className="step pending">Paso 3: Detalle de Facturación</li>
+          <li className="step pending">Paso 4: Realizar Pago</li>
+        </ul>
+      </div>
 
 
         {/* <button onClick={() => {
@@ -126,7 +129,7 @@ const Cart = () => {
             <p>Total (IVA incluido): ${totalAmount}</p>
             <input type="text" placeholder="Ingresá tu cupón" className="coupon-input" />
             <button className="apply-discount-btn">Aplicar descuento</button>
-            <button className="checkout-btn" onClick={() => navigate('/Checkout')} >Ir a pagar</button>
+            <button className="datosEnvio-btn" onClick={() => navigate('/CartEnvio')} >Siguiente</button>
           </div>
         </div>
       </div>

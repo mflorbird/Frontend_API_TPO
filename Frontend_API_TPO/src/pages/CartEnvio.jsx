@@ -42,17 +42,25 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
         newErrors[field] = '*Obligatorio';
       }
     });
+
+    // Validar si se ha seleccionado un método de pago
+    if (!metodoPago) {
+      newErrors.metodoPago = '*Selecciona un método de pago';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleCartEnvio= (e) => {
-    e.preventDefault();
+  const handleCartEnvio = (e) => {
+    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
     if (validateForm()) {
-      navigate('/Checkout', { state: { metodoPago, formData, subtotal, discount } });
+      navigate('/CartEnvio', { state: { metodoPago, formData, subtotal, discount } });
     }
   };
 
   return (
-    <Container fluid className="checkout-container">
+    <Container fluid className="cartEnvio-container">
       <div className="steps-container">
         <ul className="progress-steps">
           <li className="step completed">Paso 1: Completa tu carrito</li>
@@ -62,14 +70,16 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
         </ul>
       </div>
 
-      <Row>
-        <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
+      
+        <div className="CartEnvio-body">
+        
+        <Button variant="secondary" className="mt-4" onClick={() => navigate('/Cart')}>
           Modificar Pedido
         </Button>
 
-        <Col md={8} className="p-5">
+        <div className='FormDatos'>
           <h2>Datos de Envío</h2>
-          <Form onSubmit={handleCheckout}>
+          <Form onSubmit={handleCartEnvio}> {/* Aquí se usa handleCartEnvio */}
             <Row>
               <Col md={6}>
                 <Form.Group controlId="nombre">
@@ -205,12 +215,16 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="mt-3" onClick={handleCartEnvio}>
+            {/* Eliminar el onClick aquí, ya que se usa onSubmit del Form */}
+            <Button variant="primary" type="submit" className="mt-3" onClick={() => navigate('/Checkout')}>
               Continuar
             </Button>
           </Form>
-        </Col>
-      </Row>
+        
+        
+        </div>
+    </div>
+      
     </Container>
   );
 }
