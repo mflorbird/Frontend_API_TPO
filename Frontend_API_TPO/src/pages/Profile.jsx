@@ -31,20 +31,17 @@ const Perfil = () => {
             <h1>Hola {nombre}</h1>
             <div className="perfil-tabs">
                 <button className="active">Mis datos</button>
-                {!isEditing && (
-                    <button onClick={handleEditClick}>Modificar datos</button>
-                )}
                 <button>Mis pedidos</button>
                 <button>Mis favoritos</button>
             </div>
             <div className="perfil-content">
                 <h2>Mis datos</h2>
-                <p>Modificá tus datos personales a continuación para que tu cuenta esté actualizada.</p>
+                {/* <p>Modificá tus datos personales a continuación para que tu cuenta esté actualizada.</p> */}
                 
-                {/* para habilitar la edicion */}
+                {/* para habilitar la edicion
                 <button className="edit-toggle-button" onClick={handleEditToggle}>
                     {isEditing ? "Cancelar" : "Modificar datos"}
-                </button>
+                </button> */}
                 
                 <div className="perfil-form">
                     
@@ -84,38 +81,10 @@ const Perfil = () => {
                             disabled={!isEditing}
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Fecha de nacimiento</label>
-                        <input
-                            type="date"
-                            value={fechaNacimiento}
-                            onChange={(e) => setFechaNacimiento(e.target.value)}
-                            disabled={!isEditing}
-                        />
-                    </div>
-                    <h3>Contraseña</h3>
-                    <div className="form-group">
-                        <label>Contraseña</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            disabled={!isEditing}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Confirmar contraseña</label>
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            disabled={!isEditing}
-                        />
-                    </div>
-
+{/*                  
                     {isEditing && (
                         <button className="save-button" onClick={handleSave}>Guardar datos</button>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>
