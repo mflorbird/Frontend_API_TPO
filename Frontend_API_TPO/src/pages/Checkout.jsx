@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 import { useNavigate } from 'react-router-dom';
+import useUserData from '../hooks/useUserData';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
   const [metodoPago, setMetodoPago] = useState('');
+  const { userData, loading, error } = useUserData();
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -16,6 +18,18 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
   });
 
   const [errors, setErrors] = useState('');
+
+  useEffect(() => {
+    if (userData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        nombre: userData.nombre || '',
+        apellido: userData.apellido || '',
+        email: userData.email || '',
+      }));
+    }
+  }, [userData]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,6 +66,19 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
       navigate('/FinalizarCompra');
     }
   };
+
+
+  if (loading) {
+    return <p>Cargando datos...</p>;
+  }
+
+  if (error) {
+    return <p>Error al obtener los datos: {error}</p>;
+  }
+
+  if (!userData) {
+    return <p>No se encontró el usuario.</p>;
+  }
 
   return (
     <Container fluid className="checkout-container">
