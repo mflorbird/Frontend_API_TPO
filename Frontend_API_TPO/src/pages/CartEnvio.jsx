@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/cartEnvio.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import useUserData from '../hooks/useUserData';
 
 const CartEnvio = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
+  const { userData, loading, error } = useUserData();
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -20,6 +21,16 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (userData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        nombre: userData.nombre || '',
+        apellido: userData.apellido || '',
+      }));
+    }
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,8 +65,6 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
     }
   };
 
-
-  const { userData, loading, error } = useUserData();
   
   if (loading) {
     return <p>Cargando datos...</p>;
@@ -81,8 +90,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
       </div>
 
       
-        <div className="CartEnvio-body">
-        
+      <div className="CartEnvio-body">
         <Button variant="secondary" className="mt-4" onClick={() => navigate('/Cart')}>
           Modificar Pedido
         </Button>
@@ -97,7 +105,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="nombre"
-                    value={userData.nombre}
+                    value={formData.nombre}
                     onChange={handleChange}
                     className={errors.nombre ? 'input-error' : ''}
                     required
@@ -111,7 +119,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="apellido"
-                    value={userData.apellido}
+                    value={formData.apellido}
                     onChange={handleChange}
                     className={errors.apellido ? 'input-error' : ''}
                     required
