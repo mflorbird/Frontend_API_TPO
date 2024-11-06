@@ -1,34 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useUserData from '../hooks/useUserData'; // Importa el hook
 import '../styles/profile.css';
-import { AppContext } from '../context/AppContext';
 
 const Perfil = () => {
-    const [userData, setUserData] = useState(null);
+  const { userData, loading, error } = useUserData(); // Usa el hook
 
-    //ver si esto hacemos hook
-    useEffect (() => {
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch ('http://localhost:3000/users');
-          const data = await response.json();
+  if (loading) {
+    return <p>Cargando datos...</p>;
+  }
 
-          //solo el user
-          const user=data.find(user => user.role === "user");
-          if (user){
-            setUserData(user);
-          }
-        }catch (error){
-          console.error("Error al obtener datos:", error);
-        }
-      };
+  if (error) {
+    return <p>Error al obtener los datos: {error}</p>;
+  }
 
-      fetchUserData();
-
-    }, []);
-
-    if (!userData){
-      return <p>Cargando datos...</p>
-    }
+  if (!userData) {
+    return <p>No se encontró el usuario.</p>;
+  }
 
     /* const [nombre, setNombre] = useState("José");
     const [apellido, setApellido] = useState("Perez");
@@ -56,7 +43,7 @@ const Perfil = () => {
 
     return (
         <div className="perfil-container">
-            <h1>Hola {userData.username}</h1>
+            <h1>Hola {userData.nombre}</h1>
             <div className="perfil-tabs">
                 <button className="active">Mis datos</button>
                 <button>Mis pedidos</button>
