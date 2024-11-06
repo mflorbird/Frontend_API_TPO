@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/profile.css';
+import { AppContext } from '../context/AppContext';
 
 const Perfil = () => {
     const [nombre, setNombre] = useState("José");
