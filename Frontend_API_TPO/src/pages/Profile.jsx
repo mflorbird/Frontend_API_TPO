@@ -1,9 +1,9 @@
 import React from 'react';
-import useUserData from '../hooks/useUserData'; // Importa el hook
+import useUserData from '../hooks/useUserData';
 import '../styles/profile.css';
 
 const Perfil = () => {
-  const { userData, loading, error } = useUserData(); // Usa el hook
+  const { userData, loading, error } = useUserData();
 
   if (loading) {
     return <p>Cargando datos...</p>;
@@ -17,14 +17,7 @@ const Perfil = () => {
     return <p>No se encontró el usuario.</p>;
   }
 
-    /* const [nombre, setNombre] = useState("José");
-    const [apellido, setApellido] = useState("Perez");
-    const [correo, setCorreo] = useState("nombre@dominio.com");
-    const [usuario, setUsuario] = useState("user123");
-    const [fechaNacimiento, setFechaNacimiento] = useState("13/03/1995");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [isEditing, setIsEditing] = useState(false); // Estado para modo de edición */
+    /* const [isEditing, setIsEditing] = useState(false); // Estado para modo de edición */
 
     //  para manejar el cambio de estado edicion
     // const handleEditClick = () => {

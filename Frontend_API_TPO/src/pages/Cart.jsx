@@ -4,6 +4,10 @@ import zapatillas2 from '../assets/05ZAPATILLAS.png';
 import zapatillas3 from '../assets/08ZAPATILLAS.png';
 import "../styles/cart.css";
 import { useNavigate } from 'react-router-dom';
+import useUserData from '../hooks/useUserData';
+
+
+
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([
@@ -43,10 +47,26 @@ const Cart = () => {
     calculateTotal();
   }, [cartItems]);
 
+
+  
+    const { userData, loading, error } = useUserData();
+  
+    if (loading) {
+      return <p>Cargando datos...</p>;
+    }
+  
+    if (error) {
+      return <p>Error al obtener los datos: {error}</p>;
+    }
+  
+    if (!userData) {
+      return <p>No se encontró el usuario.</p>;
+    }
+
   return (
     <div className="cart-container">
       <div className="cart-container-body">
-        <h1>Hola [Nombre]</h1>
+        <h1>Hola {userData.nombre}</h1>
         <div className="steps-container">
         <ul className="progress-steps">
           <li className="step current">Paso 1: Completa tu carrito</li>
