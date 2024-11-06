@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/cartEnvio.css';
 import { useNavigate } from 'react-router-dom';
+import useUserData from '../hooks/useUserData';
 
 const CartEnvio = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
@@ -53,6 +54,21 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
     }
   };
 
+
+  const { userData, loading, error } = useUserData();
+  
+  if (loading) {
+    return <p>Cargando datos...</p>;
+  }
+
+  if (error) {
+    return <p>Error al obtener los datos: {error}</p>;
+  }
+
+  if (!userData) {
+    return <p>No se encontró el usuario.</p>;
+  }
+
   return (
     <Container fluid className="cartEnvio-container">
       <div className="steps-container">
@@ -81,7 +97,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="nombre"
-                    value={formData.nombre}
+                    value={userData.nombre}
                     onChange={handleChange}
                     className={errors.nombre ? 'input-error' : ''}
                     required
@@ -95,7 +111,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="apellido"
-                    value={formData.apellido}
+                    value={userData.apellido}
                     onChange={handleChange}
                     className={errors.apellido ? 'input-error' : ''}
                     required
