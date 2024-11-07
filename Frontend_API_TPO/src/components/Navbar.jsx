@@ -3,7 +3,7 @@ import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
 import userPhoto from '../assets/user-photo.jpeg';
-import closeProduct from '../assets/x.svg'; 
+import closeProduct from '../assets/x.svg';
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
@@ -42,6 +42,7 @@ const Navbar = () => {
   return (
     <nav className="custom-navbar">
       <img src={logo} alt="Logo" className="navbar-logo" />
+      
       {/* Mostrar enlaces solo si el usuario no es admin */}
       {!isAdmin && (
         <ul className="navbar-links">
@@ -51,6 +52,7 @@ const Navbar = () => {
           <li><a href="/contacto">Contacto</a></li>
         </ul>
       )}
+
       <div className="navbar-user">
         {/* Mostrar el carrito solo si el usuario no es admin */}
         {!isAdmin && (
@@ -60,40 +62,23 @@ const Navbar = () => {
               <span className="cart-badge">{cartItemCount}</span>
             </div>
 
-
-              
-              <div className="cart-product">
-                <div className="info-cart-product">
-                  <span className="cantidad-producto-carrito">1</span>
-                  <p className="titulo-producto-carrito">Zapatos Nike</p>
-                  <span className="precio-producto-carrito">$80</span>
-                  <img src={closeProduct} alt="Eliminar producto" className="close-product" />
-                </div>
-              </div>
-              <div className="cart-total-hidden">
-                <h3>Total:</h3>
-                <span className="total-pagar-hidden">$150</span>
-              </div>
-
-             
-              <div className="cart-buttons">
-                <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
-                <button onClick={() => navigate("/cartEnvio")} className="cart-button-checkout">Pagar</button>
-              </div>
-              
+            {/* Contenedor oculto que se muestra al hacer clic en el ícono del carrito */}
             {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
               <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
-                <div className="cart-product">
-                  <div className="info-cart-product">
-                    <span className="cantidad-producto-carrito">1</span>
-                    <p className="titulo-producto-carrito">Zapatos Nike</p>
-                    <span className="precio-producto-carrito">$80</span>
+                {cartItems.map((item, index) => (
+                  <div key={index} className="cart-product">
+                    <div className="info-cart-product">
+                      <span className="cantidad-producto-carrito">{item.quantity}</span>
+                      <p className="titulo-producto-carrito">{item.name}</p>
+                      <span className="precio-producto-carrito">${item.price}</span>
+                      <img src={closeProduct} alt="Eliminar producto" className="close-product" />
+                    </div>
                   </div>
-                  <img src={closeProduct} alt="Eliminar producto" className="close-product" />
-                </div>
+                ))}
+                
                 <div className="cart-total-hidden">
                   <h3>Total:</h3>
-                  <span className="total-pagar-hidden">$150</span>
+                  <span className="total-pagar-hidden">${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</span>
                 </div>
 
                 <div className="cart-buttons">
