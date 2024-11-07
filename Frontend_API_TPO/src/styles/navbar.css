@@ -84,16 +84,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px;
-
+  padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.20);
-
+  margin-top: 10px;
 }
 
 .info-cart-product{
   display: flex;
   justify-content: space-between;
   flex: 0.8;
+  padding-left: 50px;
 }
 
 .titulo-producto-carrito{
@@ -125,9 +125,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
+  padding: 15px 0;
   gap: 20px;
   font-size: 15px;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
 .total-pagar-hidden{
@@ -138,6 +140,8 @@
 .hidden-cart{
   display: none;
 }
+
+
 
 .cart-buttons {
   display: flex;

@@ -65,8 +65,8 @@ const Navbar = () => {
                   <span className="cantidad-producto-carrito">1</span>
                   <p className="titulo-producto-carrito">Zapatos Nike</p>
                   <span className="precio-producto-carrito">$80</span>
+                  <img src={closeProduct} alt="Eliminar producto" className="close-product" />
                 </div>
-                <img src={closeProduct} alt="Eliminar producto" className="close-product" />
               </div>
               <div className="cart-total-hidden">
                 <h3>Total:</h3>
@@ -76,7 +76,7 @@ const Navbar = () => {
              
               <div className="cart-buttons">
                 <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
-                <button onClick={() => navigate("/checkout")} className="cart-button-checkout">Pagar</button>
+                <button onClick={() => navigate("/cartEnvio")} className="cart-button-checkout">Pagar</button>
               </div>
             </div>
           )}
