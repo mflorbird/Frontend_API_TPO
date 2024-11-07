@@ -79,7 +79,8 @@ const Navbar = () => {
               <div className="cart-buttons">
                 <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
                 <button onClick={() => navigate("/cartEnvio")} className="cart-button-checkout">Pagar</button>
-
+              </div>
+              
             {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
               <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
                 <div className="cart-product">
@@ -99,7 +100,6 @@ const Navbar = () => {
                   <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
                   <button onClick={() => navigate("/checkout")} className="cart-button-checkout">Pagar</button>
                 </div>
-
               </div>
             )}
           </div>
