@@ -1,0 +1,147 @@
+.finalizar-compra-container {
+    padding: 3rem;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    margin-bottom: 200px;
+  }
+  
+.confirmacion-body{
+    width: auto; /* Quitar el ancho fijo para permitir que se ajuste */
+    max-width: 80%; 
+    margin: 0 auto;
+    padding: 5px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-bottom: 10px;
+    padding-left: 80px;
+}
+.finalizar-compra-container h2,
+.finalizar-compra-container h3 {
+    color: #333;
+    font-weight: 600;
+    margin-top: 40px;
+
+}
+
+.finalizar-compra-container p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.bg-light {
+    background-color: #f4f4f4 !important;
+    border-radius: 8px;
+}
+
+.bg-light h3 {
+    color: #333;
+    font-weight: 600;
+}
+
+.bg-light p {
+    font-size: 16px;
+    color: #666;
+}
+
+.mt-4 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.input-errors {
+    border: 2px solid #b22222; 
+    }
+  
+
+  /*PROGRESO */
+/* Contenedor más pequeño y centrado */
+.steps-container {
+    width: 60%; 
+   
+  }
+  
+  /* Estilos de la lista de pasos */
+  .progress-steps {
+    display: flex;
+    list-style-type: none;
+    margin: 10px;
+    background-color: #e0e0e0; /* Fondo gris claro */
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .progress-steps .step {
+    flex: 1;
+    text-align: center;
+    padding: 10px 15px;
+    font-weight: bold;
+    color: #666;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Paso completado */
+  .progress-steps .completed {
+    background-color: #555; /* Fondo gris oscuro para completado */
+    color: white;
+  }
+  
+  /* Paso actual */
+  .progress-steps .current {
+    background-color: #888; /* Fondo intermedio para el paso actual */
+    color: white;
+  }
+  
+  /* Paso pendiente */
+  .progress-steps .pending {
+    color: #999; /* Texto gris claro para pendiente */
+  }
+  
+  /* Flechas en los bordes de cada paso */
+  .progress-steps .step:not(:last-child) {
+    position: relative;
+  }
+  
+  .progress-steps .step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10px; /* Ajusta para alinear bien la flecha */
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 10px solid #e0e0e0;
+    z-index: 1;
+  }
+  
+  .progress-steps .completed:not(:last-child)::after {
+    border-left-color: #555; /* Flecha del paso completado */
+  }
+  
+  .progress-steps .current:not(:last-child)::after {
+    border-left-color: #888; /* Flecha del paso actual */
+  }
+  

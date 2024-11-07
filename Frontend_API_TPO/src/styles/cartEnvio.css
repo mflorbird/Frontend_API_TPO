@@ -1,4 +1,4 @@
-.checkout-container {
+.cartEnvio-container {
     padding: 3rem;
     font-family: 'Arial', sans-serif;
     width: 100%;
@@ -9,19 +9,23 @@
     margin-top: 100px;
     margin-bottom: 200px;
   }
-  
-  .Checkout-body{
+
+  .CartEnvio-body {
     width: auto; /* Quitar el ancho fijo para permitir que se ajuste */
-    max-width: 80%; 
+    max-width: 50%; /* El mismo máximo que el ancho del botón */
     margin: 0 auto;
-    padding: 5px;
+    margin-top: 40px;
+    padding: 10px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 40px;
-    margin-bottom: 10px;
   }
-
+  
+ .FormDatos{
+    margin-top: 10px;
+    margin-bottom: 10px;
+ }
+  
   .error-text {
     color: #b22222;
     font-size: 0.875rem;
@@ -36,15 +40,6 @@
     margin-bottom: 1rem;
   }
 
-  .checkout-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
   .form-group label {
     margin-bottom: 0.5rem;
     font-weight: bold;
@@ -53,23 +48,10 @@
   .form-group input,
   .form-group select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  .checkout-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .checkout-btn:hover {
-    background-color: #0056b3;
+    
   }
   
   .input-error {
@@ -77,6 +59,9 @@
   color: #b22222;
   background-color: #ffe6e6; /* agrega un fondo para resaltar el campo esto me esta funcionando en metodo pero no en el form */
   }
+
+
+
 
 
   /*PROGRESO */

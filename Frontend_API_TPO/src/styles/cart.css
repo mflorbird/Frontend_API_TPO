@@ -24,6 +24,7 @@
     background-color: #f9f9f9;
     padding: 1.5rem;
     border-radius: 10px;
+    display:grid;
   }
 
   .cart-summary {
@@ -38,27 +39,65 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
   }
   
   .cart-item img {
     width: 70px;
-    height: 70px;
+    height: auto;
     border-radius: 10px;
   }
+
+  /*PROGRESO */
+    .steps-container{
+      background-color: transparent;
+    }
+
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px 0;
+      font-family: Arial, sans-serif;
+      list-style-type: none;
+      padding: 0;
+    }
+    
+ /* Paso completado */
+.progress-steps .completed {
+  color: white;
+  background-color: #28a745; /* Verde para pasos completados */
+}
+
+/* Paso actual */
+.progress-steps .current {
+  color: black;
+  background-color: rgba(40, 167, 69, 0.3); /* Verde claro con transparencia */
+  border-radius: 5px;
+}
+
+/* Paso pendiente */
+.progress-steps .pending {
+  color: #ccc;
+  background-color: #f1f1f1; /* Gris para pasos pendientes */
+}
+
+
+
 
   /* Estilos de los items del carrito */
 
   .item-details {
     flex-grow: 1;
-    margin-left: 1rem;
+    margin-left: 3rem;
   }
 
   .item-quantity {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 15rem;
   }
 
   /* Estilos del resumen del pedido */
@@ -67,6 +106,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+    
   }
 
   .coupon-input {
@@ -75,6 +115,7 @@
     margin-top: 1rem;
     border-radius: 5px;
     border: 1px solid #ddd;
+    
   }
 
   .apply-discount-btn {
@@ -87,7 +128,7 @@
     width: 100%;
   }
 
-  .checkout-btn {
+  .datosEnvio-btn {
     background-color: #007bff;
     color: white;
     padding: 0.5rem 1rem;
@@ -104,4 +145,6 @@
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
+    align-items: right;
+    margin-left: 20rem;
   }
