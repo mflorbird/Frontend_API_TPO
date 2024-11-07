@@ -3,6 +3,8 @@
       {
         "id": 1,
         "username": "usuario1",
+        "nombre":"Aca va el nombre",
+        "apellido": "Y aca el apellido",
         "email": "usuario1@example.com",
         "password": "Contraseña123",
         "role": "user"

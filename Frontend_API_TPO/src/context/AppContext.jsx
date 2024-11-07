@@ -11,6 +11,9 @@ export const AppProvider = ({ children }) => {
     //aca agrego lo de la 29/10 y el AppProvider al AppRoutes
     const [token, setToken]=useState(null);
     
+    //agrego lo de la clase 5/11
+    const[error , setError]=useState(false);
+
     //estado de carrito para que se pueda usar globalmente
     const [cartItems, setCartItems] = useState([]); 
 

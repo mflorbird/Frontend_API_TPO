@@ -4,6 +4,10 @@ import zapatillas2 from '../assets/05ZAPATILLAS.png';
 import zapatillas3 from '../assets/08ZAPATILLAS.png';
 import "../styles/cart.css";
 import { useNavigate } from 'react-router-dom';
+import useUserData from '../hooks/useUserData';
+
+
+
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([
@@ -43,35 +47,35 @@ const Cart = () => {
     calculateTotal();
   }, [cartItems]);
 
+
+  
+    const { userData, loading, error } = useUserData();
+  
+    if (loading) {
+      return <p>Cargando datos...</p>;
+    }
+  
+    if (error) {
+      return <p>Error al obtener los datos: {error}</p>;
+    }
+  
+    if (!userData) {
+      return <p>No se encontró el usuario.</p>;
+    }
+
   return (
     <div className="cart-container">
       <div className="cart-container-body">
-        <h1>Hola [Nombre]</h1>
-        <div className="steps-container">
+        <h1>Hola {userData.nombre}</h1>
+        
         <ul className="progress-steps">
           <li className="step current">Paso 1: Completa tu carrito</li>
-          <li className="step current">Paso 2: Datos de Envío</li>
+          <li className="step pending">Paso 2: Datos de Envío</li>
           <li className="step pending">Paso 3: Detalle de Facturación</li>
           <li className="step pending">Paso 4: Realizar Pago</li>
         </ul>
-      </div>
+      
 
-
-        {/* <button onClick={() => {
-          // Función para agregar un artículo de prueba
-          const newItem = {
-            id: 3,
-            name: "Otras Zapatillas de prueba",
-            size: "38",
-            color: "Negro",
-            quantity: 1,
-            price: 50,
-            image: zapatillas3,
-          };
-          setCartItems([...cartItems, newItem]);
-        }}>
-          Agregar un producto de prueba
-        </button> */}
         <p>Visualizá los productos que tenes en tu carrito</p>
         <div className="cart-content">
           <div className="cart-items">

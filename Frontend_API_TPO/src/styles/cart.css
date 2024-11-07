@@ -50,78 +50,41 @@
   }
 
   /*PROGRESO */
-  /*PROGRESO */
-/* Contenedor más pequeño y centrado */
-.steps-container {
-  width: 60%; 
-  margin: 0 auto;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
+    .steps-container{
+      background-color: transparent;
+    }
 
-/* Estilos de la lista de pasos */
-.progress-steps {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 10px;
-  background-color: #e0e0e0; /* Fondo gris claro */
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.progress-steps .step {
-  flex: 1;
-  text-align: center;
-  padding: 10px 15px;
-  font-weight: bold;
-  color: #666;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-/* Paso completado */
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 20px 0;
+      font-family: Arial, sans-serif;
+      list-style-type: none;
+      padding: 0;
+    }
+    
+ /* Paso completado */
 .progress-steps .completed {
-  background-color: #555; /* Fondo gris oscuro para completado */
   color: white;
+  background-color: #28a745; /* Verde para pasos completados */
 }
 
 /* Paso actual */
 .progress-steps .current {
-  background-color: #888; /* Fondo intermedio para el paso actual */
-  color: white;
+  color: black;
+  background-color: rgba(40, 167, 69, 0.3); /* Verde claro con transparencia */
+  border-radius: 5px;
 }
 
 /* Paso pendiente */
 .progress-steps .pending {
-  color: #999; /* Texto gris claro para pendiente */
+  color: #ccc;
+  background-color: #f1f1f1; /* Gris para pasos pendientes */
 }
 
-/* Flechas en los bordes de cada paso */
-.progress-steps .step:not(:last-child) {
-  position: relative;
-}
 
-.progress-steps .step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -10px; /* Ajusta para alinear bien la flecha */
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 10px solid #e0e0e0;
-  z-index: 1;
-}
 
-.progress-steps .completed:not(:last-child)::after {
-  border-left-color: #555; /* Flecha del paso completado */
-}
-
-.progress-steps .current:not(:last-child)::after {
-  border-left-color: #888; /* Flecha del paso actual */
-}
 
   /* Estilos de los items del carrito */
 
