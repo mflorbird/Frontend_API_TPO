@@ -60,6 +60,26 @@ const Navbar = () => {
               <span className="cart-badge">{cartItemCount}</span>
             </div>
 
+
+              
+              <div className="cart-product">
+                <div className="info-cart-product">
+                  <span className="cantidad-producto-carrito">1</span>
+                  <p className="titulo-producto-carrito">Zapatos Nike</p>
+                  <span className="precio-producto-carrito">$80</span>
+                  <img src={closeProduct} alt="Eliminar producto" className="close-product" />
+                </div>
+              </div>
+              <div className="cart-total-hidden">
+                <h3>Total:</h3>
+                <span className="total-pagar-hidden">$150</span>
+              </div>
+
+             
+              <div className="cart-buttons">
+                <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
+                <button onClick={() => navigate("/cartEnvio")} className="cart-button-checkout">Pagar</button>
+
             {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
               <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
                 <div className="cart-product">
@@ -79,6 +99,7 @@ const Navbar = () => {
                   <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
                   <button onClick={() => navigate("/checkout")} className="cart-button-checkout">Pagar</button>
                 </div>
+
               </div>
             )}
           </div>
