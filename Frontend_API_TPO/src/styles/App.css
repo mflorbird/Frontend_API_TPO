@@ -18,7 +18,7 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #191c32;
+  background-color: #fff;
   color: #fff;
 }
 

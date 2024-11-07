@@ -12,7 +12,7 @@ import FinalizarCompra from '../pages/FinalizarCompra.jsx';
 import ProductManagementPage from '../pages/ProductManagementPage.jsx';
 import AppProvider from '../context/AppContext.jsx';
 import CartEnvio from '../pages/CartEnvio.jsx';
-
+import AddProductPage from '../pages/AddProductPage.jsx';
 
 
 const AppRoutes = () => {
@@ -29,18 +29,16 @@ const AppRoutes = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/finalizarCompra" element={<FinalizarCompra />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/product-management" element={<ProductManagementPage />} />
+          
         </Route>
 
         <Route element={<SimpleLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/add-product" element={<AddProductPage />} />
 
         </Route>
-
-        <Route path="/product-management" element={<ProductManagementPage />} />
-
-
-        {/* agregar mas rutas*/}
       </Routes>
     </AppProvider>
   );
