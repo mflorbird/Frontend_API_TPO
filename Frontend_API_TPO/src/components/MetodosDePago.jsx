@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Image, Alert } from 'react-bootstrap';
-import qr from '../assets/QRNAIKI.png'; // Código QR de ejemplo
+// import qr from '../assets/QRNAIKI.png'; // Código QR de ejemplo
 
 const handleConfirmPurchase = () => {
   // aca la logica pra fazer a compra (ex:, enviar los datos al backend)
@@ -28,7 +28,7 @@ const BilleteraDigitalForm = ({ handleFileUpload = () => {} }) => (
   <div>
     <h3>Último Paso: Realizar el Pago con tu Billetera Digital</h3>
     <h5>Escanea el código QR y selecciona el método de pago de tu billetera</h5>
-    <Image src={qr} alt="Código QR" fluid />
+    {/* <Image src={qr} alt="Código QR" fluid /> */}
     <Form.Group className="mt-3">
       <Form.Label>Adjunta el comprobante de pago</Form.Label>
       <Form.Control type="file" onChange={handleFileUpload} />

@@ -1,20 +1,27 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "username": "usuario1",
-        "nombre":"Aca va el nombre",
-        "apellido": "Y aca el apellido",
-        "email": "usuario1@example.com",
-        "password": "Contraseña123",
-        "role": "user"
-      },
-      {
-        "id": 2,
-        "username": "usuario2",
-        "email": "usuario2@example.com",
-        "password": "Contraseña456",
-        "role": "admin"
-      } 
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "usuario1",
+      "email": "usuario1@example.com",
+      "password": "Contraseña123",
+      "role": "user"
+    },
+    {
+      "id": 2,
+      "username": "usuario2",
+      "email": "usuario2@example.com",
+      "password": "Contraseña456",
+      "role": "admin"
+    },
+    {
+      "id": "5721",
+      "nombre": "Maria Florencia",
+      "apellido": "Bird",
+      "email": "florenciabird95@gmail.com",
+      "fechaNacimiento": "1995-03-13",
+      "usuario": "florbird",
+      "contraseña": "Contraseña1995"
+    }
+  ]
 }
