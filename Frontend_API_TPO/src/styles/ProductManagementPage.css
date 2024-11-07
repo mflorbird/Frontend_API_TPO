@@ -83,3 +83,42 @@
   white-space: nowrap; 
   align-self: center; 
 }
+
+/* ProductManagementPage.css */
+.container {
+  max-width: 800px;
+}
+
+h4 {
+  margin-top: 1.5rem;
+}
+
+.btn-outline-primary {
+  display: inline-flex;
+  align-items: center;
+}
+
+.image-upload .image-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.image-upload .placeholder {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  color: #888;
+  font-size: 12px;
+  text-align: center;
+}
+
+.product-form, .stock-container {
+  background-color: #fff !important;
+}
