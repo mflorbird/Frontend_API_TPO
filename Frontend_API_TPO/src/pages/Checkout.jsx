@@ -82,14 +82,12 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
 
   return (
     <Container fluid className="checkout-container">
-      <div className="steps-container">
         <ul className="progress-steps">
           <li className="step completed">Paso 1: Completa tu carrito</li>
           <li className="step completed">Paso 2: Datos de Envío</li>
           <li className="step current">Paso 3: Detalle de Facturación</li>
           <li className="step pending">Paso 4: Realizar Pago</li>
         </ul>
-      </div>
 
       <div className="Checkout-body">
         <Form onSubmit={handleCheckout}>

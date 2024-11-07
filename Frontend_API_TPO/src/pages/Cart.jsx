@@ -67,31 +67,15 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart-container-body">
         <h1>Hola {userData.nombre}</h1>
-        <div className="steps-container">
+        
         <ul className="progress-steps">
           <li className="step current">Paso 1: Completa tu carrito</li>
-          <li className="step current">Paso 2: Datos de Envío</li>
+          <li className="step pending">Paso 2: Datos de Envío</li>
           <li className="step pending">Paso 3: Detalle de Facturación</li>
           <li className="step pending">Paso 4: Realizar Pago</li>
         </ul>
-      </div>
+      
 
-
-        {/* <button onClick={() => {
-          // Función para agregar un artículo de prueba
-          const newItem = {
-            id: 3,
-            name: "Otras Zapatillas de prueba",
-            size: "38",
-            color: "Negro",
-            quantity: 1,
-            price: 50,
-            image: zapatillas3,
-          };
-          setCartItems([...cartItems, newItem]);
-        }}>
-          Agregar un producto de prueba
-        </button> */}
         <p>Visualizá los productos que tenes en tu carrito</p>
         <div className="cart-content">
           <div className="cart-items">

@@ -7,7 +7,7 @@ import '../styles/finalizarCompra.css';
 const FinalizarCompra = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { metodoPago, formData, subtotal, discount } = location.state || {};
+    const { metodoPago, formData = {}, subtotal=0, discount = 0 } = location.state || {};
   
     const total = subtotal - discount;
   
@@ -19,21 +19,23 @@ const FinalizarCompra = () => {
   
     return (
     
-      <Container className="finalizar-compra-container">
-        <div class="progress-steps">
-          <span class="step completed">Paso 1: Completa tu carrito</span>
-          <span class="step completed">Paso 2: Verifica tus datos</span>
-          <span class="step current">Paso 3: Pagar Compra</span>
-        </div>
+      <Container fluid className="finalizar-compra-container">
+          <ul className="progress-steps">
+            <li className="step completed">Paso 1: Completa tu carrito</li>
+            <li className="step completed">Paso 2: Datos de Envío</li>
+            <li className="step completed">Paso 3: Detalle de Facturación</li>
+            <li className="step current">Paso 4: Realizar Pago</li>
+          </ul>
 
+        <div className="confirmacion-body">
         <Row>
           <Col md={8}>
             <h2>Confirmación del Pedido</h2>
-            <p><strong>Nombre:</strong> {formData.nombre} {formData.apellido}</p>
-            <p><strong>Email:</strong> {formData.email}</p>
-            <p><strong>Dirección:</strong> {formData.direccionCalle} {formData.direccionNumero}</p>
-            <p><strong>Provincia:</strong> {formData.provincia}</p>
-           
+            <p><strong>Nombre:</strong> {formData?.nombre || 'No disponible'} {formData?.apellido || 'No disponible'}</p>
+            <p><strong>Email:</strong> {formData?.email || 'No disponible'}</p>
+            <p><strong>Dirección:</strong> {formData?.direccionCalle || ''} {formData?.direccionNumero || ''}</p>
+            <p><strong>Provincia:</strong> {formData?.provincia || 'No disponible'}</p>
+          
             <div className="mt-4">
                 {metodoPago === 'tarjetaCredito' && <MetodosDePago metodoPagoSeleccionado="tarjetaCredito" />}
                 {metodoPago === 'billeteraDigital' && <MetodosDePago metodoPagoSeleccionado="billeteraDigital" />}
@@ -45,8 +47,10 @@ const FinalizarCompra = () => {
             <p><strong>Subtotal:</strong> ${subtotal}</p>
             <p><strong>Descuento:</strong> ${discount}</p>
             <p><strong>Total:</strong> ${total}</p>
+            <p><strong>Envío:</strong> Gratis</p>
           </Col>
         </Row>
+        </div>
       </Container>
     );
   };
