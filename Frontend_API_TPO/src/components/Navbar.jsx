@@ -14,11 +14,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  
   const btnCartRef = useRef(null);
   const containerCartProductsRef = useRef(null);
 
-  
   useEffect(() => {
     const btnCart = btnCartRef.current;
     const containerCartProducts = containerCartProductsRef.current;
@@ -31,7 +29,6 @@ const Navbar = () => {
       btnCart.addEventListener('click', toggleCart);
     }
 
-    
     return () => {
       if (btnCart) {
         btnCart.removeEventListener('click', toggleCart);
@@ -39,25 +36,30 @@ const Navbar = () => {
     };
   }, []);
 
+  // Verifica si el usuario es admin
+  const isAdmin = user && user.role === 'admin';
+
   return (
     <nav className="custom-navbar">
       <img src={logo} alt="Logo" className="navbar-logo" />
-      <ul className="navbar-links">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/oportunidades">Oportunidades</a></li>
-        <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
-        <li><a href="/contacto">Contacto</a></li>
-      </ul>
+      {/* Mostrar enlaces solo si el usuario no es admin */}
+      {!isAdmin && (
+        <ul className="navbar-links">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/oportunidades">Oportunidades</a></li>
+          <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
+          <li><a href="/contacto">Contacto</a></li>
+        </ul>
+      )}
       <div className="navbar-user">
-        <div className="container-icon">
-          <div ref={btnCartRef} className="cart-container">
-            <img src={cartIcon} alt="Carrito" className="navbar-cart" />
-            <span className="cart-badge">{cartItemCount}</span>
-          </div>
+        {/* Mostrar el carrito solo si el usuario no es admin */}
+        {!isAdmin && (
+          <div className="container-icon">
+            <div ref={btnCartRef} className="cart-container">
+              <img src={cartIcon} alt="Carrito" className="navbar-cart" />
+              <span className="cart-badge">{cartItemCount}</span>
+            </div>
 
-          
-          {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
-            <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
 
               
               <div className="cart-product">
@@ -77,11 +79,33 @@ const Navbar = () => {
               <div className="cart-buttons">
                 <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
                 <button onClick={() => navigate("/cartEnvio")} className="cart-button-checkout">Pagar</button>
-              </div>
-            </div>
-          )}
-        </div>
 
+            {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
+              <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
+                <div className="cart-product">
+                  <div className="info-cart-product">
+                    <span className="cantidad-producto-carrito">1</span>
+                    <p className="titulo-producto-carrito">Zapatos Nike</p>
+                    <span className="precio-producto-carrito">$80</span>
+                  </div>
+                  <img src={closeProduct} alt="Eliminar producto" className="close-product" />
+                </div>
+                <div className="cart-total-hidden">
+                  <h3>Total:</h3>
+                  <span className="total-pagar-hidden">$150</span>
+                </div>
+
+                <div className="cart-buttons">
+                  <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
+                  <button onClick={() => navigate("/checkout")} className="cart-button-checkout">Pagar</button>
+                </div>
+
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Menú del usuario */}
         {user ? (
           <Dropdown>
             <Dropdown.Toggle className="navbar-profile dropdown-toggle-white" id="dropdown-basic">
