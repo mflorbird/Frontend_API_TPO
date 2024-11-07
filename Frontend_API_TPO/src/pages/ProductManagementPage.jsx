@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProductManagementHeader from '../components/ProductManagementHeader';
+import Navbar from '../components/Navbar';  // Asegúrate de importar la Navbar
 import ProductTable from '../components/ProductTable';
 import Search from '../components/Search';
 import { Button } from 'react-bootstrap'; 
@@ -18,7 +18,8 @@ const ProductManagementPage = () => {
 
   return (
     <div className="product-management">
-      <ProductManagementHeader />
+      {/* Reemplazar ProductManagementHeader por Navbar */}
+      <Navbar />
       <h1>Gestión de Productos</h1>
       <p className="description">Aquí puedes agregar, modificar y eliminar los productos de tu tienda.</p>
       <div className="search-container">
