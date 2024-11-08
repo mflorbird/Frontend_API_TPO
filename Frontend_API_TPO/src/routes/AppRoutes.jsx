@@ -13,6 +13,7 @@ import ProductManagementPage from '../pages/ProductManagementPage.jsx';
 import AppProvider from '../context/AppContext.jsx';
 import CartEnvio from '../pages/CartEnvio.jsx';
 import AddProductPage from '../pages/AddProductPage.jsx';
+import About from '../pages/About.jsx';
 
 
 const AppRoutes = () => {
@@ -30,6 +31,7 @@ const AppRoutes = () => {
           <Route path="/finalizarCompra" element={<FinalizarCompra />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/product-management" element={<ProductManagementPage />} />
+          <Route path="/about" element={<About />} />
           
         </Route>
 
