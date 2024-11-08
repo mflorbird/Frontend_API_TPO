@@ -12,7 +12,9 @@ import FinalizarCompra from '../pages/FinalizarCompra.jsx';
 import ProductManagementPage from '../pages/ProductManagementPage.jsx';
 import AppProvider from '../context/AppContext.jsx';
 import CartEnvio from '../pages/CartEnvio.jsx';
-import AddProductPage from '../pages/AddProductPage.jsx';
+import AddProductPage from '../pages/AddProductPage'; 
+
+// import AddProductPage from '../pages/AddProductPage.jsx';
 
 
 const AppRoutes = () => {

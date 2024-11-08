@@ -73,6 +73,11 @@
   margin-bottom: 20px; /
 }
 
+.search-container .search-input {
+  margin-bottom: 0 !important;
+}
+
+
 .search-container > * {
   margin-right: 10px; 
 }
@@ -84,7 +89,7 @@
   align-self: center; 
 }
 
-/* ProductManagementPage.css */
+
 .container {
   max-width: 800px;
 }
