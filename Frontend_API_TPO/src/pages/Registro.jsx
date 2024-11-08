@@ -47,7 +47,7 @@ const RegistroPage = () => {
         await registerUser(formData);
         setIsSubmitted(true);
       } catch (error) {
-        setError('Error al crear la cuenta. Inténtalo de nuevo.');
+        setError('No pudimos crear tu cuenta. Inténtalo nuevamente.');
       } finally {
         setLoading(false);
       }
@@ -94,7 +94,7 @@ const RegistroPage = () => {
             />
 
             <FormField
-              label="Correo Electrónico"
+              label="Correo electrónico"
               type="email"
               name="email"
               value={formData.email}
@@ -113,7 +113,7 @@ const RegistroPage = () => {
             />
 
             <FormField
-              label="Nombre de Usuario"
+              label="Nombre de usuario"
               type="text"
               name="usuario"
               value={formData.usuario}
