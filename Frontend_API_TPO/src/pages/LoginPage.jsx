@@ -44,7 +44,7 @@ const LoginPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <BackButton text="Volver al inicio" />
+          <BackButton text="Volver" />
           <img src="/naikii.svg" alt="Logo" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
 
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
@@ -55,12 +55,12 @@ const LoginPage = () => {
 
           <Form onSubmit={handleSubmit}>
             <FormField
-              label="Usuario o correo electrónico"
-              type="text"
+              label="Correo electrónico"
+              type="email"
               name="usuarioOEmail"
               value={formData.usuarioOEmail}
               onChange={handleChange}
-              placeholder="Ingresa tu usuario o correo electrónico"
+              placeholder="Ingresa tu correo electrónico"
               error={errors.usuarioOEmail}
             />
 

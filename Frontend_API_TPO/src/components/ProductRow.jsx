@@ -21,7 +21,7 @@ const ProductRow = ({ product, onProductDeleted }) => {
       setShowModal(false);
       onProductDeleted();
     } catch (error) {
-      console.error('Error al eliminar el producto:', error);
+      console.error('No se pudo eliminar el producto:', error);
     }
   };
 
