@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // URL base de la API
-const API_URL = 'http://localhost:3000/api/v1/gestionCatalogo';
+const API_URL = 'http://localhost:3000/products';
 
 // Instancia para hacer peticiones con interceptor
 const axiosWithInterceptor = axios.create();
@@ -16,6 +16,15 @@ axiosWithInterceptor.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+export const addProductToDb = async (productData) => {
+  try {
+    const response = await axios.post(API_URL, productData);
+    return response.data;
+  } catch (error) {
+    console.error('Detalles del error:', error.response ? error.response.data : error.message);
+    throw new Error('Error al agregar producto');
+  }
+};
 
 // destacados - get: '/productos/destacados' OK
 export const getDestacados = async () => {
@@ -108,3 +117,13 @@ export const getRecientes = async () => {
     throw new Error('Error al obtener los productos recientes', error);
   }
 };
+
+// export const addProductToDB = async (productData) => {
+//   try {
+//     const response = awaitaxiosWithInterceptor.put(API_URL, productData);
+//     return response.data; 
+//   } catch (error) {
+//     console.error('Error al agregar el producto a la tienda', error);
+//     throw error;
+//   }
+// };

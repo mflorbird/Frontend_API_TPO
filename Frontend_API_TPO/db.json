@@ -31,16 +31,42 @@
       "fechaNacimiento": "1995-12-12",
       "usuario": "jose123",
       "contraseña": "contraseña123"
+    },
+    {
+      "id": "429b",
+      "nombre": "Franco",
+      "apellido": "Perez",
+      "email": "fran@gmail.com",
+      "fechaNacimiento": "2000-11-11",
+      "usuario": "fp@gmail.com",
+      "contraseña": "contraseña123"
     }
   ],
-
   "products": [
     {
       "model": "Campus",
-    "category": "Urban",
-    "description": "Los materiales premium, la amortiguación moderna y la zona del tobillo acolchada renuevan el icónico calzado que lo empezó todo.",
-    "price": "50000",
-    "stockTotal": [{ "size": "37", "stock": "100" },{ "size": "38", "stock": "100" }]
+      "category": "Urban",
+      "description": "Los materiales premium, la amortiguación moderna y la zona del tobillo acolchada renuevan el icónico calzado que lo empezó todo.",
+      "price": "50000",
+      "stockTotal": [
+        {
+          "size": "37",
+          "stock": "100"
+        },
+        {
+          "size": "38",
+          "stock": "100"
+        }
+      ]
+    },
+    {
+      "id": "172c",
+      "model": "Air Force",
+      "category": "Urban",
+      "description": "wdwq",
+      "price": "12",
+      "stockTotal": [],
+      "image": "blob:http://localhost:5173/5cbece8c-787a-4798-a49f-70608a3bb24f"
     }
   ]
 }

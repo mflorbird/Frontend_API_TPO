@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
-const StockInput = () => {
-  const [stockItems, setStockItems] = useState([{ size: '', stock: '' }]);
-
+const StockInput = ({ stockItems, handleStockChange }) => {
   const addStockField = () => {
-    setStockItems([...stockItems, { size: '', stock: '' }]);
+    handleStockChange([...stockItems, { size: '', stock: '' }]);
   };
 
   const removeStockField = (index) => {
     const updatedStockItems = stockItems.filter((_, i) => i !== index);
-    setStockItems(updatedStockItems);
+    handleStockChange(updatedStockItems);
+  };
+
+  const handleStockFieldChange = (e, index, field) => {
+    const value = e.target.value;
+  
+    const updatedStockItems = [...stockItems];
+    
+    updatedStockItems[index] = {
+      ...updatedStockItems[index],
+      [field]: value
+    };
+  
+    handleStockChange(updatedStockItems);
   };
 
   return (
@@ -19,13 +30,25 @@ const StockInput = () => {
       {stockItems.map((item, index) => (
         <div className="row mb-2" key={index}>
           <div className="col-md-6">
-            <input type="text" className="form-control" placeholder="Ingresa un talle" />
+            <input
+              type="text"
+              className="form-control"
+              value={item.size}
+              onChange={(e) => handleStockFieldChange(e, index, 'size')}
+              placeholder="Ingresa un talle"
+            />
           </div>
           <div className="col-md-5">
-            <input type="number" className="form-control" placeholder="Ingresa una cantidad" />
+            <input
+              type="number"
+              className="form-control"
+              value={item.stock}
+              onChange={(e) => handleStockFieldChange(e, index, 'stock')}
+              placeholder="Ingresa una cantidad"
+            />
           </div>
           <div className="col-md-1 d-flex justify-content-end">
-          <Button variant="outline-danger" onClick={() => removeStockField(index)}>
+            <Button variant="outline-danger" onClick={() => removeStockField(index)}>
               <FaTrash />
             </Button>
           </div>
