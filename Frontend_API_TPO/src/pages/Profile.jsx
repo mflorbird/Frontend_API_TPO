@@ -17,22 +17,7 @@ const Perfil = () => {
     return <p>No se encontró el usuario.</p>;
   }
 
-    /* const [isEditing, setIsEditing] = useState(false); // Estado para modo de edición */
 
-    //  para manejar el cambio de estado edicion
-    // const handleEditClick = () => {
-    //     setIsEditing(true);
-    // };
-
-    // const handleSave = () => {
-    //     // Lógica para guardar los datos
-    //     alert("Datos guardados exitosamente");
-    //     setIsEditing(false); // para volver a lectura
-    // };
-
-    // const handleEditToggle = () => {
-    //     setIsEditing(!isEditing); // alternar el modo de edición
-    // };
 
     return (
         <div className="perfil-container">
@@ -44,13 +29,7 @@ const Perfil = () => {
             </div>
             <div className="perfil-content">
                 <h2>Mis datos</h2>
-                {/* <p>Modificá tus datos personales a continuación para que tu cuenta esté actualizada.</p> */}
-                
-                {/* para habilitar la edicion
-                <button className="edit-toggle-button" onClick={handleEditToggle}>
-                    {isEditing ? "Cancelar" : "Modificar datos"}
-                </button> */}
-                
+
                 <div className="perfil-form">
                     
                     <div className="form-group">
@@ -85,10 +64,7 @@ const Perfil = () => {
                             disabled
                         />
                     </div>
-{/*                  
-                    {isEditing && (
-                        <button className="save-button" onClick={handleSave}>Guardar datos</button>
-                    )} */}
+
                 </div>
             </div>
         </div>
