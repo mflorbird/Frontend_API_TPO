@@ -1,34 +1,11 @@
-import React, { useState } from 'react';
-import FormField from './FormField'; // Tu componente reutilizable
-import TextAreaField from './TextAreaField'; // Componente para descripción
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import React from 'react';
+import { Form, Row, Col } from 'react-bootstrap';
+import FormField from './FormField';
+import TextAreaField from './TextAreaField';
 import StockInput from './StockInput';
 
-const ProductForm = () => {
-  const [formValues, setFormValues] = useState({
-    model: '',
-    category: '',
-    description: '',
-    price: '',
-    stock: ''
-  });
-  const [image, setImage] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
-
+const ProductForm = ({ formValues, handleInputChange, handleImageChange, handleStockChange, image }) => {
+  console.log(formValues)
   return (
     <Form className="product-form">
       <h4>Detalle de producto</h4>
@@ -50,7 +27,6 @@ const ProductForm = () => {
         </div>
       </Form.Group>
 
-      {/* Campos en dos columnas */}
       <Row>
         <Col md={6}>
           <FormField
@@ -59,7 +35,7 @@ const ProductForm = () => {
             name="model"
             value={formValues.model}
             onChange={handleInputChange}
-            placeholder="Ingrese el modelo"
+            placeholder="Ingresa el nombre del modelo"
           />
         </Col>
         <Col md={6}>
@@ -69,35 +45,37 @@ const ProductForm = () => {
             name="category"
             value={formValues.category}
             onChange={handleInputChange}
-            placeholder="Ingrese la categoría"
+            placeholder="Ingresa una categoría"
           />
         </Col>
       </Row>
 
-      {/* Usando TextAreaField para la descripción */}
       <TextAreaField
         label="Descripción"
         name="description"
         value={formValues.description}
         onChange={handleInputChange}
-        placeholder="Ingrese la descripción"
+        placeholder="Ingresa una descripción"
       />
-   <Row className="mt-3">
+      
+      <Row className="mt-3 mb-4">
         <Col md={6}>
-            <FormField
+          <FormField
             label="Precio"
             type="number"
             name="price"
             value={formValues.price}
             onChange={handleInputChange}
-            placeholder="Ingrese el precio"
-            />
-         </Col>
-    </Row>
+            placeholder="Ingresa el precio"
+          />
+        </Col>
+      </Row>
 
-    <h4>Stock de producto</h4>
-    <StockInput />
-  
+      <h4>Stock de producto</h4>
+      <StockInput 
+        stockItems={formValues.stockTotal} 
+        handleStockChange={handleStockChange}  
+      />
     </Form>
   );
 };

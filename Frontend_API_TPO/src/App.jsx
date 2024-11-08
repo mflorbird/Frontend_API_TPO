@@ -6,7 +6,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const App = () => {
   return (
-    <AppRoutes /> 
+      <AppRoutes /> 
+   
   );
 };
 

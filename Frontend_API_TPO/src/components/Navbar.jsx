@@ -2,8 +2,8 @@ import React, { useContext, useRef, useEffect } from "react";
 import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
-import userPhoto from '../assets/user-photo.jpeg';
-import closeProduct from '../assets/x.svg';
+import userPhoto from '../assets/UserPhoto.jpeg';
+import closeProduct from '../assets/x.svg'; 
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
@@ -36,14 +36,12 @@ const Navbar = () => {
     };
   }, []);
 
-  // Verifica si el usuario es admin
+  
   const isAdmin = user && user.role === 'admin';
 
   return (
     <nav className="custom-navbar">
       <img src={logo} alt="Logo" className="navbar-logo" />
-      
-      {/* Mostrar enlaces solo si el usuario no es admin */}
       {!isAdmin && (
         <ul className="navbar-links">
           <li><button onClick={() => navigate("/")} className="nav-button-cabecera">Inicio</button></li>
