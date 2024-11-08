@@ -2,7 +2,7 @@
 
 import React, { createContext, useState } from 'react';
 // import { addProduct } from '../services/catalogService';
-import { addProductToDb } from '../services/catalogService'; 
+import { addProductToDb, fetchProductsFromDb } from '../services/catalogService'; 
 import { useNavigate } from 'react-router-dom';
 // Crear el contexto
 export const AppContext = createContext();
@@ -48,6 +48,17 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const getProductList = async () => {
+    try {
+      const products = await fetchProductsFromDb(); 
+      console.log('Lista de productos obtenida exitosamente', products);
+      return products;
+    } catch (err) {
+      console.error('Error al obtener la lista de productos:', err);
+      return []; 
+    }
+  };
+
   const removeItemFromCart = (itemId) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
@@ -75,6 +86,7 @@ export const AppProvider = ({ children }) => {
       removeItemFromCart,
       clearCart,
       addProduct,
+      getProductList,
       totalItems,
       user,
       login,

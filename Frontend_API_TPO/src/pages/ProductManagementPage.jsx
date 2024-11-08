@@ -1,40 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';  // Asegúrate de importar la Navbar
+import Navbar from '../components/Navbar';
 import ProductTable from '../components/ProductTable';
 import Search from '../components/Search';
-import { Button } from 'react-bootstrap'; 
+import { Button } from 'react-bootstrap';
+import { AppContext } from '../context/AppContext';
 import '../styles/ProductManagementPage.css';
 
 const ProductManagementPage = () => {
   const navigate = useNavigate();
+  const { getProductList } = useContext(AppContext); 
   const [searchTerm, setSearchTerm] = useState('');
-  const products = [
-    { id: 1, image: 'https://via.placeholder.com/50', name: 'Producto 1', category: 'Categoría A', description: 'Descripción del producto 1', price: '$100', stock: 20 },
-    { id: 2, image: 'https://via.placeholder.com/50', name: 'Producto 2', category: 'Categoría B', description: 'Descripción del producto 2', price: '$150', stock: 15 },
-  ];
+  const [products, setProducts] = useState([]); 
+  const [filteredProducts, setFilteredProducts] = useState([]); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const fetchProducts = async () => {
+    try {
+      const productList = await getProductList();
+      setProducts(productList);
+      setFilteredProducts(productList);
+    } catch (error) {
+      setError('No podemos cargar tus productos.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [getProductList]);
 
   const handleAddProduct = () => {
-    navigate('/add-product')
+    navigate('/add-product');
+  };
+
+  const handleSearchClick = () => {
+    const filtered = products.filter((product) =>
+      product.model.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const onProductDeleted = () => {
+    fetchProducts();
   }
 
   return (
     <div className="product-management">
-      {/* Reemplazar ProductManagementHeader por Navbar */}
       <Navbar />
-      <h1>Gestión de Productos</h1>
-      <p className="description">Aquí puedes agregar, modificar y eliminar los productos de tu tienda.</p>
+      <h2>Mis productos</h2>
+      <p className="description">Aquí podrás agregar, modificar y eliminar los productos de tu tienda.</p>
       <div className="search-container">
-        <Search onSearch={setSearchTerm} />
+        <Search  onSearch={setSearchTerm} onSearchClick={handleSearchClick} />
         <Button onClick={handleAddProduct} variant="primary" className="add-product-button">
           Agregar producto
         </Button>
       </div>
-      <ProductTable products={filteredProducts} />
+      {loading ? (
+        <p>Cargando productos...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <ProductTable products={filteredProducts} onProductDeleted={onProductDeleted} />
+      )}
     </div>
   );
 };

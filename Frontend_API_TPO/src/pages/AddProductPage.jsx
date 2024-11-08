@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
+import { getProductById, addProductToDb } from '../services/catalogService'; 
 import '../styles/ProductManagementPage.css';
 
 const AddProductPage = () => {
-  const { addProduct, error } = useContext(AppContext); 
-
+  const { addProduct, error } = useContext(AppContext);
   const [formValues, setFormValues] = useState({
     model: '',
     category: '',
@@ -17,6 +18,30 @@ const AddProductPage = () => {
   });
 
   const [image, setImage] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false); 
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  const productId = new URLSearchParams(location.search).get('productId'); 
+
+  useEffect(() => {
+    if (productId) {
+      setIsEditMode(true);
+      getProductById(productId)
+        .then((product) => {
+          setFormValues({
+            model: product.model,
+            category: product.category,
+            description: product.description,
+            price: product.price,
+            stockTotal: product.stockTotal,
+          });
+          setImage(product.image);
+        })
+        .catch((error) => console.error('Error al obtener el producto:', error));
+    }
+  }, [productId]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -58,37 +83,56 @@ const AddProductPage = () => {
       stockTotal: value,  
     });
   };
-  
 
-  const handleSubmit = (e) => {
+  const isFormValid = () => {
+    return formValues.model && formValues.category && formValues.description && formValues.price && formValues.stockTotal.length > 0 && image;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const productData = {
       ...formValues,
       image: image, 
     };
-    console.log(productData);
-    addProduct(productData); 
+
+    try {
+      if (isEditMode) {
+        await addProductToDb({productData, productId}); 
+        console.log('Se actualizó el producto con éxito.');
+      } else {
+        await addProductToDb({productData}); 
+        console.log('Se agregó un nuevo producto.');
+      }
+      navigate('/product-management'); 
+    } catch (error) {
+      console.error('No se pudo guardar el producto', error);
+    }
   };
 
   return (
     <div className="container mt-5">
       <BackButton text="Volver al inicio" />
-      <h2>Agregar producto</h2>
-      <p>Completa la siguiente información para agregar un producto a tu tienda.</p>
+      <h2>{isEditMode ? 'Editar producto' : 'Agregar producto'}</h2>
+      <p>{isEditMode ? 'Modifica los detalles del producto.' : 'Completa la siguiente información para agregar un producto a tu tienda.'}</p>
       <ProductForm
         formValues={formValues}
+        image={image}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}
         handleStockChange={handleStockChange} 
       />
 
       <div className="d-flex justify-content-end mt-4">
-        <Button variant="primary" onClick={handleSubmit}>
-          Agregar modelo
+        <Button 
+          variant="primary" 
+          onClick={handleSubmit} 
+          disabled={!isFormValid()}
+        >
+          {isEditMode ? 'Guardar cambios' : 'Agregar producto'} 
         </Button>
       </div>
 
-      {error && <p className="text-danger mt-3">Hubo un error al agregar el producto.</p>}
+      {error && <p className="text-danger mt-3">Hubo un error al agregar o actualizar el producto.</p>}
     </div>
   );
 };

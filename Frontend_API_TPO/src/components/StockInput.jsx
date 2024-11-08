@@ -28,10 +28,10 @@ const StockInput = ({ stockItems, handleStockChange }) => {
   return (
     <div>
       {stockItems.map((item, index) => (
-        <div className="row mb-2" key={index}>
+        <div className="row mb-2 g-2" key={index}>
           <div className="col-md-6">
             <input
-              type="text"
+              type="number"
               className="form-control"
               value={item.size}
               onChange={(e) => handleStockFieldChange(e, index, 'size')}
