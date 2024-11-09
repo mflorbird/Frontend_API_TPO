@@ -1,0 +1,36 @@
+.terms-and-conditions {
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .terms-and-conditions {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 120px;
+    padding-bottom: 120px; 
+  }
+  
+  .terms-and-conditions h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .terms-and-conditions h2 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+  }
+  
+  .terms-and-conditions p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .terms-and-conditions .text-uppercase {
+    text-transform: uppercase;
+  }
+  
+  .terms-and-conditions .font-weight-bold {
+    font-weight: bold;
+  }
+  
