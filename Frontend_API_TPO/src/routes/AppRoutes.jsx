@@ -15,6 +15,7 @@ import CartEnvio from '../pages/CartEnvio.jsx';
 import About from '../pages/About.jsx';
 import AddProductPage from '../pages/AddProductPage'; 
 import TermsAndConditions from '../pages/TermsAndConditions.jsx';
+import PrivacyPolicy from '../pages/PrivacyPolicy.jsx';
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -36,6 +37,7 @@ const AppRoutes = () => {
           <Route path="/product-management" element={<ProductManagementPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
+          <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
         </Route>
 
         <Route element={<SimpleLayout />}>
