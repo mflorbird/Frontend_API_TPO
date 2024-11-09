@@ -38,6 +38,44 @@ const Cart = () => {
     calculateTotal();
   }, [cartItems]);
 
+
+  //actualizar bd.json
+  const handleQuantityChange = async (itemId, newQuantity) => {
+    try {
+      // Actualiza la cantidad en el servidor
+      await axios.patch(`http://localhost:3000/cart/${itemId}`, { quantity: newQuantity });
+
+      // Actualiza el estado local
+      setCartItems(cartItems.map((item) =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      ));
+    } catch (error) {
+      console.error("Error al actualizar la cantidad:", error);
+    }
+  };
+
+  const handleDeleteItem = async (itemId, quantity) => {
+    try {
+      if (quantity > 1) {
+        // Si la cantidad es mayor que 1, disminuye en 1
+        const newQuantity = quantity - 1;
+        await axios.patch(`http://localhost:3000/cart/${itemId}`, { quantity: newQuantity });
+
+        // Actualiza el estado local
+        setCartItems(cartItems.map((item) =>
+          item.id === itemId ? { ...item, quantity: newQuantity } : item
+        ));
+      } else {
+        // Si la cantidad es 1, elimina el producto del carrito
+        await axios.delete(`http://localhost:3000/cart/${itemId}`);
+
+        // Actualiza el estado local
+        setCartItems(cartItems.filter((item) => item.id !== itemId));
+      }
+    } catch (error) {
+      console.error("Error al eliminar el producto del carrito:", error);
+    }
+  };
   
     const { userData, loading, error } = useUserData();
   
@@ -77,23 +115,17 @@ const Cart = () => {
                     <select
                       id={`quantity-${item.id}`}
                       value={item.quantity || 1}
-                      onChange={(e) => {
-                        const newQuantity = parseInt(e.target.value);
-                        setCartItems(cartItems.map((cartItem) =>
-                          cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
-                        ));
-                      }}
-                    >
-                      {[1, 2, 3, 4, 5].map((num) => (
+                      onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                      >
+                        {[1, 2, 3, 4, 5].map((num) => (
                         <option key={num} value={num}>
                           {num}
                         </option>
                       ))}
                     </select>
                   </div>
-                  <button className="delete-item-btn" onClick={() => {
-                    setCartItems(cartItems.filter(cartItem => cartItem.id !== item.id));
-                  }}>
+                  <button className="delete-item-btn" onClick={() => handleDeleteItem(item.id, item.quantity)}
+                  >
                     🗑️
                   </button>
                 </div>
