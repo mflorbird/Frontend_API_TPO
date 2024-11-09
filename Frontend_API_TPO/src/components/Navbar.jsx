@@ -43,12 +43,20 @@ const Navbar = () => {
     <nav className="custom-navbar">
       <img src={logo} alt="Logo" className="navbar-logo" />
       {!isAdmin && (
+        // <ul className="navbar-links">
+        //   <li><button onClick={() => navigate("/")} className="nav-button-cabecera">Inicio</button></li>
+        //   <li><button onClick={() => navigate("/about")} className="nav-button-cabecera">Sobre Nosotros</button></li>
+        //   <li><button onClick={() => navigate("/contacto")} className="nav-button-cabecera">Contacto</button></li>
+        // </ul>
+
         <ul className="navbar-links">
-          <li><button onClick={() => navigate("/")} className="nav-button-cabecera">Inicio</button></li>
-          <li><button onClick={() => navigate("/about")} className="nav-button-cabecera">Sobre Nosotros</button></li>
-          <li><button onClick={() => navigate("/contacto")} className="nav-button-cabecera">Contacto</button></li>
+          <li> <a href="/" >Inicio</a></li>
+          <li> <a href="/about">Sobre nosotros</a></li>
+          <li> <a href="/contacto">Contacto</a></li>
         </ul>
       )}
+
+  
 
       <div className="navbar-user">
         {/* Mostrar el carrito solo si el usuario no es admin */}
@@ -111,3 +119,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+
