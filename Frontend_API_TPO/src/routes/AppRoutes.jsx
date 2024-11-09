@@ -14,6 +14,7 @@ import AppProvider from '../context/AppContext.jsx';
 import CartEnvio from '../pages/CartEnvio.jsx';
 import About from '../pages/About.jsx';
 import AddProductPage from '../pages/AddProductPage'; 
+import TermsAndConditions from '../pages/TermsAndConditions.jsx';
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -34,7 +35,7 @@ const AppRoutes = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/product-management" element={<ProductManagementPage />} />
           <Route path="/about" element={<About />} />
-          
+          <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
         </Route>
 
         <Route element={<SimpleLayout />}>
