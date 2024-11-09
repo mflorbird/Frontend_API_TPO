@@ -48,21 +48,21 @@ const TermsAndConditions = () => {
             Nuestra política de privacidad describe la recopilación y el uso de información personal en la plataforma y se aplica a su uso de la plataforma. El usuario consiente en forma expresa, informada, voluntaria e inequívoca el tratamiento de sus datos personales por parte de Naikii, de conformidad con dicha política de privacidad.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">1- REGLAS BÁSICAS</h4>
           <p className="mb-3">
             Requisitos. Para poder usar la plataforma, usted deberá haber cumplido dieciocho (18) años, no estar declarado judicialmente como incapaz, o tener la capacidad restringida para contratar o disponer de su patrimonio o contar con el consentimiento de sus progenitores, tutor o representante legal. Naikii podrá pedirle documentación que acredite estos extremos para la protección de la comunidad de usuarios.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" />
 
           <h4 className="mt-3">2- PROPIEDAD DEL CONTENIDO</h4>
           <p className="mb-3">
             Excepto por el contenido de usuario (definido a continuación), todo el contenido de nuestra plataforma, incluidos textos, software, gráficos, fotografías, sonidos, videos, aplicaciones, características interactivas, y otros contenidos protegidos por derechos de propiedad intelectual ("contenido"), es propiedad de Naikii S.A. y/o de terceros de los que tenemos licencia, y está protegido por las leyes sobre derechos de propiedad intelectual. Nada de lo dispuesto en estos términos otorga una licencia o cesión de derechos de propiedad intelectual a favor del usuario.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">3- CÓDIGO DE CONDUCTA DEL USUARIO</h4>
           <p className="mb-3">
@@ -73,35 +73,35 @@ const TermsAndConditions = () => {
             - Sea usted mismo. No se haga pasar por ninguna persona u organización, incluidos los atletas o empleados de Naikii.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">4- TERCEROS EN LA PLATAFORMA</h4>
           <p className="mb-3">
             Cuando lo considere oportuno, Naikii puede vincularse o asociarse con sitios web de terceros, plataformas de redes sociales, aplicaciones móviles y otros productos y servicios ("terceros"). Puede conectarse con estos terceros a través de la plataforma, pero esto no significa que Naikii avale, monitoree o tenga control sobre estos terceros o sus actividades, que están sujetos a términos de uso y políticas de privacidad independientes. Naikii no es responsable del contenido, las políticas o las actividades de terceros, y usted decide interactuar con terceros bajo su propio riesgo.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" />
 
           <h4 className="mt-3">5- RESCISIÓN</h4>
           <p className="mb-3">
             De acuerdo a la legislación aplicable, nosotros podremos rescindir o modificar la plataforma, los productos o servicios en cualquier momento, sin previo aviso, por iniciativa propia o por petición de terceros. También podremos restringir el uso que usted hace de la plataforma cuando identifiquemos un uso indebido de la misma, sin responsabilidad imputable a Naikii.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">6- INDEMNIZACIÓN</h4>
           <p className="mb-3">
             Indemnización y liberación. Usted acepta indemnizar, defender y eximir de responsabilidad a Naikii y sus directivos, empleados, agentes, licenciantes y proveedores de y contra todas las reclamaciones, pérdidas, responsabilidades, gastos y costos que de alguna manera surjan de o en relación con su uso del contenido, su uso de la plataforma o cualquier violación de estos términos, de cualquier ley o de los derechos de terceros.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">7- DISPUTAS / TÉRMINOS ADICIONALES</h4>
           <p className="mb-3">
             Derecho aplicable / Jurisdicción. La relación entre usted y Naikii se regirá por las leyes de la República Argentina y cualquier controversia se someterá a los Juzgados y/o Tribunales de la jurisdicción correspondiente en razón de las leyes argentinas.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h4 className="mt-3">8- ATENCIÓN AL CONSUMIDOR/USUARIO</h4>
           <p className="mb-3">

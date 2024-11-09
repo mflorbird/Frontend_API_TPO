@@ -16,6 +16,7 @@ import About from '../pages/About.jsx';
 import AddProductPage from '../pages/AddProductPage'; 
 import TermsAndConditions from '../pages/TermsAndConditions.jsx';
 import PrivacyPolicy from '../pages/PrivacyPolicy.jsx';
+import Contact from '../pages/Contact.jsx';
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -38,6 +39,7 @@ const AppRoutes = () => {
           <Route path="/about" element={<About />} />
           <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
           <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
+          <Route path="/contacto" element={<Contact/>} />
         </Route>
 
         <Route element={<SimpleLayout />}>

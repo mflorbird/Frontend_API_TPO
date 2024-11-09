@@ -1,0 +1,23 @@
+.contact-container {
+    max-width: 800px;
+    margin: auto;
+    padding-top: 120px; 
+    padding-bottom: 120px;
+  }
+  .card {
+    padding: 20px;
+    border-radius: 8px;
+    
+  }
+  
+  .card-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .card-title i {
+    margin-right: 8px;
+    color: #0d6efd;
+  }
+  
