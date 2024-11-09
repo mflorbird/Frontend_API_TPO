@@ -1,67 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import zapatillas1 from '../assets/01ZAPATILLAS.png';
 import zapatillas2 from '../assets/05ZAPATILLAS.png';
-import zapatillas3 from '../assets/08ZAPATILLAS.png';
 import "../styles/cart.css";
 import { useNavigate } from 'react-router-dom';
 import useUserData from '../hooks/useUserData';
-
+import axios from 'axios';
 
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Zapatillas deportivas",
-      size: "37",
-      quantity: 1,
-      price: 120,
-      image: zapatillas1,
-    },
-    {
-      id: 2,
-      name: "Zapatillas urbanas",
-      size: "42",
-      quantity: 2,
-      price: 35,
-      image: zapatillas2,
-    },
-  ]);
-
+  const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
-  const [totalItems, setTotalItems] = useState(0); // Estado para la cantidad de productos
+  const [totalItems, setTotalItems] = useState(0);
+ 
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/cart'); 
+      setCartItems(response.data);
+    } catch (error) {
+      console.error("Error al obtener los productos del carrito:", error);
+    }
+  };
 
   const calculateTotal = () => {
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
     setTotalAmount(total);
 
-    // Calcular el número total de artículos
     const totalItemsCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-    setTotalItems(totalItemsCount);  // Establecer la cantidad total de artículos
+    setTotalItems(totalItemsCount);
   };
+
+  useEffect(() => {
+    fetchCartItems(); // Llamar a la función de productos
+  }, []);
 
   useEffect(() => {
     calculateTotal();
   }, [cartItems]);
 
-
   
     const { userData, loading, error } = useUserData();
   
-    if (loading) {
-      return <p>Cargando datos...</p>;
-    }
-  
-    if (error) {
-      return <p>Error al obtener los datos: {error}</p>;
-    }
-  
-    if (!userData) {
-      return <p>No se encontró el usuario.</p>;
-    }
+    if (loading) return <p>Cargando datos...</p>;
+    if (error) return <p>Error al obtener los datos: {error}</p>;
+    if (!userData) return <p>No se encontró el usuario.</p>;
 
   return (
     <div className="cart-container">
@@ -84,18 +68,18 @@ const Cart = () => {
             ) : (
               cartItems.map((item) => (
                 <div key={item.id} className="cart-item">
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.image || '/path/to/default-image.jpg'} alt={item.name} />
                   <div className="item-details">
-                    <p><strong>{item.name}</strong></p>
-                    <p>Talle: {item.size}</p>
+                    <p><strong>{item.model}</strong></p>
+                    <p>Talle: {item.size || 'N/A'}</p>
+                    <p>Precio: ${item.price}</p>
                   </div>
                   <div className="item-quantity">
                     <label htmlFor={`quantity-${item.id}`}>Cantidad</label>
                     <select
                       id={`quantity-${item.id}`}
-                      value={item.quantity}
+                      value={item.quantity || 1}
                       onChange={(e) => {
-                        // Actualizar la cantidad de productos
                         const newQuantity = parseInt(e.target.value);
                         setCartItems(cartItems.map((cartItem) =>
                           cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
@@ -110,7 +94,6 @@ const Cart = () => {
                     </select>
                   </div>
                   <button className="delete-item-btn" onClick={() => {
-                    // Eliminar el producto del carrito
                     setCartItems(cartItems.filter(cartItem => cartItem.id !== item.id));
                   }}>
                     🗑️
@@ -124,7 +107,7 @@ const Cart = () => {
             <h3>Resumen del pedido</h3>
             {cartItems.map((item) => (
               <div key={item.id} className="summary-item">
-                <p>{item.name}</p>
+                <p>{item.model}</p>
                 <p>Cantidad: {item.quantity}</p>
                 <p>${item.price}</p>
               </div>
