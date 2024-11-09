@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import zapatillas1 from '../assets/01ZAPATILLAS.png';
-import zapatillas2 from '../assets/05ZAPATILLAS.png';
 import "../styles/cart.css";
 import { useNavigate } from 'react-router-dom';
 import useUserData from '../hooks/useUserData';
