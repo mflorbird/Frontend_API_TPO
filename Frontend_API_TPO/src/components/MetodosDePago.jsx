@@ -94,11 +94,11 @@ const TransferenciaBancariaForm = ({ handleFileUpload = () => {} }) => (
   <div>
     <h3>Último Paso: Realizar el Pago con Transferencia Bancaria</h3>
     <Alert variant="secondary">
-      <p><strong>CBU:</strong> XXXXXXXXXXXXXXXXXX</p>
-      <p><strong>Usuario:</strong> xxxxxxxxxxxxx</p>
-      <p><strong>Empresa:</strong> xxxxxxxxxxxx</p>
-      <p><strong>Alias:</strong> xxxxxxx</p>
-      <p><strong>Banco:</strong> xxxxxxxxxxx</p>
+      <p><strong>CBU:</strong> 2541002333058810</p>
+      <p><strong>Usuario:</strong> NaikiiZapas </p>
+      <p><strong>Empresa:</strong> Naikii </p>
+      <p><strong>Alias:</strong> naikii.ok </p>
+      <p><strong>Banco:</strong> Banco de la Nacion Argentina </p>
     </Alert>
     <Form.Group className="mt-3">
       <Form.Label>Adjunta el comprobante de pago</Form.Label>
