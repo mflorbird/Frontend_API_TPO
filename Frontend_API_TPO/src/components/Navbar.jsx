@@ -45,7 +45,6 @@ const Navbar = () => {
       {!isAdmin && (
         <ul className="navbar-links">
           <li><button onClick={() => navigate("/")} className="nav-button-cabecera">Inicio</button></li>
-          <li><button onClick={() => navigate("/oportunidades")} className="nav-button-cabecera">Oportunidades</button></li>
           <li><button onClick={() => navigate("/about")} className="nav-button-cabecera">Sobre Nosotros</button></li>
           <li><button onClick={() => navigate("/contacto")} className="nav-button-cabecera">Contacto</button></li>
         </ul>
