@@ -60,7 +60,9 @@ const RegistroPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <BackButton />
+        <Link to="/" className="text-decoration-none text-dark mb-4 d-block">
+            &larr; Volver
+        </Link>
           <img
             src="/naikii.svg"
             alt="Logo"
@@ -71,7 +73,7 @@ const RegistroPage = () => {
             Regístrate y conseguí las zapas que van con vos.
           </p>
 
-          {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Empezá a disfrutar de la experiencia NAIKII</Alert>}
+          {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Inicia sesión y empezá a disfrutar de la experiencia NAIKII</Alert>}
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
