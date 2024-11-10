@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
+import { Form, Alert, Container, Row, Col, Button, FormCheck } from 'react-bootstrap';
 import BackButton from '../components/BackButton';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
@@ -136,10 +136,16 @@ const RegistroPage = () => {
               error={errors.contraseña}
             />
 
+            <div>
+              <label className="form-check-label mt-4 mb-4" htmlFor="acceptTerms">
+              • Al registrarme, confirmo que he leído y acepto los   <a href="/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> así como las <a href="/politicas-de-privacidad" target="_blank">Políticas de Privacidad</a>.
+              </label>
+            </div>
+
             <FormSubmitButton
               label="Registrarme"
               loading={loading}
-              disabled={loading || !formData.nombre || !formData.apellido || !formData.email || !formData.contraseña}
+              disabled={loading || !formData.nombre || !formData.apellido || !formData.email || !formData.contraseña || !formData.fechaNacimiento || !formData.usuario}
             />
             <div className="d-flex align-items-center justify-content-center mt-4">
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
