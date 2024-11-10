@@ -45,14 +45,27 @@ export const getDestacados = async () => {
 };
 
 // favoritos - get: "/productos/favoritos") OK
-export const getFavoritos = async () => {
+export const getFavoritos = async (user) => {
+  let productosFavoritos= [];
   try {
-    const response = await axiosWithInterceptor.get(`${API_URL}/productos/favoritos`);
-    return response.data;
-  } catch (error) {
-    throw new Error('Error al obtener los productos favoritos', error);
+    for (const productoId of user.favoritos) {
+      const producto = await getProductById(productoId);
+        productosFavoritos.push(producto);
+    }
+    return productosFavoritos;
+    } catch (error) {
+        throw new Error('Error al obtener los productos favoritos', error);
   }
-};
+}
+
+// export const getFavoritos = async () => {
+//   try {
+//     const response = await axiosWithInterceptor.get(`${API_URL}/productos/favoritos`);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error('Error al obtener los productos favoritos', error);
+//   }
+// };
 
 // categoria - get ruta: "/productos/categoria/{categoria}" OK
 export const getCategoria = async (categoria) => {
@@ -117,14 +130,27 @@ export const eliminiarFavorito = async (productoId) => {
 }
 
 // productos recientes - get ruta: "/productos/recientes" OK
-export const getRecientes = async () => {
+export const getVisitados = async (user) => {
+  let productosVisitados= [];
   try {
-    const response = await axios.get(`${API_URL}/productos/recientes`);
-    return response.data;
-  } catch (error) {
-    throw new Error('Error al obtener los productos recientes', error);
+    for (const productoId of user.visitados) {
+      const producto = await getProductById(productoId);
+        productosVisitados.push(producto);
+    }
+    return productosVisitados;
+    } catch (error) {
+        throw new Error('Error al obtener los productos visitados', error);
   }
-};
+}
+
+// export const getRecientes = async () => {
+//   try {
+//     const response = await axios.get(`${API_URL}/productos/recientes`);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error('Error al obtener los productos recientes', error);
+//   }
+// };
 
 // export const addProductToDB = async (productData) => {
 //   try {
@@ -163,6 +189,15 @@ export const getProductById = async (id) => {
   } catch (error) {
     console.error('Error al obtener el producto:', error);
     throw new Error('Error al obtener el producto');
+  }
+};
+export const getFeaturedProducts = async () => {
+  try {
+    const response = await axios.get(API_URL, { params: { featured: true } });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los productos destacados:', error);
+    throw new Error('Error al obtener los productos destacados');
   }
 };
 
