@@ -114,6 +114,9 @@ const Navbar = () => {
                   <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => { navigate("/profile"); }}>
+                    Mi Perfil
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => { logout(); navigate("/login"); }}>
                     Cerrar Sesión
                   </Dropdown.Item>

@@ -1,26 +1,15 @@
-//cargo data para manejar el estado del carrito 
-
 import React, { createContext, useState } from 'react';
 // import { addProduct } from '../services/catalogService';
 import { addProductToDb, fetchProductsFromDb } from '../services/catalogService'; 
 import { useNavigate } from 'react-router-dom';
 import {updateFavorites, updateVisitados} from '../services/userService';
 
-// Crear el contexto
 export const AppContext = createContext();
-
-// Proveedor del contexto
 export const AppProvider = ({ children }) => {
   const navigate = useNavigate(); 
-  //aca agrego lo de la 29/10 y el AppProvider al AppRoutes
   const [token, setToken] = useState(null);
-
-  //agrego lo de la clase 5/11
   const [error, setError] = useState(false);
-
-  //estado de carrito para que se pueda usar globalmente
   const [cartItems, setCartItems] = useState([]);
-
   const [user, setUser] = useState(null);
 
   const addItemToCart = (item) => {

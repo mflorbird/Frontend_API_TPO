@@ -31,8 +31,10 @@
       "visitados": [
         "59a3578d-501c-4372-99cc-ac05b332f4fc",
         "49bb7b63-df50-4106-b9a9-7596208661c3",
-        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b"
-      ]
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
+      ],
+      "idUsuario": ""
     },
     {
       "id": "a115",
@@ -53,7 +55,10 @@
       "usuario": "fp@gmail.com",
       "contraseña": "contraseña123",
       "favoritos": [],
-      "visitados": []
+      "visitados": [
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
+      ],
+      "idUsuario": ""
     },
     {
       "id": "bf5e",
@@ -70,7 +75,8 @@
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
         "49bb7b63-df50-4106-b9a9-7596208661c3",
         "aad749de-1616-42ec-8bf5-129bf5f6e0bb"
-      ]
+      ],
+      "idUsuario": 1
     }
   ],
   "products": [
@@ -143,7 +149,6 @@
   "cart": [],
   "envio": [],
   "checkout": [
-    {
-    }
+    {}
   ]
 }
