@@ -1,23 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { Container, Row, Col, Button, Form, Image, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import qr from '../assets/QRNAIKI.png';
 import '../styles/finalizarCompra.css';
+import axios from 'axios'; 
+
+const API_USERS_URL = 'http://localhost:3000/users';
+
+
 
 const FinalizarCompra = ({ formData }) => {
   const navigate = useNavigate();
   const [metodoPago, setMetodoPago] = useState('');
   const [subtotal] = useState(0); // Asumiendo que el subtotal es 0 o se pasa de alguna manera
   const [discount] = useState(0); // Asumiendo que el descuento es 0 o se pasa de alguna manera
+  const [userWithId1, setUserWithId1] = useState(null);
+  const { userData, loading, error } = useUserData();
+  const [errors, setErrors] = useState('');
+  const [formDataLocal, setFormDataLocal] = useState(formData); // Renombrado a formDataLocal
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: ''
+  });
+
+  // Fetch user with idUsuario=1
+  const fetchUserWithId1 = async () => {
+    try {
+      const response = await axios.get(`${API_USERS_URL}?idUsuario=1`);
+      if (response.data && response.data.length > 0) {
+        setUserWithId1(response.data[0]);
+      } else {
+        console.error('No se encontró un usuario con idUsuario = 1');
+      }
+    } catch (error) {
+      console.error("Error al obtener el usuario con idUsuario = 1:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserWithId1();
+  }, []);
+  
 
   const handleConfirmPurchase = () => {
-    alert('¡Compra realizada con éxito!');
+    alert('¡Gracias por comprar en NAIKII!');
     navigate('/');
   };
 
   const handleMetodoPagoChange = (e) => {
     setMetodoPago(e.target.value);
   };
+
+  if (loading) {
+    return <p>Cargando datos...</p>;
+  }
+
+  if (error) {
+    return <p>Error al obtener los datos: {error}</p>;
+  }
+
+  if (!userData) {
+    return <p>No se encontró el usuario.</p>;
+  }
+  
+
 
   return (
     <Container fluid className="finalizar-compra-container">
@@ -31,12 +77,37 @@ const FinalizarCompra = ({ formData }) => {
       <div className="confirmacion-body">
         <Row>
           <Col md={8}>
-            <h2>Confirmación del Pedido</h2>
-            <p><strong>Nombre:</strong> {formData?.nombre || 'No disponible'} {formData?.apellido || 'No disponible'}</p>
-            <p><strong>Email:</strong> {formData?.email || 'No disponible'}</p>
-            <p><strong>Dirección:</strong> {formData?.direccionCalle || ''} {formData?.direccionNumero || ''}</p>
-            <p><strong>Provincia:</strong> {formData?.provincia || 'No disponible'}</p>
-
+          <h2>Confirmación del Pedido</h2>
+          <Row>
+            <Col md={6}>
+                  <Form.Group controlId="nombre">
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="nombre"
+                      value={userWithId1 ? userWithId1.nombre : formData.nombre}
+                      onChange={handleChange}
+                      className={errors.nombre ? 'input-error' : ''}
+                      required
+                    />
+                    {errors.nombre && <div className="error-text">{errors.nombre}</div>}
+                  </Form.Group>
+            </Col>
+            <Col md={6}>
+                <Form.Group controlId="apellido">
+                <Form.Label>Apellido</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="apellido"
+                      value={userWithId1 ? userWithId1.apellido : formData.apellido}
+                      onChange={handleChange}
+                      className={errors.apellido ? 'input-error' : ''}
+                      required
+                    />
+                    {errors.apellido && <div className="error-text">{errors.apellido}</div>}
+                  </Form.Group>
+                </Col>
+            </Row>  
             <div className="mt-4">
               <h4>Selecciona el Método de Pago</h4>
               <select value={metodoPago} onChange={handleMetodoPagoChange}>

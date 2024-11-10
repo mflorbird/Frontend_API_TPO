@@ -3,8 +3,11 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/cartEnvio.css';
 import { useNavigate } from 'react-router-dom';
 import useUserData from '../hooks/useUserData';
+import axios from 'axios'; 
 
-const CartEnvio = ({ cartItems, subtotal, discount }) => {
+const API_USERS_URL = 'http://localhost:3000/users';
+
+const CartEnvio = () => {
   const navigate = useNavigate(); 
   const { userData, loading, error } = useUserData();
   const [formData, setFormData] = useState({
@@ -21,18 +24,22 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [userWithId1, setUserWithId1] = useState(null);
+
+  // Fetch user with idUsuario=1
+  const fetchUserWithId1 = async () => {
+    try {
+      const response = await axios.get(`${API_USERS_URL}?idUsuario=1`);
+      setUserWithId1(response.data[0]);
+    } catch (error) {
+      console.error("Error al obtener el usuario con idUsuario = 1:", error);
+    }
+  };
 
   useEffect(() => {
-    if (userData) {
-      setFormData((prevData) => ({
-        ...prevData,
-        nombre: userData.nombre || '',
-        apellido: userData.apellido || '',
-      }));
-    }
-  }, [userData]);
-
-
+    fetchUserWithId1();
+  }, []);
+    
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -50,7 +57,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
   const validateForm = () => {
     const newErrors = {};
     Object.keys(formData).forEach((field) => {
-      if (field !== 'direccionPisoDepto' && field !== 'notaPedido' && !formData[field]) {
+      if (field !== 'direccionPisoDepto' && field !== 'notaPedido' && field !== 'nombre' && field !== 'apellido' && !formData[field]) {
         newErrors[field] = '*Obligatorio';
       }
     });
@@ -59,15 +66,13 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
     return Object.keys(newErrors).length === 0; 
   };
 
-
   const saveShippingData = async () => {
     try {
+      if (!userData || !userData.id) throw new Error("Falta el ID de usuario.");
       const response = await fetch(`http://localhost:3000/envio/${userData.id}`, {
-        method: 'PUT', // Usa PUT si el registro ya existe o POST si quieres crear uno nuevo
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
   
       if (!response.ok) {
@@ -77,7 +82,6 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
       console.error(error);
     }
   };
-  
 
   const handleCartEnvio = async (e) => {
     e.preventDefault();
@@ -86,29 +90,26 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
       navigate('/Checkout');
     }
   };
- 
+
   if (loading) {
     return <p>Cargando datos...</p>;
   }
-
   if (error) {
     return <p>Error al obtener los datos: {error}</p>;
   }
-
   if (!userData) {
     return <p>No se encontró el usuario.</p>;
   }
 
   return (
     <Container fluid className="cartEnvio-container">
-        <ul className="progress-steps">
-          <li className="step completed">Paso 1: Completa tu carrito</li>
-          <li className="step current">Paso 2: Datos de Envío</li>
-          <li className="step pending">Paso 3: Detalle de Facturación</li>
-          <li className="step pending">Paso 4: Realizar Pago</li>
-        </ul>
+      <ul className="progress-steps">
+        <li className="step completed">Paso 1: Completa tu carrito</li>
+        <li className="step current">Paso 2: Datos de Envío</li>
+        <li className="step pending">Paso 3: Detalle de Facturación</li>
+        <li className="step pending">Paso 4: Realizar Pago</li>
+      </ul>
 
-      
       <div className="CartEnvio-body">
         <Button variant="secondary" className="mt-4" onClick={() => navigate('/Cart')}>
           Modificar Pedido
@@ -124,10 +125,10 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="nombre"
-                    value={formData.nombre}
+                    value={userWithId1 ? userWithId1.nombre : formData.nombre}
                     onChange={handleChange}
                     className={errors.nombre ? 'input-error' : ''}
-                    required
+                    readOnly
                   />
                   {errors.nombre && <div className="error-text">{errors.nombre}</div>}
                 </Form.Group>
@@ -138,10 +139,10 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
                   <Form.Control
                     type="text"
                     name="apellido"
-                    value={formData.apellido}
+                    value={userWithId1 ? userWithId1.apellido : formData.apellido}
                     onChange={handleChange}
                     className={errors.apellido ? 'input-error' : ''}
-                    required
+                    readOnly
                   />
                   {errors.apellido && <div className="error-text">{errors.apellido}</div>}
                 </Form.Group>
@@ -252,18 +253,15 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
               />
             </Form.Group>
 
-           
-            <Button variant="primary" type="submit" className="mt-3" >
+            <Button variant="primary" type="submit" className="mt-3">
               Continuar
             </Button>
           </Form>
-        
-        
         </div>
-     </div>
-      
+      </div>
     </Container>
   );
 }
 
 export default CartEnvio;
+``

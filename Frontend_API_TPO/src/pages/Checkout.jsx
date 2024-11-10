@@ -3,6 +3,9 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 import { useNavigate } from 'react-router-dom';
 import useUserData from '../hooks/useUserData';
+import axios from 'axios'; 
+
+const API_USERS_URL = 'http://localhost:3000/users';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
@@ -18,16 +21,21 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
 
   const [errors, setErrors] = useState('');
 
-  useEffect(() => {
-    if (userData) {
-      setFormData((prevData) => ({
-        ...prevData,
-        nombre: userData.nombre || '',
-        apellido: userData.apellido || '',
-        email: userData.email || '',
-      }));
+  const [userWithId1, setUserWithId1] = useState(null);
+
+  // Fetch user with idUsuario=1
+  const fetchUserWithId1 = async () => {
+    try {
+      const response = await axios.get(`${API_USERS_URL}?idUsuario=1`);
+      setUserWithId1(response.data[0]);
+    } catch (error) {
+      console.error("Error al obtener el usuario con idUsuario = 1:", error);
     }
-  }, [userData]);
+  };
+
+  useEffect(() => {
+    fetchUserWithId1();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +53,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
   const validateForm = () => {
     const newErrors = {};
     Object.keys(formData).forEach((field) => {
-      if (field !== 'direccionPisoDepto' && field !== 'notaPedido' && !formData[field]) {
+      if (field !== 'nombre' && field !== 'apellido' && field !== 'email' && !formData[field]) {
         newErrors[field] = '*Obligatorio';
       }
     });
@@ -132,7 +140,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     <Form.Control
                       type="text"
                       name="nombre"
-                      value={formData.nombre}
+                      value={userWithId1 ? userWithId1.nombre : formData.nombre}
                       onChange={handleChange}
                       className={errors.nombre ? 'input-error' : ''}
                       required
@@ -146,7 +154,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     <Form.Control
                       type="text"
                       name="apellido"
-                      value={formData.apellido}
+                      value={userWithId1 ? userWithId1.apellido : formData.apellido}
                       onChange={handleChange}
                       className={errors.apellido ? 'input-error' : ''}
                       required
@@ -200,7 +208,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 <Form.Control
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={userWithId1 ? userWithId1.email : formData.email}
                   onChange={handleChange}
                   className={errors.email ? 'input-error' : ''}
                   required
