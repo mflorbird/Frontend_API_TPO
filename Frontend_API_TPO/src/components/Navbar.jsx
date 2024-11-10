@@ -98,16 +98,22 @@ const Navbar = () => {
         {/* Menú del usuario */}
         {user ? (
           <Dropdown>
-            <Dropdown.Toggle className="navbar-profile dropdown-toggle-white" id="dropdown-basic">
-              <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => { logout(); navigate("/login"); }}>
-                Cerrar Sesión
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <Dropdown.Toggle className="navbar-profile dropdown-toggle-white" id="dropdown-basic">
+            <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
+          </Dropdown.Toggle>
+      
+          <Dropdown.Menu>
+            {/* Opción para ir al perfil */}
+            <Dropdown.Item onClick={() => navigate("/profile")}>
+              Mi Perfil
+            </Dropdown.Item>
+            
+            {/* Opción para cerrar sesión */}
+            <Dropdown.Item onClick={() => { logout(); navigate("/login"); }}>
+              Cerrar Sesión
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         ) : (
           <button onClick={() => navigate("/login")} className="login-button">
             Iniciar Sesión
