@@ -14,7 +14,8 @@ const AddProductPage = () => {
     category: '',
     description: '',
     price: '',
-    stockTotal: []
+    stockTotal: [],
+    featured: false,
   });
 
   const [image, setImage] = useState(null);
@@ -36,6 +37,7 @@ const AddProductPage = () => {
             description: product.description,
             price: product.price,
             stockTotal: product.stockTotal,
+            featured: product.featured,
           });
           setImage(product.image);
         })
@@ -85,7 +87,7 @@ const AddProductPage = () => {
   };
 
   const isFormValid = () => {
-    return formValues.model && formValues.category && formValues.description && formValues.price && formValues.stockTotal.length > 0 && image;
+    return formValues.model && formValues.category && formValues.description && formValues.price && formValues.featured && formValues.stockTotal.length > 0 && image;
   };
 
   const handleSubmit = async (e) => {
