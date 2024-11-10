@@ -2,7 +2,7 @@ import React from 'react';
 import { Users, Bell, Star, Heart } from "lucide-react";
 import "../styles/about.css";
 import imgcabecera from '../assets/naikii.png';
-import imgequipo from '../assets/equipo.png';
+import imgequipo from '../assets/equipo.jpg';
 
 const About = () => {
   return (
