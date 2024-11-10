@@ -17,6 +17,8 @@ import AddProductPage from '../pages/AddProductPage';
 import TermsAndConditions from '../pages/TermsAndConditions.jsx';
 import PrivacyPolicy from '../pages/PrivacyPolicy.jsx';
 import Contact from '../pages/Contact.jsx';
+import ProductDetail from '../pages/ProductDetail.jsx';
+import Error from '../pages/Error.jsx';
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -40,13 +42,14 @@ const AppRoutes = () => {
           <Route path="/terminos-y-condiciones" element={<TermsAndConditions />} />
           <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
           <Route path="/contacto" element={<Contact/>} />
+          <Route path="/producto/:id" element={<ProductDetail />} />
         </Route>
 
         <Route element={<SimpleLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/add-product" element={<AddProductPage />} />
-
+          <Route path="/error" element={<Error />} />
         </Route>
       </Routes>
     </AppProvider>
