@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import DestacadosList from "../components/catalog/DestacadosList.jsx";
 import FavoritosList from "../components/catalog/FavoritosList.jsx";
-import RecientesList from "../components/catalog/RecientesList.jsx";
+import VisitadosList from "../components/catalog/VisitadosList.jsx";
 import ProductList from "../components/catalog/ProductList.jsx";
 import Carousel from "../components/catalog/Carousel.jsx";
 import "../styles/Home.css";
@@ -45,7 +45,7 @@ const Home = () => {
                     <>
                         <section className="mb-5">
                             <h2 className="mb-4">Inspirado en lo último que viste</h2>
-                            <RecientesList/>
+                            <VisitadosList/>
                         </section>
                     </>
                 )}
