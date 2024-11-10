@@ -204,18 +204,6 @@ const Cart = () => {
     console.error("Error al guardar o actualizar la compra:", error);
   }
 };
-    const addTestItem = () => {
-      const testItem = {
-        id: Math.floor(Math.random() * 100000),
-        model: 'Campus',
-        size: '44',
-        price: 40000,
-        quantity: 1,
-        image: '/path/to/default-image.jpg',
-        category: 'Urban'
-      };
-      setCartItems([...cartItems, testItem]);
-    };
 
 
   if (!userWithId1) return <p>Cargando datos del usuario...</p>;
