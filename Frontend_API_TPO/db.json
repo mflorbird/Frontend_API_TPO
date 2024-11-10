@@ -5,14 +5,24 @@
       "username": "usuario1",
       "email": "usuario1@example.com",
       "password": "Contraseña123",
-      "role": "user"
+      "role": "user",
+      "favoritos": [
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4",
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
+      ],
+      "visitados": [
+        "59a3578d-501c-4372-99cc-ac05b332f4fc",
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b"
+      ]
     },
     {
       "id": "2",
       "username": "usuario2",
       "email": "usuario2@example.com",
       "password": "Contraseña456",
-      "role": "admin"
+      "role": "admin",
+      "favoritos": [],
+      "visitados": []
     },
     {
       "id": "5721",
@@ -21,7 +31,13 @@
       "email": "florenciabird95@gmail.com",
       "fechaNacimiento": "1995-03-13",
       "usuario": "florbird",
-      "contraseña": "Contraseña1995"
+      "contraseña": "Contraseña1995",
+      "favoritos": [
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
+      ],
+      "visitados": [
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
+      ]
     },
     {
       "id": "a115",
@@ -30,7 +46,9 @@
       "email": "jose@gmail.com",
       "fechaNacimiento": "1995-12-12",
       "usuario": "jose123",
-      "contraseña": "contraseña123"
+      "contraseña": "contraseña123",
+      "favoritos": [],
+      "visitados": []
     },
     {
       "id": "429b",
@@ -39,7 +57,9 @@
       "email": "fran@gmail.com",
       "fechaNacimiento": "2000-11-11",
       "usuario": "fp@gmail.com",
-      "contraseña": "contraseña123"
+      "contraseña": "contraseña123",
+      "favoritos": [],
+      "visitados": []
     }
   ],
   "products": [
@@ -49,6 +69,7 @@
       "category": "Urban",
       "description": "Cómodos, duraderos y atemporales: por una razón son los número 1.",
       "price": 40000,
+      "featured": false,
       "stockTotal": [
         {
           "size": "44",
@@ -67,6 +88,7 @@
       "category": "Urban",
       "description": "La confección clásica de los años 80 se combina con materiales para lucir un estilo que deja huella en la cancha y en la calle.",
       "price": 100000,
+      "featured": true,
       "stockTotal": [
         {
           "size": "38",
@@ -89,6 +111,7 @@
       "category": "Urban",
       "description": "Aportan estilo en toda la cancha y comodidad premium a un look icónico. ",
       "price": 101994,
+      "featured": true,
       "stockTotal": [
         {
           "size": "38",
