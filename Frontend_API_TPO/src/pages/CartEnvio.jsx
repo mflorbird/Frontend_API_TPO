@@ -32,6 +32,7 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
     }
   }, [userData]);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -58,14 +59,34 @@ const CartEnvio = ({ cartItems, subtotal, discount }) => {
     return Object.keys(newErrors).length === 0; 
   };
 
-  const handleCartEnvio = (e) => {
-    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+  const saveShippingData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/envio/${userData.id}`, {
+        method: 'PUT', // Usa PUT si el registro ya existe o POST si quieres crear uno nuevo
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al guardar los datos de envío');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+  const handleCartEnvio = async (e) => {
+    e.preventDefault();
     if (validateForm()) {
+      await saveShippingData(); // Guarda los datos antes de navegar
       navigate('/Checkout');
     }
   };
-
-  
+ 
   if (loading) {
     return <p>Cargando datos...</p>;
   }
