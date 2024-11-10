@@ -60,13 +60,51 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
     return Object.keys(newErrors).length === 0; 
   };
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      navigate('/FinalizarCompra');
+      try {
+        // Obtener datos de "cart"
+        const cartResponse = await fetch('http://localhost:3000/cart');
+        const cartData = await cartResponse.json();
+
+        // Calcular subtotal, descuento y otros valores que quieres pasar a `FinalizarCompra`
+        const subtotal = cartData.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        const discount = subtotal * 0.1; // Ejemplo: 10% de descuento
+        const metodoPago = 'tarjetaCredito'; // Reemplaza con el valor correcto
+        const formData = {
+          nombre: 'Juan',
+          apellido: 'Pérez',
+          email: 'juan@example.com',
+          direccionCalle: 'Calle Falsa',
+          direccionNumero: '123',
+          provincia: 'Buenos Aires'
+        };
+        // Mover datos a "checkout"
+        for (const item of cartData) {
+          await fetch('http://localhost:3000/checkout', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
+          });
+        }
+
+        // Navegar a la página de FinalizarCompra
+        navigate('/FinalizarCompra', {
+          state: {
+            metodoPago,
+            formData,
+            subtotal,
+            discount,
+          },
+        });
+      } catch (error) {
+        console.error('Error al mover datos de "cart" a "checkout":', error);
+      }
     }
   };
-
 
   if (loading) {
     return <p>Cargando datos...</p>;
@@ -249,7 +287,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
               </p>
               
-              <Button variant="primary" type="submit" className="mt-3">
+              <Button variant="primary" type="submit" onClick={handleCheckout} className="mt-3">
                 Continuar a Finalizar Compra
               </Button>
             </Col>
