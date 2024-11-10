@@ -11,12 +11,14 @@ import '../styles/ProductDetail.css';
 
 const ProductDetail = () => {
     const { id } = useParams();
-    const { user, actualizarFavoritos, actualizarVisitados } = useContext(AppContext);
+    const { user, actualizarFavoritos, actualizarVisitados, addItemToCart, cartItems } = useContext(AppContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedSize, setSelectedSize] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+
 
     useEffect(() => {
         const loadProduct = async () => {
@@ -49,6 +51,43 @@ const ProductDetail = () => {
 
     const handleSizeSelect = (size) => {
         setSelectedSize(size);
+    };
+
+    const handleAddToCart = async () => {
+        if (!selectedSize) {
+            alert("Selecciona un talle antes de agregar al carrito.");
+            return;
+        }
+
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
+        try {
+
+            const cartItem = {
+                id: product.id,
+                size: selectedSize,
+                quantity: quantity,
+                price: product.price,
+                model: product.model,
+                image: product.image
+            };
+
+            await addItemToCart(cartItem);
+
+            console.log('Producto agregado exitosamente', cartItem);
+            console.log('Carrito actualizado', cartItems);
+
+            const willNavigate = window.confirm("Producto agregado al carrito. ¿Deseas ir al carrito?");
+            if (willNavigate) {
+                navigate("/cart");
+            }
+        } catch (error) {
+            console.error("Error al agregar al carrito:", error);
+            alert("Hubo un error al agregar el producto al carrito.");
+        }
     };
 
     const toggleFavorite = async () => {
@@ -126,21 +165,30 @@ const ProductDetail = () => {
                             </ButtonGroup>
                         </div>
 
+                        <div className="quantity mb-3">
+                            <h5>Cantidad</h5>
+                            <div className="d-flex align-items-center">
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                >
+                                    -
+                                </Button>
+                                <span className="mx-3">{quantity}</span>
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={() => setQuantity(quantity + 1)}
+                                >
+                                    +
+                                </Button>
+                            </div>
+                        </div>
+
                         <div className="mt-4 d-flex align-items-center">
                             <Button
                                 variant="primary"
                                 className="me-3 btn-lg"
-                                onClick={() => {
-                                    if (!selectedSize) {
-                                        alert("Selecciona un talle antes de agregar al carrito.");
-                                        return;
-                                    }
-                                    if (!user) {
-                                        navigate("/login");
-                                    } else {
-                                        navigate("/cart");
-                                    }
-                                }}
+                                onClick={handleAddToCart}
                                 disabled={!selectedSize}
                             >
                                 Agregar al carrito
