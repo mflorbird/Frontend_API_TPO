@@ -39,3 +39,13 @@
   max-height: 500px;
   object-fit: cover;
 }
+.home-container {
+  margin-top: 56px;
+  margin-bottom: 150px;
+}
+
+.carousel-wrapper {
+  width: 100%;
+  margin-top: -56px;
+  padding-top: 56px;
+}
