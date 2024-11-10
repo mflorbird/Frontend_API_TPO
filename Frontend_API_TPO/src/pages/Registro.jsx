@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Alert, Container, Row, Col, Button } from 'react-bootstrap';
+import { Form, Alert, Container, Row, Col, Button, FormCheck } from 'react-bootstrap';
 import BackButton from '../components/BackButton';
 import FormField from '../components/FormField';
 import FormSubmitButton from '../components/FormSubmitButton';
@@ -60,7 +60,9 @@ const RegistroPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <BackButton />
+        <Link to="/" className="text-decoration-none text-dark mb-4 d-block">
+            &larr; Volver
+        </Link>
           <img
             src="/naikii.svg"
             alt="Logo"
@@ -71,7 +73,7 @@ const RegistroPage = () => {
             Regístrate y conseguí las zapas que van con vos.
           </p>
 
-          {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Empezá a disfrutar de la experiencia NAIKII</Alert>}
+          {isSubmitted && <Alert variant="success">Tu cuenta fue creada con éxito. Inicia sesión y empezá a disfrutar de la experiencia NAIKII</Alert>}
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
@@ -134,10 +136,16 @@ const RegistroPage = () => {
               error={errors.contraseña}
             />
 
+            <div>
+              <label className="form-check-label mt-4 mb-4" htmlFor="acceptTerms">
+              • Al registrarme, confirmo que he leído y acepto los   <a href="/terminos-y-condiciones" target="_blank">Términos y Condiciones</a> así como las <a href="/politicas-de-privacidad" target="_blank">Políticas de Privacidad</a>.
+              </label>
+            </div>
+
             <FormSubmitButton
               label="Registrarme"
               loading={loading}
-              disabled={loading || !formData.nombre || !formData.apellido || !formData.email || !formData.contraseña}
+              disabled={loading || !formData.nombre || !formData.apellido || !formData.email || !formData.contraseña || !formData.fechaNacimiento || !formData.usuario}
             />
             <div className="d-flex align-items-center justify-content-center mt-4">
               <div className="line" style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>

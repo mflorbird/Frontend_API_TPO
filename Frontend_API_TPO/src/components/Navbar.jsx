@@ -120,7 +120,7 @@ const Navbar = () => {
                 </Dropdown.Menu>
               </Dropdown>
           ) : (
-              <button onClick={() => navigate("/login")} className="login-button">
+              <button onClick={() => navigate("/login")} variant="primary" className="login-button">
                 Iniciar Sesión
               </button>
           )}
