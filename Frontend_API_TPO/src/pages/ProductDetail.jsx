@@ -1,22 +1,22 @@
 // src/pages/ProductDetail.jsx
 import { useParams, useNavigate } from 'react-router-dom';
-import {useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { getProductById } from '../services/catalogService';
 import { Button, ToggleButton, ButtonGroup } from 'react-bootstrap';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ProductDetail.css';
 
 const ProductDetail = () => {
     const { id } = useParams();
-    const { user } = useContext(AppContext)
+    const { user, actualizarFavoritos, actualizarVisitados } = useContext(AppContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedSize, setSelectedSize] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
-
 
     useEffect(() => {
         const loadProduct = async () => {
@@ -34,14 +34,49 @@ const ProductDetail = () => {
 
         loadProduct();
     }, [id, navigate]);
-    console.log(product);
+
+    useEffect(() => {
+        if (user && product) {
+            setIsFavorite(user.favoritos.includes(product.id));
+            const nuevosVisitados = [...user.visitados];
+            if (!nuevosVisitados.includes(product.id)) {
+                nuevosVisitados.push(product.id);
+            }
+            actualizarVisitados(user, nuevosVisitados);
+
+        }
+    }, [user, id, product]);
 
     const handleSizeSelect = (size) => {
         setSelectedSize(size);
     };
 
-    const toggleFavorite = () => {
-        setIsFavorite(!isFavorite);
+    const toggleFavorite = async () => {
+        if (!user) {
+            navigate("/login");
+            return;
+        }
+
+        try {
+            let nuevosFavoritos;
+            const productId = product.id;
+
+            if (isFavorite) {
+                // Si ya es favorito, lo eliminamos
+                nuevosFavoritos = user.favoritos.filter(fav => fav !== productId);
+            } else {
+                // Si no es favorito, lo agregamos
+                nuevosFavoritos = [...user.favoritos, productId];
+            }
+
+            // Actualiza en el backend
+            await actualizarFavoritos(user, nuevosFavoritos);
+
+            // Actualiza el estado local
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            console.error("Error al actualizar favoritos:", error);
+        }
     };
 
     if (loading) {
@@ -74,7 +109,7 @@ const ProductDetail = () => {
                         <div className="sizes mb-3">
                             <h5>Talle</h5>
                             <ButtonGroup className="mb-3">
-                                {product.stockTotal.map(({size, stock}) => (
+                                {product.stockTotal.map(({ size, stock }) => (
                                     <ToggleButton
                                         key={size}
                                         type="radio"
@@ -91,38 +126,40 @@ const ProductDetail = () => {
                             </ButtonGroup>
                         </div>
 
-                        {!user && (
-                        <div className="mt-4">
-                            <Button variant="primary"
-                                    className="me-3 btn-lg"
-                                    onClick={() => navigate("/login")}
-                                    disabled={!selectedSize}>
+                        <div className="mt-4 d-flex align-items-center">
+                            <Button
+                                variant="primary"
+                                className="me-3 btn-lg"
+                                onClick={() => {
+                                    if (!selectedSize) {
+                                        alert("Selecciona un talle antes de agregar al carrito.");
+                                        return;
+                                    }
+                                    if (!user) {
+                                        navigate("/login");
+                                    } else {
+                                        navigate("/cart");
+                                    }
+                                }}
+                                disabled={!selectedSize}
+                            >
                                 Agregar al carrito
                             </Button>
-                        </div>
-                        )}
                             {user && (
-                                <div className="mt-4">
-                                    <Button variant="primary"
-                                            className="me-3 btn-lg"
-                                            onClick={() => navigate("/cart")}
-                                            disabled={!selectedSize}>
-                                        Agregar al carrito
-                                    </Button>
-                                    <Button
-                                        variant="outline-secondary"
-                                        onClick={toggleFavorite}
-                                        className="btn-lg"
-                                    >
-                                        {isFavorite ? <BsHeartFill/> : <BsHeart/>}
-                                    </Button>
-                                </div>
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={toggleFavorite}
+                                    className="btn-lg"
+                                >
+                                    {isFavorite ? <BsHeartFill color="red" /> : <BsHeart />}
+                                </Button>
                             )}
                         </div>
                     </div>
                 </div>
             </div>
-            );
-            };
+        </div>
+    );
+};
 
-            export default ProductDetail;
+export default ProductDetail;
