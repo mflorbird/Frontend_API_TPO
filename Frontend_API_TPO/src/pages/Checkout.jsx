@@ -6,7 +6,6 @@ import useUserData from '../hooks/useUserData';
 
 const Checkout = ({ cartItems, subtotal, discount }) => {
   const navigate = useNavigate(); 
-  const [metodoPago, setMetodoPago] = useState('');
   const { userData, loading, error } = useUserData();
   const [formData, setFormData] = useState({
     nombre: '',
@@ -30,7 +29,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
     }
   }, [userData]);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -52,10 +50,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
       }
     });
 
-    if (!metodoPago) {
-      newErrors.metodoPago = '*Selecciona un método de pago';
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; 
   };
@@ -71,7 +65,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
         // Calcular subtotal, descuento y otros valores que quieres pasar a `FinalizarCompra`
         const subtotal = cartData.reduce((acc, item) => acc + item.price * item.quantity, 0);
         const discount = subtotal * 0.1; // Ejemplo: 10% de descuento
-        const metodoPago = 'tarjetaCredito'; // Reemplaza con el valor correcto
         const formData = {
           nombre: 'Juan',
           apellido: 'Pérez',
@@ -94,7 +87,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
         // Navegar a la página de FinalizarCompra
         navigate('/FinalizarCompra', {
           state: {
-            metodoPago,
             formData,
             subtotal,
             discount,
@@ -252,36 +244,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
               <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
                 Modificar Pedido
               </Button>
-
-              <h5 className="mt-4">Seleccione Método de Pago</h5>
-              <Form.Check
-                type="radio"
-                label="Transferencia Bancaria"
-                name="metodoPago"
-                value="transferenciaBancaria"
-                onChange={(e) => setMetodoPago(e.target.value)}
-                checked={metodoPago === 'transferenciaBancaria'}
-                className={errors.metodoPago ? 'input-error' : ''}
-              />
-              <Form.Check
-                type="radio"
-                label="Tarjeta de Crédito"
-                name="metodoPago"
-                value="tarjetaCredito"
-                onChange={(e) => setMetodoPago(e.target.value)}
-                checked={metodoPago === 'tarjetaCredito'}
-                className={errors.metodoPago ? 'input-error' : ''}
-              />
-              <Form.Check
-                type="radio"
-                label="Billetera Digital"
-                name="metodoPago"
-                value="billeteraDigital"
-                onChange={(e) => setMetodoPago(e.target.value)}
-                checked={metodoPago === 'billeteraDigital'}
-                className={errors.metodoPago ? 'input-error' : ''}
-              />
-              {errors.metodoPago && <div className="error-text">{errors.metodoPago}</div>}
 
               <p className="mt-3 text-muted">
                 Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
