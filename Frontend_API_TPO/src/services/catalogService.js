@@ -56,7 +56,7 @@ export const getFavoritos = async (user) => {
     } catch (error) {
         throw new Error('Error al obtener los productos favoritos', error);
   }
-}
+};
 
 // export const getFavoritos = async () => {
 //   try {
@@ -68,6 +68,31 @@ export const getFavoritos = async (user) => {
 // };
 
 // categoria - get ruta: "/productos/categoria/{categoria}" OK
+export const getProductoCategoria = async (categoria) => {
+  try {
+    const response = await fetchProductsFromDb()
+    return response.filter(product => product.category === categoria);
+    } catch (error) {
+        throw new Error('Error al obtener los productos por categoria', error);
+  }
+};
+
+export const getCategorias = async () => {
+  let categorias = [];
+    try {
+        const response = await fetchProductsFromDb();
+        response.forEach(product => {
+            if (!categorias.includes(product.category)) {
+                categorias.push(product.category);
+            }
+        });
+        return categorias;
+    } catch (error) {
+        throw new Error('Error al obtener las categorias', error);
+    }
+};
+
+
 export const getCategoria = async (categoria) => {
   try {
     const response = await axios.get(`${API_URL}/productos/categoria/${categoria}`);
