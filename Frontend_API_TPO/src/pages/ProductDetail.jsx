@@ -1,5 +1,5 @@
 // src/pages/ProductDetail.jsx
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { getProductById } from '../services/catalogService';
@@ -90,9 +90,9 @@ const ProductDetail = () => {
     return (
         <div className="product-detail-container">
             <div className="container my-5">
-                <a href="/" className="text-decoration-none mb-4 d-block">
+                <Link to="/" className="text-decoration-none mb-4 d-block">
                     &larr; Volver al inicio
-                </a>
+                </Link>
                 <div className="row">
                     <div className="col-md-6">
                         <img
