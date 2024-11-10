@@ -40,7 +40,8 @@
       ],
       "visitados": [
         "59a3578d-501c-4372-99cc-ac05b332f4fc",
-        "49bb7b63-df50-4106-b9a9-7596208661c3"
+        "49bb7b63-df50-4106-b9a9-7596208661c3",
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b"
       ]
     },
     {
@@ -64,6 +65,23 @@
       "contraseña": "contraseña123",
       "favoritos": [],
       "visitados": []
+    },
+    {
+      "id": "bf5e",
+      "nombre": "Juan",
+      "apellido": "Lopez",
+      "email": "jlopez@gmail.com",
+      "fechaNacimiento": "1995-03-13",
+      "usuario": "jlopez",
+      "contraseña": "Contraseña123",
+      "favoritos": [
+        "aad749de-1616-42ec-8bf5-129bf5f6e0bb"
+      ],
+      "visitados": [
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
+        "49bb7b63-df50-4106-b9a9-7596208661c3",
+        "aad749de-1616-42ec-8bf5-129bf5f6e0bb"
+      ]
     }
   ],
   "products": [
