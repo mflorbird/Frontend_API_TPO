@@ -4,6 +4,8 @@ import React, { createContext, useState } from 'react';
 // import { addProduct } from '../services/catalogService';
 import { addProductToDb, fetchProductsFromDb } from '../services/catalogService'; 
 import { useNavigate } from 'react-router-dom';
+import {updateFavorites, updateVisitados} from '../services/userService';
+
 // Crear el contexto
 export const AppContext = createContext();
 
@@ -79,6 +81,34 @@ export const AppProvider = ({ children }) => {
     clearCart();
   };
 
+
+  const actualizarFavoritos = async (user, nuevosFavoritos) => {
+    try
+    {
+      const updatedUser = await updateFavorites(user.id, nuevosFavoritos);
+      setUser(updatedUser);
+    }
+    catch (error)
+    {
+      console.error("Error al actualizar favoritos:", error);
+      throw error;
+    }
+    };
+
+  const actualizarVisitados = async (user, nuevosVisitados) => {
+    try
+    {
+      const updatedUser = await updateVisitados(user.id, nuevosVisitados);
+      setUser(updatedUser);
+    }
+    catch (error)
+    {
+      console.error("Error al actualizar visitados:", error);
+      throw error;
+    }
+  }
+
+
   return (
     <AppContext.Provider value={{
       cartItems,
@@ -92,8 +122,9 @@ export const AppProvider = ({ children }) => {
       login,
       logout,
       token,
-      setToken
-
+      setToken,
+      actualizarFavoritos,
+      actualizarVisitados
     }}>
       {children}
     </AppContext.Provider>
