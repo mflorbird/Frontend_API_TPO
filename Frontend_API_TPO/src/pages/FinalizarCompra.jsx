@@ -17,11 +17,7 @@ const FinalizarCompra = ({ formData }) => {
   const [userWithId1, setUserWithId1] = useState(null);
   const { userData, loading, error } = useUserData();
   const [errors, setErrors] = useState('');
-  const [formDataLocal, setFormDataLocal] = useState(formData); // Renombrado a formDataLocal
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: ''
-  });
+
 
   // Fetch user with idUsuario=1
   const fetchUserWithId1 = async () => {
@@ -78,36 +74,10 @@ const FinalizarCompra = ({ formData }) => {
         <Row>
           <Col md={8}>
           <h2>Confirmación del Pedido</h2>
-          <Row>
-            <Col md={6}>
-                  <Form.Group controlId="nombre">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="nombre"
-                      value={userWithId1 ? userWithId1.nombre : formData.nombre}
-                      onChange={handleChange}
-                      className={errors.nombre ? 'input-error' : ''}
-                      required
-                    />
-                    {errors.nombre && <div className="error-text">{errors.nombre}</div>}
-                  </Form.Group>
-            </Col>
-            <Col md={6}>
-                <Form.Group controlId="apellido">
-                <Form.Label>Apellido</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="apellido"
-                      value={userWithId1 ? userWithId1.apellido : formData.apellido}
-                      onChange={handleChange}
-                      className={errors.apellido ? 'input-error' : ''}
-                      required
-                    />
-                    {errors.apellido && <div className="error-text">{errors.apellido}</div>}
-                  </Form.Group>
-                </Col>
-            </Row>  
+            <p><strong>Nombre:</strong> {userWithId1 ? userWithId1.nombre : formData.nombre}</p>
+            <p><strong>Apellido:</strong> {userWithId1 ? userWithId1.apellido : formData.apellido}</p>
+            <p><strong>Email:</strong> {userWithId1 ? userWithId1.email : formData.email}</p>
+            
             <div className="mt-4">
               <h4>Selecciona el Método de Pago</h4>
               <select value={metodoPago} onChange={handleMetodoPagoChange}>
