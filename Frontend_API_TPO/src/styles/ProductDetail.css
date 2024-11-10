@@ -1,0 +1,21 @@
+.container {
+    max-width: 900px;
+}
+
+.sizes h5 {
+    margin-bottom: 0.5rem;
+}
+
+.btn-lg .favorite-button svg {
+    font-size: 1.5rem;
+}
+
+.description {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+.product-detail-container {
+    margin-top: 150px;
+    margin-bottom: 130px;
+}
