@@ -64,7 +64,6 @@ export const AppProvider = ({ children }) => {
   const removeItemFromCart = (itemId) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
-
   const clearCart = () => {
     setCartItems([]);
   };
