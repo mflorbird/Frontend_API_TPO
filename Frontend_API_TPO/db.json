@@ -51,9 +51,10 @@
     {
       "id": "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
       "model": "Campus",
-      "category": "Urban",
+      "category": "Casual",
       "description": "Cómodos, duraderos y atemporales: por una razón son los número 1.",
       "price": 40000,
+      "featured": false,
       "stockTotal": [
         {
           "size": "44",
@@ -72,6 +73,7 @@
       "category": "Urban",
       "description": "La confección clásica de los años 80 se combina con materiales para lucir un estilo que deja huella en la cancha y en la calle.",
       "price": 100000,
+      "featured": true,
       "stockTotal": [
         {
           "size": "38",
@@ -94,6 +96,7 @@
       "category": "Urban",
       "description": "Aportan estilo en toda la cancha y comodidad premium a un look icónico. ",
       "price": 101994,
+      "featured": true,
       "stockTotal": [
         {
           "size": "38",

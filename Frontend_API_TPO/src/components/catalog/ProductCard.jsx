@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
             />
             <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{product.model}</h5>
-                <p className="card-text">{product.description}</p>
+                {/*<p className="card-text">{product.description}</p>*/}
                 <p className="card-text">
                     <strong>Precio: ${product.price}</strong>
                 </p>

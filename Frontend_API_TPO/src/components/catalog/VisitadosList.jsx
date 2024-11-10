@@ -1,12 +1,12 @@
 // ProductList.jsx
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
-import { getFavoritos } from "../../services/catalogService.js";
+import { getVisitados } from "../../services/catalogService.js";
 import { AppContext } from '../../context/AppContext';
 import { useContext } from 'react';
 
 
-const FavoritosList = () => {
+const VisitadosList = () => {
 
     const { user } = useContext(AppContext);
     const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const FavoritosList = () => {
                 return;
             }
             try {
-                const products = await getFavoritos( user );
+                const products = await getVisitados( user );
                 setData(products);
                 setLoading(false);
             } catch (error) {
@@ -40,7 +40,7 @@ const FavoritosList = () => {
 
     if (loading) return <p>Loading...</p>;
 
-    if (!data.length) return <p>No hay productos en favoritos</p>;
+    if (!data.length) return <p>No hay productos visitados</p>;
 
     return (
         <div className="container mt-3">
@@ -55,4 +55,4 @@ const FavoritosList = () => {
     );
 };
 
-export default FavoritosList;
+export default VisitadosList;

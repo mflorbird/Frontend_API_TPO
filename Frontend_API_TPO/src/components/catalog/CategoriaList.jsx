@@ -1,14 +1,11 @@
 // ProductList.jsx
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
-import { getFavoritos } from "../../services/catalogService.js";
-import { AppContext } from '../../context/AppContext';
-import { useContext } from 'react';
+import { getProductoCategoria } from "../../services/catalogService.js";
 
 
-const FavoritosList = () => {
+const CategoriaList = ({ categoria }) => {
 
-    const { user } = useContext(AppContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -22,12 +19,8 @@ const FavoritosList = () => {
 
     useEffect(() => {
         const loadProducts = async () => {
-            if (user.favoritos.length === 0) {
-                setLoading(false);
-                return;
-            }
             try {
-                const products = await getFavoritos( user );
+                const products = await getProductoCategoria( categoria );
                 setData(products);
                 setLoading(false);
             } catch (error) {
@@ -40,7 +33,6 @@ const FavoritosList = () => {
 
     if (loading) return <p>Loading...</p>;
 
-    if (!data.length) return <p>No hay productos en favoritos</p>;
 
     return (
         <div className="container mt-3">
@@ -55,4 +47,4 @@ const FavoritosList = () => {
     );
 };
 
-export default FavoritosList;
+export default CategoriaList;
