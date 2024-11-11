@@ -10,8 +10,9 @@ import { Dropdown } from 'react-bootstrap';
 import { getCategorias } from "../services/catalogService.js";
 
 const Navbar = () => {
-  const { cartItems, user, logout } = useContext(AppContext);
-  const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const { cart, user, logout } = useContext(AppContext);
+  const cartItemCount = cart?.items ? Object.values(cart.items).reduce((acc, item) => acc + item.quantity, 0) : 0;
+
   const navigate = useNavigate();
   const location = useLocation();
   const [categories, setCategories] = useState([]);
@@ -39,7 +40,6 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // Cargar categorías desde el servicio
     const loadCategories = async () => {
       const categorias = await getCategorias();
       setCategories(categorias);
@@ -63,14 +63,18 @@ const Navbar = () => {
                     Categorías
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    {categories.map((category, index) => (
-                        <Dropdown.Item
-                            key={index}
-                            onClick={() => navigate(`/categoria/${category}`)}
-                        >
-                          {category}
-                        </Dropdown.Item>
-                    ))}
+                    {categories.length > 0 ? (
+                        categories.map((category, index) => (
+                            <Dropdown.Item
+                                key={index}
+                                onClick={() => navigate(`/categoria/${category}`)}
+                            >
+                              {category}
+                            </Dropdown.Item>
+                        ))
+                    ) : (
+                        <Dropdown.Item disabled>Cargando...</Dropdown.Item>
+                    )}
                   </Dropdown.Menu>
                 </Dropdown>
               </li>
@@ -78,19 +82,19 @@ const Navbar = () => {
         )}
 
         <div className="navbar-user">
-          {!isAdmin && (
+          {!isAdmin && cart && (
               <div className="container-icon">
-              <div ref={btnCartRef} className="cart-container">
+                <div ref={btnCartRef} className="cart-container">
                   <img src={cartIcon} alt="Carrito" className="navbar-cart"/>
                   <span className="cart-badge">{cartItemCount}</span>
                 </div>
                 {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
                     <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
-                      {cartItems.map((item, index) => (
-                          <div key={index} className="cart-product">
+                      {Object.entries(cart.items).map(([itemId, item]) => (
+                          <div key={itemId} className="cart-product">
                             <div className="info-cart-product">
                               <span className="cantidad-producto-carrito">{item.quantity}</span>
-                              <p className="titulo-producto-carrito">{item.name}</p>
+                              <p className="titulo-producto-carrito">{itemId}</p>
                               <span className="precio-producto-carrito">${item.price}</span>
                               <img src={closeProduct} alt="Eliminar producto" className="close-product" />
                             </div>
@@ -98,7 +102,7 @@ const Navbar = () => {
                       ))}
                       <div className="cart-total-hidden">
                         <h3>Total:</h3>
-                        <span className="total-pagar-hidden">${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</span>
+                        <span className="total-pagar-hidden">${Object.values(cart.items).reduce((total, item) => total + item.price * item.quantity, 0)}</span>
                       </div>
                       <div className="cart-buttons">
                         <button onClick={() => navigate("/cart")} className="cart-button-ver">Ver Carrito</button>
@@ -123,7 +127,7 @@ const Navbar = () => {
                 </Dropdown.Menu>
               </Dropdown>
           ) : (
-              <button onClick={() => navigate("/login")} variant="primary" className="login-button">
+              <button onClick={() => navigate("/login")} className="login-button">
                 Iniciar Sesión
               </button>
           )}

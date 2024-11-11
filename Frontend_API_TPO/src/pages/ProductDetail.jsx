@@ -11,7 +11,7 @@ import '../styles/ProductDetail.css';
 
 const ProductDetail = () => {
     const { id } = useParams();
-    const { user, actualizarFavoritos, actualizarVisitados, addItemToCart, cartItems } = useContext(AppContext);
+    const { user, actualizarFavoritos, actualizarVisitados, addItemToCart, cart } = useContext(AppContext);
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -78,7 +78,8 @@ const ProductDetail = () => {
             await addItemToCart(cartItem);
 
             console.log('Producto agregado exitosamente', cartItem);
-            console.log('Carrito actualizado', cartItems);
+            console.log('Producto agregado exitosamente', cart);
+            console.log('Carrito actualizado', cart);
 
             const willNavigate = window.confirm("Producto agregado al carrito. ¿Deseas ir al carrito?");
             if (willNavigate) {

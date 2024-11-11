@@ -1,43 +1,157 @@
-import React, { createContext, useState } from 'react';
-// import { addProduct } from '../services/catalogService';
-import { addProductToDb, fetchProductsFromDb } from '../services/catalogService'; 
+import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {updateFavorites, updateVisitados} from '../services/userService';
+import { addProductToDb, fetchProductsFromDb } from '../services/catalogService';
+import { updateFavorites, updateVisitados } from '../services/userService';
+import {
+  getCartByUserId,
+  createCart,
+  addUpdateItem,
+  removeItem,
+  updateItemQuantity,
+  closeCart,
+  checkout
+} from '../services/cartService';
+
 
 export const AppContext = createContext();
+
+
 export const AppProvider = ({ children }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [token, setToken] = useState(null);
   const [error, setError] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [cart, setCart] = useState(null);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const addItemToCart = (item) => {
-    setCartItems((prevItems) => {
-      const itemExists = prevItems.find((prevItem) => prevItem.id === item.id);
-      if (itemExists) {
-        /*const newQuantity = prevItem.quantity + 1;*/
-        return prevItems.map((prevItem) =>
-          prevItem.id === item.id
-            ? { ...prevItem, quantity: Math.min(prevItem.quantity + 1, item.stock) }
-            : prevItem
-        );
+  useEffect(() => {
+    const initializeCart = async () => {
+      if (user && !cart) {
+        try {
+          setLoading(true);
+          let userCart = await getCartByUserId(user.id);
+
+          if (!userCart) {
+            userCart = await createCart(user.id);
+          }
+
+          setCart(userCart);
+        } catch (error) {
+          console.error('Error al inicializar el carrito:', error);
+        } finally {
+          setLoading(false);
+        }
       }
-      return [...prevItems, { ...item, quantity: 1 }];
-    });
-  };
+    };
 
-  const addProduct = async (productData) => {
+    initializeCart();
+  }, [user]);
+
+
+
+  const addItemToCart = async (item) => {
+    if (!user || !cart) return;
+
     try {
-      const product = await addProductToDb(productData); 
-      setError(false);
-      navigate("/product-management")
-      console.log('Producto agregado exitosamente', product);
-    } catch (err) {
-      setError(true);
-      console.error('Error al agregar el producto:', err);
+      setLoading(true);
+      const itemId = `${item.id}---${item.size}`;
+      const currentItem = cart.items[itemId];
+
+      console.log('Item actual:', currentItem);
+      console.log('Item nuevo:', item);
+
+      const newQuantity = currentItem ? currentItem.quantity + item.quantity : item.quantity;
+
+      console.log('Cantidad de items:', newQuantity);
+      const updatedCart = await addUpdateItem(
+          cart.id,
+          item.id,
+          item.size,
+          newQuantity,
+          item.price
+      );
+
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error al agregar item al carrito:', error);
+      throw error;
+    } finally {
+      setLoading(false);
     }
   };
+
+  const updateCartItemQuantity = async (item, newQuantity) => {
+    if (!user || !cart) return;
+
+    try {
+      setLoading(true);
+      const updatedCart = await updateItemQuantity(cart.id, item, newQuantity);
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error al actualizar cantidad:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeItemFromCart = async (item) => {
+    if (!user || !cart) return;
+
+    try {
+      setLoading(true);
+      const updatedCart = await removeItem(cart.id, item);
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error al eliminar item del carrito:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const clearCart = async () => {
+    if (!user || !cart) return;
+
+    try {
+      setLoading(true);
+      await closeCart(cart.id);
+      const newCart = await createCart(user.id);
+      setCart(newCart);
+    } catch (error) {
+      console.error('Error al limpiar el carrito:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const cartTotals = {
+    items: cart?.items ? Object.values(cart.items).reduce((total, item) => total + item.quantity, 0) : 0,
+    amount: cart?.precioTotal || 0
+  };
+
+  const checkoutCart = async () => {
+    if (!user || !cart) return;
+
+    try {
+      setLoading(true);
+      const cartStatus = await checkout(cart);
+      if (cartStatus.isValid) {
+        const newCart = await createCart(user.id);
+        setCart(newCart);
+        } else {
+        console.error('Error al finalizar la compra:', cartStatus.message);
+      }
+    } catch (error) {
+        console.error('Error al finalizar la compra:', error);
+        throw error;
+    }
+    finally {
+        setLoading(false);
+    }
+    };
+
 
   const getProductList = async () => {
     try {
@@ -50,31 +164,26 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const removeItemFromCart = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
-  //Calcular la cantidad total de items en el carrito
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
-
   const login = (userData) => {
     setUser(userData);
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     clearCart();
-  };
+    navigate('/');
+    };
 
 
   const actualizarFavoritos = async (user, nuevosFavoritos) => {
     try
     {
+      if (JSON.stringify(user.favoritos) !== JSON.stringify(nuevosFavoritos))
+      {
       const updatedUser = await updateFavorites(user.id, nuevosFavoritos);
       setUser(updatedUser);
+    }
     }
     catch (error)
     {
@@ -84,28 +193,29 @@ export const AppProvider = ({ children }) => {
     };
 
   const actualizarVisitados = async (user, nuevosVisitados) => {
-    try
-    {
-      const updatedUser = await updateVisitados(user.id, nuevosVisitados);
-      setUser(updatedUser);
-    }
-    catch (error)
-    {
+    try {
+      if (JSON.stringify(user.visitados) !== JSON.stringify(nuevosVisitados)) {
+        const updatedUser = await updateVisitados(user.id, nuevosVisitados);
+        setUser(updatedUser);
+      }
+    } catch (error) {
       console.error("Error al actualizar visitados:", error);
       throw error;
     }
-  }
+  };
 
 
   return (
     <AppContext.Provider value={{
-      cartItems,
+      cart,
+      cartTotals,
       addItemToCart,
       removeItemFromCart,
+      updateCartItemQuantity,
       clearCart,
-      addProduct,
+      checkoutCart,
+      loading,
       getProductList,
-      totalItems,
       user,
       login,
       logout,
