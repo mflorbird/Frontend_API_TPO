@@ -44,9 +44,10 @@
         "59a3578d-501c-4372-99cc-ac05b332f4fc",
         "49bb7b63-df50-4106-b9a9-7596208661c3",
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
-        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4",
+        "aa52b20a-1615-4f79-b9e4-3491b92b14c2"
       ],
-      "idUsuario": ""
+      "idUsuario": 1
     },
     {
       "id": "a115",
@@ -147,7 +148,7 @@
       "visitados": [
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
-      "idUsuario": 1
+      "idUsuario": ""
     }
   ],
   "products": [
@@ -371,9 +372,140 @@
           "subtotal": 200000
         }
       },
-      "estado": "activo",
+      "estado": "cerrado",
       "precioTotal": 200000,
-      "createdAt": "2024-11-11T17:40:24.722Z"
+      "createdAt": "2024-11-11T17:40:24.722Z",
+      "closedAt": "2024-11-11T17:57:13.366Z"
+    },
+    {
+      "id": "c1fd",
+      "cartId": "3f5f0c2d-63c7-4bac-8078-16d2efbcfe06",
+      "userId": "3d0b",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T17:57:13.419Z"
+    },
+    {
+      "id": "d92a",
+      "cartId": "614ad59c-afc5-4be3-834a-5b1c5856b99a",
+      "userId": "2",
+      "items": [],
+      "estado": "cerrado",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T17:57:16.557Z",
+      "closedAt": "2024-11-11T18:33:18.501Z"
+    },
+    {
+      "id": "da20",
+      "cartId": "fa1eb8d7-c341-4096-8f2f-0e7f16dd3e1a",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 2,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 200000
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 200000,
+      "createdAt": "2024-11-11T17:59:26.347Z",
+      "closedAt": "2024-11-11T18:29:01.900Z"
+    },
+    {
+      "id": "d3d5",
+      "cartId": "ead4f7b6-25e9-4fc8-aeaf-7f94d52bf476",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:29:01.947Z"
+    },
+    {
+      "id": "f680",
+      "cartId": "3c7001d2-7b77-4c12-aed5-a7bf658c8228",
+      "userId": "5721",
+      "items": [],
+      "estado": "cerrado",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:31:52.125Z",
+      "closedAt": "2024-11-11T18:31:55.908Z"
+    },
+    {
+      "id": "5fb1",
+      "cartId": "791c2973-8eef-4787-908b-e3e7190525f6",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:31:55.947Z"
+    },
+    {
+      "id": "5bc6",
+      "cartId": "787a9786-ee93-43be-91de-b480d63c9524",
+      "userId": "5721",
+      "items": [],
+      "estado": "cerrado",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:32:33.145Z",
+      "closedAt": "2024-11-11T18:33:08.901Z"
+    },
+    {
+      "id": "caa1",
+      "cartId": "ec6db1e3-a43d-4981-891b-74eab884875d",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:33:08.956Z"
+    },
+    {
+      "id": "19fa",
+      "cartId": "3bf4fec7-c3cb-46ec-b671-9d9b34846790",
+      "userId": "2",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:33:18.536Z"
+    },
+    {
+      "id": "a2a6",
+      "cartId": "c3e6d42a-ba15-4f49-9495-3f27c4f25705",
+      "userId": "2",
+      "items": [],
+      "estado": "cerrado",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:34:57.568Z",
+      "closedAt": "2024-11-11T18:34:59.461Z"
+    },
+    {
+      "id": "6123",
+      "cartId": "71cf8942-b83f-4d1d-8ecb-57448732a33c",
+      "userId": "2",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:34:59.509Z"
+    },
+    {
+      "id": "0ec2",
+      "cartId": "96e90731-97d9-40f3-b885-ec8b8180699f",
+      "userId": "5721",
+      "items": [],
+      "estado": "cerrado",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:35:02.538Z",
+      "closedAt": "2024-11-11T18:35:04.818Z"
+    },
+    {
+      "id": "60c0",
+      "cartId": "0f2f59ff-75a3-4598-b69b-b0d72259fd26",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T18:35:04.861Z"
     }
   ],
   "envio": [],

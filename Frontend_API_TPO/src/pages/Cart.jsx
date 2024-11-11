@@ -16,7 +16,7 @@ const Cart = () => {
   const [discountCode, setDiscountCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
-
+  
   const fetchCartItems = async () => {
     try {
       const response = await axios.get(`${API_CART_URL}?userId=${user.id}`); // Usar el userId desde el contexto
