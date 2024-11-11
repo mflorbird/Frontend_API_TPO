@@ -10,6 +10,7 @@ const Footer = () => {
         <ul className="footer-links">
           <a href="/terminos-y-condiciones">Términos y Condiciones</a>
           <a href="/politicas-de-privacidad">Políticas de Privacidad</a>
+          <a href="/FAQ">Preguntas Frecuentes</a>
         </ul>
       </div>
       <div className="footer-divider"/>
