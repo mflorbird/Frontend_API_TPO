@@ -26,12 +26,11 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const initializeCart = async () => {
-      if (user && !cart) {
+      if (!user) return;
         try {
           setLoading(true);
           let userCart = await getCartByUserId(user.id);
-
-          if (!userCart) {
+          if (!userCart || userCart.estado === 'cerrado') {
             userCart = await createCart(user.id);
           }
 
@@ -40,14 +39,13 @@ export const AppProvider = ({ children }) => {
           console.error('Error al inicializar el carrito:', error);
         } finally {
           setLoading(false);
-        }
       }
     };
 
     initializeCart();
   }, [user]);
 
-
+  const cartItems = cart?.items ? Object.values(cart.items) : [];
 
   const addItemToCart = async (item) => {
     if (!user || !cart) return;
@@ -209,6 +207,7 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       cart,
+      cartItems,
       cartTotals,
       addItemToCart,
       removeItemFromCart,

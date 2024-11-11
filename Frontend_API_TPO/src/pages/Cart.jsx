@@ -14,7 +14,7 @@ const Cart = () => {
   const [discountCode, setDiscountCode] = useState('');
   const [discountAmount, setDiscountAmount] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
-
+  
   const fetchCartItems = async () => {
     try {
       const items = await getCartItemsByUserId(user.id); // nuevo servicio de obtener los productos del carrito

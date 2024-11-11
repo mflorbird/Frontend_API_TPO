@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
@@ -7,7 +7,6 @@ import closeProduct from '../assets/x.svg';
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import { getCategorias } from "../services/catalogService.js";
 
 const Navbar = () => {
   const { cart, user, logout } = useContext(AppContext);
@@ -15,37 +14,12 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [categories, setCategories] = useState([]);
+  const [isCartVisible, setCartVisible] = useState(false); // Estado para controlar visibilidad del carrito
 
-  const btnCartRef = useRef(null);
-  const containerCartProductsRef = useRef(null);
 
-  useEffect(() => {
-    const btnCart = btnCartRef.current;
-    const containerCartProducts = containerCartProductsRef.current;
-
-    const toggleCart = () => {
-      containerCartProducts.classList.toggle('hidden-cart');
-    };
-
-    if (btnCart) {
-      btnCart.addEventListener('click', toggleCart);
-    }
-
-    return () => {
-      if (btnCart) {
-        btnCart.removeEventListener('click', toggleCart);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    const loadCategories = async () => {
-      const categorias = await getCategorias();
-      setCategories(categorias);
-    };
-    loadCategories();
-  }, []);
+  const toggleCart = () => {
+    setCartVisible(!isCartVisible); // Alterna la visibilidad del carrito
+  };
 
   const isAdmin = user && user.role === 'admin';
 
@@ -57,39 +31,18 @@ const Navbar = () => {
               <li><Link to="/">Inicio</Link></li>
               <li><Link to="/about">Sobre nosotros</Link></li>
               <li><Link to="/contacto">Contacto</Link></li>
-              <li>
-                <Dropdown>
-                  <Dropdown.Toggle>
-                    Categorías
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {categories.length > 0 ? (
-                        categories.map((category, index) => (
-                            <Dropdown.Item
-                                key={index}
-                                onClick={() => navigate(`/categoria/${category}`)}
-                            >
-                              {category}
-                            </Dropdown.Item>
-                        ))
-                    ) : (
-                        <Dropdown.Item disabled>Cargando...</Dropdown.Item>
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </li>
             </ul>
         )}
 
         <div className="navbar-user">
-          {!isAdmin && cart && (
+          {!isAdmin && user && cart && (  // Verifica si el usuario está logueado
               <div className="container-icon">
-                <div ref={btnCartRef} className="cart-container" onClick={() => navigate("/cart")}>
+                <div onClick={toggleCart} className="cart-container"> {/* Cambiado a onClick */}
                   <img src={cartIcon} alt="Carrito" className="navbar-cart"/>
                   <span className="cart-badge">{cartItemCount}</span>
                 </div>
                 {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
-                    <div ref={containerCartProductsRef} className="container-cart-products hidden-cart">
+                    <div className={`container-cart-products ${isCartVisible ? '' : 'hidden-cart'}`}> {/* Visibilidad controlada */}
                       {Object.entries(cart.items).map(([itemId, item]) => (
                           <div key={itemId} className="cart-product">
                             <div className="info-cart-product">
@@ -118,9 +71,11 @@ const Navbar = () => {
                   <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => { navigate("/profile"); }}>
-                    Mi Perfil
-                  </Dropdown.Item>
+                  {!isAdmin && ( // Solo muestra "Mi Perfil" si el usuario no es admin
+                    <Dropdown.Item onClick={() => { navigate("/profile"); }}>
+                      Mi Perfil
+                    </Dropdown.Item>
+                  )}
                   <Dropdown.Item onClick={() => { logout(); navigate("/login"); }}>
                     Cerrar Sesión
                   </Dropdown.Item>
