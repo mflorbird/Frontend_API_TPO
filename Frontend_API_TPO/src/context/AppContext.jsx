@@ -46,7 +46,7 @@ export const AppProvider = ({ children }) => {
     initializeCart();
   }, [user]);
 
-
+  const cartItems = cart?.items ? Object.values(cart.items) : [];
 
   const addItemToCart = async (item) => {
     if (!user || !cart) return;
@@ -207,6 +207,7 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       cart,
+      cartItems,
       cartTotals,
       addItemToCart,
       removeItemFromCart,
