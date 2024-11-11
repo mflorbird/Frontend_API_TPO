@@ -3,6 +3,7 @@ import "../styles/cart.css";
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { getCartItemsByUserId, getCartByUserId, updateItemQuantity, removeItem, emptyCart } from '../services/cartService'; // Importar los servicios adecuados
+import OrderSummary from '../components/OrderSummary';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -24,16 +25,6 @@ const Cart = () => {
     }
   };
 
-  // // Fetch cart items from the API
-  // const fetchCartItems = async () => {
-  //   try {
-  //     const cart = await getCartByUserId(user.id); // Llamada al servicio de obtener el carrito
-  //     setCartItems(Array.isArray(cart?.items) ? cart.items : []);
-  //   } catch (error) {
-  //     console.error("Error al obtener los productos del carrito:", error);
-  //     setCartItems([]);
-  //   }
-  // };
 
   // Calculate total amount, shipping cost, etc.
   const calculateTotal = () => {
@@ -72,10 +63,11 @@ const Cart = () => {
 
   // Update quantity of a cart item
   const handleQuantityChange = async (item, newQuantity) => {
+    console.log("Changing quantity for item:", item, "to:", newQuantity);
     try {
       await updateItemQuantity(user.id, item, newQuantity); // Llamada al servicio de actualizar cantidad
       setCartItems(cartItems.map((cartItem) =>
-        cartItem.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
+        cartItem.productId === item.productId && cartItem.size === item.size ? { ...cartItem, quantity: newQuantity } : cartItem
       ));
     } catch (error) {
       console.error("Error al actualizar la cantidad:", error);
@@ -106,7 +98,15 @@ const Cart = () => {
     }
   };
 
-  if (!user) return <p>Cargando datos del usuario...</p>;
+  if (!user) {
+    return (
+      <div className="cart-container">
+        <p>Por favor, inicia sesión para ver tu carrito.</p>
+        <button onClick={() => navigate('/login')}>Iniciar Sesión</button>
+      </div>
+    );
+  }
+
 
   return (
     <div className="cart-container">
@@ -151,16 +151,7 @@ const Cart = () => {
               )}
             </div>
           <div className="cart-summary">
-            <h3>Resumen de compra</h3>
-            <div className="summary-item">
-              <p>Subtotal: ${subtotal}</p>
-            </div>
-            <div className="summary-item">
-              <p>Descuento: ${discountAmount}</p>
-            </div>
-            <div className="summary-item">
-              <p>Total: ${totalAmount}</p>
-            </div>
+          <OrderSummary subtotal={subtotal} discountAmount={discountAmount} totalAmount={totalAmount} />
             <div className="summary-item">
               <input
                 type="text"

@@ -50,7 +50,6 @@ const CartEnvio = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Eliminar errores en tiempo real si el campo es válido
     if (value && errors[name]) {
       setErrors((prevErrors) => {
         const updatedErrors = { ...prevErrors };

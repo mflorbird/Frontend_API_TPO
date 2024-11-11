@@ -84,7 +84,7 @@ const Navbar = () => {
         <div className="navbar-user">
           {!isAdmin && cart && (
               <div className="container-icon">
-                <div ref={btnCartRef} className="cart-container">
+                <div ref={btnCartRef} className="cart-container" onClick={() => navigate("/cart")}>
                   <img src={cartIcon} alt="Carrito" className="navbar-cart"/>
                   <span className="cart-badge">{cartItemCount}</span>
                 </div>

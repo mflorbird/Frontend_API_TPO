@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/checkout.css';
 import { useNavigate } from 'react-router-dom';
-import useUserData from '../hooks/useUserData';
-import axios from 'axios'; 
+import { AppContext } from '../context/AppContext';
+import OrderSummary from '../components/OrderSummary';
 
-const API_USERS_URL = 'http://localhost:3000/users';
 
-const Checkout = ({ cartItems, subtotal, discount }) => {
+const Checkout = () => {
   const navigate = useNavigate(); 
-  const { userData, loading, error } = useUserData();
+  const { user, cartItems, subtotal, discount } = useContext(AppContext);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -20,22 +19,25 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
   });
 
   const [errors, setErrors] = useState('');
-
-  const [userWithId1, setUserWithId1] = useState(null);
-
-  // Fetch user with idUsuario=1
-  const fetchUserWithId1 = async () => {
-    try {
-      const response = await axios.get(`${API_USERS_URL}?idUsuario=1`);
-      setUserWithId1(response.data[0]);
-    } catch (error) {
-      console.error("Error al obtener el usuario con idUsuario = 1:", error);
-    }
-  };
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null);      
 
   useEffect(() => {
-    fetchUserWithId1();
-  }, []);
+    if (user) {
+      setFormData({
+        nombre: user.nombre || '',
+        apellido: user.apellido || '',
+        cuitDni: '',
+        provincia: '',
+        codigoPostal: '',
+        email: user.email || '',
+      });
+      setLoading(false);  
+    } else {
+      setError('No se encontró el usuario.');
+      setLoading(false);  
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,70 +64,36 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
     return Object.keys(newErrors).length === 0; 
   };
 
-  const handleCheckout = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        // Obtener datos de "cart"
-        const cartResponse = await fetch('http://localhost:3000/cart');
-        const cartData = await cartResponse.json();
-
-        // Calcular subtotal, descuento y otros valores que quieres pasar a `FinalizarCompra`
-        const subtotal = cartData.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        const discount = subtotal * 0.1; // Ejemplo: 10% de descuento
-        const formData = {
-          nombre: 'Juan',
-          apellido: 'Pérez',
-          email: 'juan@example.com',
-          direccionCalle: 'Calle Falsa',
-          direccionNumero: '123',
-          provincia: 'Buenos Aires'
-        };
-        // Mover datos a "checkout"
-        for (const item of cartData) {
-          await fetch('http://localhost:3000/checkout', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(item),
-          });
-        }
-
-        // Navegar a la página de FinalizarCompra
-        navigate('/FinalizarCompra', {
-          state: {
-            formData,
-            subtotal,
-            discount,
-          },
-        });
-      } catch (error) {
-        console.error('Error al mover datos de "cart" a "checkout":', error);
-      }
+  const saveShippingData = async () => {
+    try {
+      if (!user || !user.id) throw new Error("Falta el ID de usuario.");
+      setCartItems((prevCarrito) => ({
+        ...prevCarrito,
+        envio: formData,
+      }));
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  if (loading) {
-    return <p>Cargando datos...</p>;
-  }
 
-  if (error) {
-    return <p>Error al obtener los datos: {error}</p>;
-  }
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      await saveShippingData(); // Guarda los datos antes de navegar
+      navigate('/FinalizarCompra');
+    }
+  };
 
-  if (!userData) {
-    return <p>No se encontró el usuario.</p>;
-  }
-
+ 
   return (
     <Container fluid className="checkout-container">
-        <ul className="progress-steps">
-          <li className="step completed">Paso 1: Completa tu carrito</li>
-          <li className="step completed">Paso 2: Datos de Envío</li>
-          <li className="step current">Paso 3: Detalle de Facturación</li>
-          <li className="step pending">Paso 4: Realizar Pago</li>
-        </ul>
+      <ul className="progress-steps">
+        <li className="step completed">Paso 1: Completa tu carrito</li>
+        <li className="step completed">Paso 2: Datos de Envío</li>
+        <li className="step current">Paso 3: Detalle de Facturación</li>
+        <li className="step pending">Paso 4: Realizar Pago</li>
+      </ul>
 
       <div className="Checkout-body">
         <Form onSubmit={handleCheckout}>
@@ -140,10 +108,9 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     <Form.Control
                       type="text"
                       name="nombre"
-                      value={userWithId1 ? userWithId1.nombre : formData.nombre}
+                      value={formData.nombre}
                       onChange={handleChange}
                       className={errors.nombre ? 'input-error' : ''}
-                      required
                     />
                     {errors.nombre && <div className="error-text">{errors.nombre}</div>}
                   </Form.Group>
@@ -154,10 +121,9 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                     <Form.Control
                       type="text"
                       name="apellido"
-                      value={userWithId1 ? userWithId1.apellido : formData.apellido}
+                      value={formData.apellido}
                       onChange={handleChange}
                       className={errors.apellido ? 'input-error' : ''}
-                      required
                     />
                     {errors.apellido && <div className="error-text">{errors.apellido}</div>}
                   </Form.Group>
@@ -172,7 +138,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                   value={formData.cuitDni}
                   onChange={handleChange}
                   className={errors.cuitDni ? 'input-error' : ''}
-                  required
                 />
                 {errors.cuitDni && <div className="error-text">{errors.cuitDni}</div>}
               </Form.Group>
@@ -185,7 +150,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                   value={formData.provincia}
                   onChange={handleChange}
                   className={errors.provincia ? 'input-error' : ''}
-                  required
                 />
                 {errors.provincia && <div className="error-text">{errors.provincia}</div>}
               </Form.Group>
@@ -198,7 +162,6 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                   value={formData.codigoPostal}
                   onChange={handleChange}
                   className={errors.codigoPostal ? 'input-error' : ''}
-                  required
                 />
                 {errors.codigoPostal && <div className="error-text">{errors.codigoPostal}</div>}
               </Form.Group>
@@ -208,10 +171,9 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 <Form.Control
                   type="email"
                   name="email"
-                  value={userWithId1 ? userWithId1.email : formData.email}
+                  value={formData.email}
                   onChange={handleChange}
                   className={errors.email ? 'input-error' : ''}
-                  required
                 />
                 {errors.email && <div className="error-text">{errors.email}</div>}
               </Form.Group>
@@ -221,32 +183,9 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
             <Col md={4} className="p-5 bg-light">
               <h3>Tu Pedido</h3>
               <div className="order-summary">
-                <ul>
-                  {(cartItems || []).map((item, index) => (
-                    <li key={index} className="d-flex justify-content-between">
-                      <span>{item.producto}</span>
-                      <span>${item.subtotal}</span>
-                    </li>
-                  ))}
-                </ul>
                 <hr />
-                <div className="d-flex justify-content-between">
-                  <span>Subtotal</span>
-                  <span>${subtotal}</span>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <span>Envío</span>
-                  <span>Gratis</span>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <span>Descuento</span>
-                  <span>${discount}</span>
-                </div>
+                <OrderSummary cartItems={cartItems} subtotal={subtotal} discount={discount} />
                 <hr />
-                <div className="d-flex justify-content-between">
-                  <strong>Total</strong>
-                  <strong>${subtotal - discount}</strong>
-                </div>
               </div>
 
               <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
@@ -257,7 +196,7 @@ const Checkout = ({ cartItems, subtotal, discount }) => {
                 Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
               </p>
               
-              <Button variant="primary" type="submit" onClick={handleCheckout} className="mt-3">
+              <Button variant="primary" type="submit" className="mt-3">
                 Continuar a Finalizar Compra
               </Button>
             </Col>
