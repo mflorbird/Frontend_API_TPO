@@ -12,7 +12,7 @@ const About = () => {
       </div>
       
       <div className="text-section">
-        <h2 className="section-title">Sobre Nosotros</h2>
+        <h2 className="section-title mb-4">Sobre Nosotros</h2>
         <p className="section-text">
           En NAIKII, somos más que una tienda de zapatillas. Somos un estilo de vida, una forma de expresión, y un compromiso con la comodidad y el diseño de calidad. Creemos que cada paso que das debe ser tan único como tú, y por eso seleccionamos cuidadosamente cada par de zapatillas para ofrecerte lo mejor en tendencia, innovación y confort.
           Desde nuestra fundación, hemos tenido una visión clara: poner a tu alcance las zapatillas más modernas, versátiles y cómodas, para que puedas vivir el día a día sin preocupaciones, pero siempre con estilo. Ya sea para entrenar, caminar por la ciudad o disfrutar de un momento de descanso, en NAIKII encontrarás ese par perfecto que se adapta a tu ritmo de vida.
@@ -24,7 +24,7 @@ const About = () => {
       </div>
 
       <div className="text-section">
-        <h2 className="section-title">Nuestro Proceso</h2>
+        <h2 className="section-title mb-4">Nuestro Proceso</h2>
         <div className="process-cards">
           {[
             {
