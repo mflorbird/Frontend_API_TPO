@@ -21,6 +21,7 @@ import ProductDetail from '../pages/ProductDetail.jsx';
 import Error from '../pages/Error.jsx';
 import CategoriaPage from "../pages/CategoriaPage.jsx";
 import FAQ from '../pages/FAQ.jsx';
+import SizeGuide from '../pages/SizeGuide.jsx';
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -47,6 +48,7 @@ const AppRoutes = () => {
           <Route path="/producto/:id" element={<ProductDetail />} />
           <Route path="/categoria/:categoria" element={<CategoriaPage />} />
           <Route path="/FAQ" element={<FAQ />} />
+          <Route path="/size-guide" element={<SizeGuide />} />
         </Route>
 
         <Route element={<SimpleLayout />}>

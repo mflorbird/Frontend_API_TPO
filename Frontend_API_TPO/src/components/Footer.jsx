@@ -11,6 +11,7 @@ const Footer = () => {
           <a href="/terminos-y-condiciones">Términos y Condiciones</a>
           <a href="/politicas-de-privacidad">Políticas de Privacidad</a>
           <a href="/FAQ">Preguntas Frecuentes</a>
+          <a href="/size-guide">Guía de talles</a>
         </ul>
       </div>
       <div className="footer-divider"/>
