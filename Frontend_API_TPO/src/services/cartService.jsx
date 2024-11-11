@@ -263,3 +263,30 @@ export const emptyCart = async (cartId) => {
         throw error;
     }
 };
+
+
+export const getCartItemsByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}`, { params: { userId } });
+        const cart = response.data[0];
+        if (!cart) {
+            throw new Error('Carrito no encontrado');
+        }
+
+        const items = Object.entries(cart.items).map(([itemId, item]) => {
+            const [productId, size] = itemId.split('---');
+            return {
+                productId,
+                size,
+                quantity: item.quantity,
+                price: item.price,
+                subtotal: item.subtotal
+            };
+        });
+
+        return items;
+    } catch (error) {
+        console.error('Error al obtener los productos del carrito:', error);
+        throw error;
+    }
+};

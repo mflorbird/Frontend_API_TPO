@@ -204,6 +204,7 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const [cartItems, setCartItems] = useState([]); 
 
   return (
     <AppContext.Provider value={{
@@ -214,6 +215,9 @@ export const AppProvider = ({ children }) => {
       updateCartItemQuantity,
       clearCart,
       checkoutCart,
+      cartItems,
+      setCartItems,
+      setUser,
       loading,
       getProductList,
       user,

@@ -46,7 +46,7 @@
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
-      "idUsuario": 1
+      "idUsuario": ""
     },
     {
       "id": "a115",
@@ -70,7 +70,7 @@
       "visitados": [
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
-      "idUsuario": ""
+      "idUsuario": 1
     },
     {
       "id": "bf5e",
@@ -217,6 +217,38 @@
       "userId": "5721",
       "items": {
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 3,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 300000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 300000,
+      "createdAt": "2024-11-11T16:18:33.279Z"
+    },
+    {
+      "id": "b5df",
+      "cartId": "1879a985-b869-4915-96df-986c21ca1ae6",
+      "userId": "429b",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 4,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 400000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 400000,
+      "createdAt": "2024-11-11T17:22:45.297Z"
+    },
+    {
+      "id": "e616",
+      "cartId": "1f708309-6d0b-4909-bb8d-edd334bdbf41",
+      "userId": "bf5e",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
           "quantity": 1,
           "price": 100000,
           "size": "38",
@@ -225,7 +257,7 @@
       },
       "estado": "activo",
       "precioTotal": 100000,
-      "createdAt": "2024-11-11T16:18:33.279Z"
+      "createdAt": "2024-11-11T19:19:02.536Z"
     }
   ],
   "envio": [],
