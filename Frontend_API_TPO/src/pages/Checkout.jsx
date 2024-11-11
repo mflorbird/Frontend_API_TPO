@@ -8,7 +8,7 @@ import OrderSummary from '../components/OrderSummary';
 
 const Checkout = () => {
   const navigate = useNavigate(); 
-  const { user, cartItems, subtotal, discount } = useContext(AppContext);
+  const { user, cartItems, setCartItems, subtotal, discount } = useContext(AppContext);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -67,12 +67,12 @@ const Checkout = () => {
   const saveShippingData = async () => {
     try {
       if (!user || !user.id) throw new Error("Falta el ID de usuario.");
-      setCartItems((prevCarrito) => ({
-        ...prevCarrito,
-        envio: formData,
-      }));
+      
+      if (!shippingData) throw new Error("Faltan los datos de envío.");
+  
+      setCartItems((prevItems) => [...prevItems, shippingData]);
     } catch (error) {
-      console.error(error);
+      console.error("Error al guardar los datos de envío:", error);
     }
   };
 
@@ -80,7 +80,7 @@ const Checkout = () => {
   const handleCheckout = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      await saveShippingData(); // Guarda los datos antes de navegar
+      await saveShippingData(); 
       navigate('/FinalizarCompra');
     }
   };
