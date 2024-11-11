@@ -69,12 +69,15 @@
       "usuario": "jlopez",
       "contraseña": "Contraseña123",
       "favoritos": [
-        "aad749de-1616-42ec-8bf5-129bf5f6e0bb"
+        "aad749de-1616-42ec-8bf5-129bf5f6e0bb",
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
       "visitados": [
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
         "49bb7b63-df50-4106-b9a9-7596208661c3",
-        "aad749de-1616-42ec-8bf5-129bf5f6e0bb"
+        "aad749de-1616-42ec-8bf5-129bf5f6e0bb",
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4",
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
       ],
       "idUsuario": 1
     }
