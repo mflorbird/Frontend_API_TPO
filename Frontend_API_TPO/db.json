@@ -6,7 +6,7 @@
       "email": "usuario1@example.com",
       "password": "Contraseña123",
       "role": "user",
-      "idUsuario": 1,
+      "idUsuario": "",
       "favoritos": [
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
@@ -92,6 +92,48 @@
         "59a3578d-501c-4372-99cc-ac05b332f4fc"
       ],
       "idUsuario": ""
+    },
+    {
+      "id": "e0fe",
+      "nombre": "D",
+      "apellido": "B",
+      "email": "dbari@uade.edu.ar",
+      "fechaNacimiento": "1569-12-01",
+      "usuario": "baridie",
+      "contraseña": "12345678",
+      "favoritos": [],
+      "visitados": [
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
+      ],
+      "idUsuario": 1
+    },
+    {
+      "id": "438f",
+      "nombre": "Diego",
+      "apellido": "P",
+      "email": "diegop@gmail.com",
+      "fechaNacimiento": "1789-12-02",
+      "usuario": "diegop",
+      "contraseña": "12345678",
+      "favoritos": [],
+      "visitados": [
+        "59a3578d-501c-4372-99cc-ac05b332f4fc"
+      ],
+      "idUsuario": ""
+    },
+    {
+      "id": "c86e",
+      "nombre": "diego",
+      "apellido": "h",
+      "email": "dh@gmail.com",
+      "fechaNacimiento": "1111-01-01",
+      "usuario": "dh",
+      "contraseña": "12345678",
+      "favoritos": [],
+      "visitados": [
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
+      ],
+      "idUsuario": ""
     }
   ],
   "products": [
@@ -163,53 +205,103 @@
   ],
   "carts": [
     {
-      "id": "fd1f",
-      "cartId": "c4958f6c-97a1-4179-b5bc-ed911ac62381",
+      "id": "ea68",
+      "cartId": "e0a17c24-b4c9-4002-9885-a9701eecaa84",
       "userId": "1",
       "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        },
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---40": {
+          "quantity": 3,
+          "price": 100000,
+          "size": "40",
+          "subtotal": 300000
+        },
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---44": {
+          "quantity": 3,
+          "price": 100000,
+          "size": "44",
+          "subtotal": 300000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 700000,
+      "createdAt": "2024-11-11T16:27:59.739Z"
+    },
+    {
+      "id": "8aaf",
+      "cartId": "0bbf5e77-640d-4d58-9d7b-7ce2891334ff",
+      "userId": "e0fe",
+      "items": {
         "59a3578d-501c-4372-99cc-ac05b332f4fc---39": {
-          "quantity": 4,
+          "quantity": 10,
           "price": 101994,
           "size": "39",
-          "subtotal": 407976
-        },
+          "subtotal": 1019940
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 1019940,
+      "createdAt": "2024-11-11T17:06:44.184Z",
+      "closedAt": "2024-11-11T17:08:21.657Z"
+    },
+    {
+      "id": "9f03",
+      "cartId": "cdb97d66-6ebb-42c0-80f3-85b8fcdb70a0",
+      "userId": "438f",
+      "items": {
         "59a3578d-501c-4372-99cc-ac05b332f4fc---40": {
           "quantity": 1,
           "price": 101994,
           "size": "40",
           "subtotal": 101994
         },
-        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---44": {
-          "quantity": 14,
-          "price": 100000,
-          "size": "44",
-          "subtotal": 1400000
-        },
-        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---40": {
-          "quantity": 10,
-          "price": 100000,
-          "size": "40",
-          "subtotal": 1000000
-        },
         "59a3578d-501c-4372-99cc-ac05b332f4fc---38": {
-          "quantity": 7,
+          "quantity": 5,
           "price": 101994,
           "size": "38",
-          "subtotal": 713958
-        },
-        "fd1f---undefined": {
-          "subtotal": null
-        },
-        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---43": {
+          "subtotal": 509970
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 611964,
+      "createdAt": "2024-11-11T17:13:12.406Z",
+      "closedAt": "2024-11-11T17:13:41.829Z"
+    },
+    {
+      "id": "2f35",
+      "cartId": "be724362-4d1c-452a-bb2e-06362d5c25b9",
+      "userId": "c86e",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---40": {
           "quantity": 4,
-          "price": 40000,
-          "size": "43",
-          "subtotal": 160000
+          "price": 100000,
+          "size": "40",
+          "subtotal": 400000
+        },
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---44": {
+          "quantity": 4,
+          "price": 100000,
+          "size": "44",
+          "subtotal": 400000
         }
       },
       "estado": "activo",
-      "precioTotal": 3783928,
-      "createdAt": "2024-11-11T04:27:52.692Z"
+      "precioTotal": 800000,
+      "createdAt": "2024-11-11T17:14:42.177Z"
+    },
+    {
+      "id": "cad8",
+      "cartId": "cfb4744e-043f-4f5d-922c-782a11d6882e",
+      "userId": "e0fe",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T17:19:43.178Z"
     }
   ],
   "envio": [],
