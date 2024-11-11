@@ -238,7 +238,7 @@ const Cart = () => {
               />
               <button onClick={applyDiscount}>Aplicar Descuento</button>
             </div>
-            <button onClick={guardarCompra}>Siguiente</button>
+            <button onClick={() => { navigate("/cartEnvio"); }}>Siguiente</button>
           </div>
         </div>
       </div>
