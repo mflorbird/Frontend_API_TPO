@@ -26,12 +26,11 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const initializeCart = async () => {
-      if (user && !cart) {
+      if (user) {
         try {
           setLoading(true);
           let userCart = await getCartByUserId(user.id);
-
-          if (!userCart) {
+          if (!userCart || userCart.estado === 'cerrado') {
             userCart = await createCart(user.id);
           }
 
