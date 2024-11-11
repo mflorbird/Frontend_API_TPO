@@ -239,3 +239,14 @@ export const checkout = async (cart) => {
         throw error;
     }
 };
+
+
+export const emptyCart = async (cartId) => {
+    try {
+        const response = await axios.patch(`${BASE_URL}/${cartId}`, { items: {}, precioTotal: 0 });
+        return response.data;
+    } catch (error) {
+        console.error('Error al vaciar el carrito:', error);
+        throw error;
+    }
+};
