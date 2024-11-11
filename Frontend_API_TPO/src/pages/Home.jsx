@@ -15,7 +15,7 @@ import "../styles/Home.css";
 const Home = () => {
 
     const { user } = useContext(AppContext)
-    const [carouselImages, setCarouselImages] = useState([
+    const [carouselImages] = useState([
         { src: carousel1, alt: 'Carousel 1' },
         { src: carousel2, alt: 'Carousel 2' },
         { src: carousel3, alt: 'Carousel 3' }
@@ -34,7 +34,6 @@ const Home = () => {
                 {user && (
                     <>
                     <section className="mb-5">
-                        <h2 className="mb-4">Inspirado en tus favoritos</h2>
                         <FavoritosList/>
                     </section>
                     </>
@@ -48,7 +47,6 @@ const Home = () => {
                 {user && (
                     <>
                         <section className="mb-5">
-                            <h2 className="mb-4">Inspirado en lo último que viste</h2>
                             <VisitadosList/>
                         </section>
                     </>
