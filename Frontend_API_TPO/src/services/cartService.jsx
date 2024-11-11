@@ -227,6 +227,19 @@ export const checkout = async (cart) => {
             };
         }
 
+        const deductStock = async (cart) => {
+            const promises = cart.items.map(async (item) => {
+                const { productId, size, quantity } = item;
+                await axios.patch(`http://localhost:3000/products/${productId}/deductStock`, {
+                    size,
+                    quantity,
+                });
+            });
+            await Promise.all(promises);
+        };
+
+        await deductStock(cart);
+
         const response = await closeCart(cart.cartId);
         return {
             isValid: true,
@@ -236,6 +249,44 @@ export const checkout = async (cart) => {
         }
     } catch (error) {
         console.error('Error al realizar el checkout:', error);
+        throw error;
+    }
+};
+
+
+export const emptyCart = async (cartId) => {
+    try {
+        const response = await axios.patch(`${BASE_URL}/${cartId}`, { items: {}, precioTotal: 0 });
+        return response.data;
+    } catch (error) {
+        console.error('Error al vaciar el carrito:', error);
+        throw error;
+    }
+};
+
+
+export const getCartItemsByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}`, { params: { userId } });
+        const cart = response.data[0];
+        if (!cart) {
+            throw new Error('Carrito no encontrado');
+        }
+
+        const items = Object.entries(cart.items).map(([itemId, item]) => {
+            const [productId, size] = itemId.split('---');
+            return {
+                productId,
+                size,
+                quantity: item.quantity,
+                price: item.price,
+                subtotal: item.subtotal
+            };
+        });
+
+        return items;
+    } catch (error) {
+        console.error('Error al obtener los productos del carrito:', error);
         throw error;
     }
 };

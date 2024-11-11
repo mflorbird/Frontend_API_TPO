@@ -1,12 +1,9 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import { Container, Row, Col, Button, Form, Image, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import qr from '../assets/QRNAIKI.png';
 import '../styles/finalizarCompra.css';
-import axios from 'axios'; 
-
-const API_USERS_URL = 'http://localhost:3000/users';
-
+import { AppContext } from '../context/AppContext';
 
 
 const FinalizarCompra = ({ formData }) => {
@@ -14,29 +11,19 @@ const FinalizarCompra = ({ formData }) => {
   const [metodoPago, setMetodoPago] = useState('');
   const [subtotal] = useState(0); // Asumiendo que el subtotal es 0 o se pasa de alguna manera
   const [discount] = useState(0); // Asumiendo que el descuento es 0 o se pasa de alguna manera
-  const [userWithId1, setUserWithId1] = useState(null);
-  const { userData, loading, error } = useUserData();
+  const { userData } = useContext(AppContext);
   const [errors, setErrors] = useState('');
-
-
-  // Fetch user with idUsuario=1
-  const fetchUserWithId1 = async () => {
-    try {
-      const response = await axios.get(`${API_USERS_URL}?idUsuario=1`);
-      if (response.data && response.data.length > 0) {
-        setUserWithId1(response.data[0]);
-      } else {
-        console.error('No se encontró un usuario con idUsuario = 1');
-      }
-    } catch (error) {
-      console.error("Error al obtener el usuario con idUsuario = 1:", error);
-    }
-  };
+  const [loading, setLoading] = useState(false); // Estado de carga (loading)
+  const [error, setError] = useState(''); // Estado para errores
+ 
 
   useEffect(() => {
-    fetchUserWithId1();
+    // Simulación de carga de datos
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false); // Datos cargados, simulado
+    }, 2000); // Espera 2 segundos (simulación de carga)
   }, []);
-  
 
   const handleConfirmPurchase = () => {
     alert('¡Gracias por comprar en NAIKII!');
@@ -74,9 +61,9 @@ const FinalizarCompra = ({ formData }) => {
         <Row>
           <Col md={8}>
           <h2>Confirmación del Pedido</h2>
-            <p><strong>Nombre:</strong> {userWithId1 ? userWithId1.nombre : formData.nombre}</p>
-            <p><strong>Apellido:</strong> {userWithId1 ? userWithId1.apellido : formData.apellido}</p>
-            <p><strong>Email:</strong> {userWithId1 ? userWithId1.email : formData.email}</p>
+            <p><strong>Nombre:</strong> {user ? user.nombre : formData.nombre}</p>
+            <p><strong>Apellido:</strong> {user ? user.apellido : formData.apellido}</p>
+            <p><strong>Email:</strong> {user ? user.email : formData.email}</p>
             
             <div className="mt-4">
               <h4>Selecciona el Método de Pago</h4>
