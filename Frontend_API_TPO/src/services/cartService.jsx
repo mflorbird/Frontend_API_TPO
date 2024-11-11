@@ -227,17 +227,18 @@ export const checkout = async (cart) => {
             };
         }
 
-        // const deductStock = async (cart) => {
-        //     const promises = Object.entries(cart.items).map(async ([itemId, cartItem]) => {
-        //         const [productId, size] = itemId.split('---');
-        //         await axios.patch(`http://localhost:3000/products/${productId}/deductStock`, {
-        //             size,
-        //             quantity: cartItem.quantity
-        //         });
-        //     });
-        //     await Promise.all(promises);
-        // };
-        
+        const deductStock = async (cart) => {
+            const promises = cart.items.map(async (item) => {
+                const { productId, size, quantity } = item;
+                await axios.patch(`http://localhost:3000/products/${productId}/deductStock`, {
+                    size,
+                    quantity,
+                });
+            });
+            await Promise.all(promises);
+        };
+
+        await deductStock(cart);
 
         const response = await closeCart(cart.cartId);
         return {
