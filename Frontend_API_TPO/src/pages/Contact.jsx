@@ -10,10 +10,10 @@ const Contact = () => {
       <Navbar />
 
       <main className="container my-5">
-        <h1 className="text-center mb-4">Contacto y sucursales</h1>
+        <h1 className="text-center mb-6">Contacto y sucursales</h1>
 
         <section className="my-4">
-          <h2>¿En qué podemos ayudarte?</h2>
+          <h3 className='mb-4'>¿En qué podemos ayudarte?</h3>
           <ul>
             <li>Te podés comunicar con nosotros de <strong>Lunes a Domingo de 9 a 21hrs</strong>.</li>
             <li>Escribinos por Whatsapp al <strong>+54 9 11 3299-6932</strong>.</li>
@@ -24,7 +24,7 @@ const Contact = () => {
         <hr className="my-4" />
 
         <section className="my-4">
-          <h2>Dónde podés encontrarnos</h2>
+          <h2 className='mb-4'>Dónde podés encontrarnos</h2>
           <div className="row">
             <div className="col-md-6 mb-4">
               <div className="card border-primary">
