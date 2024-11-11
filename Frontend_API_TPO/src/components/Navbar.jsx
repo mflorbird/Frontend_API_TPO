@@ -7,7 +7,6 @@ import closeProduct from '../assets/x.svg';
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import { getCategorias } from "../services/catalogService.js";
 
 const Navbar = () => {
   const { cart, user, logout } = useContext(AppContext);
@@ -15,16 +14,8 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [categories, setCategories] = useState([]);
   const [isCartVisible, setCartVisible] = useState(false); // Estado para controlar visibilidad del carrito
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      const categorias = await getCategorias();
-      setCategories(categorias);
-    };
-    loadCategories();
-  }, []);
 
   const toggleCart = () => {
     setCartVisible(!isCartVisible); // Alterna la visibilidad del carrito
@@ -40,27 +31,6 @@ const Navbar = () => {
               <li><Link to="/">Inicio</Link></li>
               <li><Link to="/about">Sobre nosotros</Link></li>
               <li><Link to="/contacto">Contacto</Link></li>
-              <li>
-                <Dropdown>
-                  <Dropdown.Toggle>
-                    Categorías
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {categories.length > 0 ? (
-                        categories.map((category, index) => (
-                            <Dropdown.Item
-                                key={index}
-                                onClick={() => navigate(`/categoria/${category}`)}
-                            >
-                              {category}
-                            </Dropdown.Item>
-                        ))
-                    ) : (
-                        <Dropdown.Item disabled>Cargando...</Dropdown.Item>
-                    )}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </li>
             </ul>
         )}
 
