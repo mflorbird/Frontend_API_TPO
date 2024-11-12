@@ -47,7 +47,7 @@
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4",
         "aa52b20a-1615-4f79-b9e4-3491b92b14c2"
       ],
-      "idUsuario": 1
+      "idUsuario": ""
     },
     {
       "id": "a115",
@@ -106,7 +106,7 @@
       "visitados": [
         "59a3578d-501c-4372-99cc-ac05b332f4fc"
       ],
-      "idUsuario": 1
+      "idUsuario": ""
     },
     {
       "id": "438f",
@@ -149,6 +149,34 @@
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
       "idUsuario": ""
+    },
+    {
+      "id": "77f6",
+      "nombre": "Natalia",
+      "apellido": "Testa",
+      "email": "nataliatesta13@gmail.com",
+      "fechaNacimiento": "1992-09-01",
+      "usuario": "natesta",
+      "contraseña": "testa000",
+      "favoritos": [
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b"
+      ],
+      "visitados": [
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4",
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b"
+      ],
+      "idUsuario": 1
+    },
+    {
+      "id": "04d6",
+      "nombre": "Natalia",
+      "apellido": "Testa",
+      "email": "nataliatesta13@gmail.com",
+      "fechaNacimiento": "1992-09-01",
+      "usuario": "natesta",
+      "contraseña": "testa000",
+      "favoritos": [],
+      "visitados": []
     }
   ],
   "products": [
@@ -539,6 +567,234 @@
       "estado": "activo",
       "precioTotal": 1019940,
       "createdAt": "2024-11-11T20:54:44.647Z"
+    },
+    {
+      "id": "1ce7",
+      "cartId": "d2184b5e-9839-47f6-ae9c-0b59b415c296",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        },
+        "59a3578d-501c-4372-99cc-ac05b332f4fc---39": {
+          "quantity": 2,
+          "price": 101994,
+          "size": "39",
+          "subtotal": 203988
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 303988,
+      "createdAt": "2024-11-11T21:43:12.966Z",
+      "closedAt": "2024-11-11T21:59:07.628Z"
+    },
+    {
+      "id": "fa09",
+      "cartId": "08303a05-a486-453f-b6ae-a6ca05b19981",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T21:59:07.670Z"
+    },
+    {
+      "id": "25c0",
+      "cartId": "b770493e-568b-480e-b1f4-2e1717bc1c85",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T21:59:31.153Z"
+    },
+    {
+      "id": "1511",
+      "cartId": "fac3cbf2-eed0-44c6-b09d-f199dcd89714",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T22:00:04.450Z"
+    },
+    {
+      "id": "450e",
+      "cartId": "86c859b4-88db-4aa3-935d-981b651dae88",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T22:32:46.494Z"
+    },
+    {
+      "id": "b682",
+      "cartId": "ab65a93d-a550-4e93-8222-b1871c933ebe",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T22:41:26.257Z"
+    },
+    {
+      "id": "b5d2",
+      "cartId": "be5d7fa6-7098-45be-b146-bf3eac646d1f",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T22:52:42.578Z"
+    },
+    {
+      "id": "ee8f",
+      "cartId": "7c90b05e-71f9-4b33-ba70-b03cc13fce7c",
+      "userId": "5721",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 1,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 100000
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 100000,
+      "createdAt": "2024-11-11T23:02:12.199Z",
+      "closedAt": "2024-11-11T23:04:55.097Z"
+    },
+    {
+      "id": "651f",
+      "cartId": "d24b4059-cd41-4b14-8526-a5287262207e",
+      "userId": "5721",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-11T23:04:55.135Z"
+    },
+    {
+      "id": "f756",
+      "cartId": "4bb14259-4db0-45ea-9daf-ae63d4abb8b9",
+      "userId": "77f6",
+      "items": {
+        "ae7f582a-2317-4c8d-b342-74d9f83cd9a4---38": {
+          "quantity": 2,
+          "price": 100000,
+          "size": "38",
+          "subtotal": 200000
+        }
+      },
+      "estado": "cerrado",
+      "precioTotal": 200000,
+      "createdAt": "2024-11-11T23:06:15.466Z",
+      "closedAt": "2024-11-12T00:07:25.846Z"
+    },
+    {
+      "id": "0b71",
+      "cartId": "b44f7e6e-d753-4525-a245-7aa4c3826695",
+      "userId": "77f6",
+      "items": [],
+      "estado": "activo",
+      "precioTotal": 0,
+      "createdAt": "2024-11-12T00:07:25.892Z"
+    },
+    {
+      "id": "128e",
+      "cartId": "f912e2c5-2f6a-4df9-8c78-7611da82d6e2",
+      "userId": "77f6",
+      "items": {
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---44": {
+          "quantity": 1,
+          "price": 40000,
+          "size": "44",
+          "subtotal": 40000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 40000,
+      "createdAt": "2024-11-12T00:07:35.875Z"
+    },
+    {
+      "id": "7987",
+      "cartId": "6660b92d-83be-452c-9898-0ba36e5aed5e",
+      "userId": "77f6",
+      "items": {
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---44": {
+          "quantity": 3,
+          "price": 40000,
+          "size": "44",
+          "subtotal": 120000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 120000,
+      "createdAt": "2024-11-12T00:08:07.441Z"
+    },
+    {
+      "id": "99a6",
+      "cartId": "88b9b56a-5ef9-4133-8d7e-3e302e65a39d",
+      "userId": "77f6",
+      "items": {
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---44": {
+          "quantity": 5,
+          "price": 40000,
+          "size": "44",
+          "subtotal": 200000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 200000,
+      "createdAt": "2024-11-12T00:11:56.466Z"
+    },
+    {
+      "id": "d2d2",
+      "cartId": "7b4b3a06-9523-475d-9fec-6dcd8567be79",
+      "userId": "77f6",
+      "items": {
+        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---43": {
+          "quantity": 4,
+          "price": 40000,
+          "size": "43",
+          "subtotal": 160000
+        }
+      },
+      "estado": "activo",
+      "precioTotal": 160000,
+      "createdAt": "2024-11-12T00:15:50.453Z"
     }
   ],
   "envio": [],

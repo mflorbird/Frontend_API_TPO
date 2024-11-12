@@ -8,7 +8,7 @@ import OrderSummary from '../components/OrderSummary';
 
 const Checkout = () => {
   const navigate = useNavigate(); 
-  const { user, cartItems, setCartItems, subtotal, discount } = useContext(AppContext);
+  const { user, cartItems, subtotal, discount } = useContext(AppContext);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -18,9 +18,11 @@ const Checkout = () => {
     email: '',
   });
 
+
   const [errors, setErrors] = useState('');
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);      
+  const [shippingData, setShippingData] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -38,6 +40,7 @@ const Checkout = () => {
       setLoading(false);  
     }
   }, [user]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,27 +67,32 @@ const Checkout = () => {
     return Object.keys(newErrors).length === 0; 
   };
 
+  
   const saveShippingData = async () => {
     try {
       if (!user || !user.id) throw new Error("Falta el ID de usuario.");
       
-      if (!shippingData) throw new Error("Faltan los datos de envío.");
-  
-      setCartItems((prevItems) => [...prevItems, shippingData]);
+      // saco de aca el setcartitems
+      const shippingDataToSave = {
+        ...formData,
+        userId: user.id,
+      };
+
+      // aca dsp si llegamos guardamos los datos.
+      setShippingData(shippingDataToSave);
     } catch (error) {
       console.error("Error al guardar los datos de envío:", error);
     }
   };
 
-
   const handleCheckout = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       await saveShippingData(); 
-      navigate('/FinalizarCompra');
+      console.log("Redirigiendo a FinalizarCompra..."); //  esto para verificar el flujo
+      navigate('/finalizarCompra');
     }
   };
-
  
   return (
     <Container fluid className="checkout-container">

@@ -23,7 +23,7 @@ export const AppProvider = ({ children }) => {
   const [cart, setCart] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     const initializeCart = async () => {
       if (!user) return;
@@ -45,7 +45,6 @@ export const AppProvider = ({ children }) => {
     initializeCart();
   }, [user]);
 
-  const cartItems = cart?.items ? Object.values(cart.items) : [];
 
   const addItemToCart = async (item) => {
     if (!user || !cart) return;
@@ -202,7 +201,8 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const [cartItems, setCartItems] = useState([]); 
+  const [cartItems, setCartItems] = useState([]);
+
 
   return (
     <AppContext.Provider value={{

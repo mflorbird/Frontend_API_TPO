@@ -230,6 +230,7 @@ export const checkout = async (cart) => {
         const deductStock = async (cart) => {
             const promises = cart.items.map(async (item) => {
                 const { productId, size, quantity } = item;
+                console.log('Deducting stock for product:', productId, size, quantity); 
                 await axios.patch(`http://localhost:3000/products/${productId}/deductStock`, {
                     size,
                     quantity,
