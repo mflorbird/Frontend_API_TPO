@@ -1,51 +1,81 @@
-import React, { useState, useEffect, useContext  } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Button, Form, Image, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import qr from '../assets/QRNAIKI.png';
 import '../styles/finalizarCompra.css';
 import { AppContext } from '../context/AppContext';
-
+import { checkout, getCartByUserId  } from '../services/cartService';  
 
 const FinalizarCompra = ({ formData }) => {
   const navigate = useNavigate();
   const [metodoPago, setMetodoPago] = useState('');
-  const [subtotal] = useState(0); // Asumiendo que el subtotal es 0 o se pasa de alguna manera
-  const [discount] = useState(0); // Asumiendo que el descuento es 0 o se pasa de alguna manera
-  const { userData } = useContext(AppContext);
-  const [errors, setErrors] = useState('');
-  const [loading, setLoading] = useState(false); // Estado de carga (loading)
-  const [error, setError] = useState(''); // Estado para errores
- 
+  const [subtotal] = useState(0); 
+  const [discount] = useState(0); 
+  const { user } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Simulación de carga de datos
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false); // Datos cargados, simulado
-    }, 2000); // Espera 2 segundos (simulación de carga)
+    setTimeout(() => setLoading(false), 2000);
   }, []);
 
-  const handleConfirmPurchase = () => {
-    alert('¡Gracias por comprar en NAIKII!');
-    navigate('/');
+  const getCartId = async (userId) => {
+    try {
+        const cart = await getCartByUserId(userId);  // Llamas al servicio
+        return cart.cartId;  // Devuelves el cartId
+    } catch (error) {
+        console.error('Error al obtener el cartId:', error);
+        throw error;
+    }
+};
+
+  const handleConfirmPurchase = async (userId) => {  // Asegúrate de pasar el userId aquí
+    setLoading(true);
+    
+    try {
+        if (!userId) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        const cart = await getCartByUserId(userId);
+
+        if (!cart || !cart.items || Object.keys(cart.items).length === 0) {
+            throw new Error('El carrito está vacío o no tiene productos');
+        }
+
+        const cartId = cart.cartId;
+        const cartData = {
+            cartId,
+            items: Object.values(cart.items),  // Convertir los items en un array para el checkout
+        };
+
+        // Ejecutar el checkout
+        const result = await checkout(cartData);
+
+        if (result.isValid) {
+            alert('¡Gracias por comprar en NAIKII!');
+            navigate('/');  // Redirigir a la página de inicio
+        } else {
+            alert(`Error: ${result.message}`);
+            setError(result.message);
+        }
+    } catch (error) {
+        console.error('Error al confirmar la compra:', error);
+        alert('Hubo un error al procesar la compra. Intenta nuevamente más tarde.');
+        setError('Error al realizar el checkout');
+    }
+
+    setLoading(false);
   };
 
-  const handleMetodoPagoChange = (e) => {
-    setMetodoPago(e.target.value);
-  };
 
-  if (loading) {
-    return <p>Cargando datos...</p>;
-  }
 
-  if (error) {
-    return <p>Error al obtener los datos: {error}</p>;
-  }
 
-  if (!userData) {
-    return <p>No se encontró el usuario.</p>;
-  }
-  
+  const handleMetodoPagoChange = (e) => setMetodoPago(e.target.value);
+
+  if (loading) return <p>Cargando datos...</p>;
+  if (error) return <p>Error al obtener los datos: {error}</p>;
 
 
   return (
@@ -60,11 +90,11 @@ const FinalizarCompra = ({ formData }) => {
       <div className="confirmacion-body">
         <Row>
           <Col md={8}>
-          <h2>Confirmación del Pedido</h2>
-            <p><strong>Nombre:</strong> {user ? user.nombre : formData.nombre}</p>
-            <p><strong>Apellido:</strong> {user ? user.apellido : formData.apellido}</p>
-            <p><strong>Email:</strong> {user ? user.email : formData.email}</p>
-            
+            <h2>Confirmación del Pedido</h2>
+            <p><strong>Nombre:</strong> {user.nombre}</p>
+            <p><strong>Apellido:</strong> {user.apellido}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+
             <div className="mt-4">
               <h4>Selecciona el Método de Pago</h4>
               <select value={metodoPago} onChange={handleMetodoPagoChange}>
@@ -87,7 +117,7 @@ const FinalizarCompra = ({ formData }) => {
             <p><strong>Descuento:</strong> ${discount}</p>
             <p><strong>Total:</strong> ${subtotal - discount}</p>
             <p><strong>Envío:</strong> Gratis</p>
-            <Button variant="primary" onClick={handleConfirmPurchase}>Confirmar Compra</Button>
+            <Button variant="primary" onClick={() => handleConfirmPurchase(user?.id)}>Confirmar Compra</Button>
           </Col>
         </Row>
       </div>
