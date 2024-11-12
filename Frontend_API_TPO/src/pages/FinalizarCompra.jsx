@@ -11,7 +11,7 @@ const FinalizarCompra = ({ formData }) => {
   const [metodoPago, setMetodoPago] = useState('');
   const [subtotal] = useState(0); 
   const [discount] = useState(0); 
-  const { user } = useContext(AppContext);
+  const { user, cart } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,25 +20,14 @@ const FinalizarCompra = ({ formData }) => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
-  const getCartId = async (userId) => {
-    try {
-        const cart = await getCartByUserId(userId);  // Llamas al servicio
-        return cart.cartId;  // Devuelves el cartId
-    } catch (error) {
-        console.error('Error al obtener el cartId:', error);
-        throw error;
-    }
-};
 
-  const handleConfirmPurchase = async (userId) => {  // Asegúrate de pasar el userId aquí
+  const handleConfirmPurchase = async () => {  // Asegúrate de pasar el userId aquí
     setLoading(true);
     
     try {
-        if (!userId) {
+      if (!user?.id)  { // si no hay usuario que log. 
             throw new Error('Usuario no encontrado');
         }
-
-        const cart = await getCartByUserId(userId);
 
         if (!cart || !cart.items || Object.keys(cart.items).length === 0) {
             throw new Error('El carrito está vacío o no tiene productos');
@@ -117,7 +106,7 @@ const FinalizarCompra = ({ formData }) => {
             <p><strong>Descuento:</strong> ${discount}</p>
             <p><strong>Total:</strong> ${subtotal - discount}</p>
             <p><strong>Envío:</strong> Gratis</p>
-            <Button variant="primary" onClick={() => handleConfirmPurchase(user?.id)}>Confirmar Compra</Button>
+            
           </Col>
         </Row>
       </div>
@@ -269,9 +258,9 @@ const TransferenciaBancariaForm = ({ onConfirm }) => (
       <Form.Label>Adjunta el comprobante de pago</Form.Label>
       <Form.Control type="file" />
     </Form.Group>
-    <Button variant="success" onClick={onConfirm}>
-      Confirmar Compra
-    </Button>
+    <Button variant="primary" onClick={() => handleConfirmPurchase(user?.id)}>Confirmar Compra</Button>
+    
+   
   </div>
 );
 
