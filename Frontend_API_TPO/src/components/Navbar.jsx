@@ -47,7 +47,7 @@ const Navbar = () => {
                           <div key={itemId} className="cart-product">
                             <div className="info-cart-product">
                               <span className="cantidad-producto-carrito">{item.quantity}</span>
-                              <p className="titulo-producto-carrito">{itemId}</p>
+                              <p className="titulo-producto-carrito">{item.model}</p>
                               <span className="precio-producto-carrito">${item.price}</span>
                               <img src={closeProduct} alt="Eliminar producto" className="close-product" />
                             </div>
