@@ -1,4 +1,3 @@
-// src/components/DiscountForm.js esto es para el descuento. no mostrar aun. // ver si es una pagina o se pone en otro lado. 
 import React, { useState } from 'react';
 import axios from 'axios';
 

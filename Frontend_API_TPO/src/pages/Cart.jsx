@@ -11,7 +11,6 @@ const Cart = () => {
     const { user, cart, setDiscount, clearCart, updateCartItemQuantity, removeItemFromCart } = useContext(AppContext);
     const [discountCode, setDiscountCode] = useState('');
 
-    // Redirecciona si user o cart son nulos o indefinidos
     useEffect(() => {
         if (!user || !cart) {
             navigate('/error');

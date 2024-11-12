@@ -1,4 +1,4 @@
-// src/pages/ProductDetail.jsx
+
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';

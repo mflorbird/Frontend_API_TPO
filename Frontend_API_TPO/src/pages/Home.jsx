@@ -1,4 +1,4 @@
-// src/pages/Home.jsx
+
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import DestacadosList from "../components/catalog/DestacadosList.jsx";

@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-// URL base de la API
 const API_URL = 'http://localhost:3000/products';
 
-// Instancia para hacer peticiones con interceptor
 const axiosWithInterceptor = axios.create();
 
 axiosWithInterceptor.interceptors.request.use((config) => {
