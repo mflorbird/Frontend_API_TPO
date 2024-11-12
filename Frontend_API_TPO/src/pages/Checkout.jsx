@@ -114,7 +114,7 @@ const Checkout = () => {
         <Form onSubmit={handleCheckout}>
           <Row>
             {/* Columna izquierda: Detalles de Facturación */}
-            <Col md={8} className="p-5">
+            <Col md={6} className="p-5">
               <h2>Detalles de Facturación</h2>
               <Row>
                 <Col md={6}>
@@ -195,9 +195,9 @@ const Checkout = () => {
             </Col>
 
             {/* Columna derecha: Tu Pedido */}
-            <Col md={4} className="p-5 bg-light">
-              <h3>Tu Pedido</h3>
-              <div className="order-summary">
+            <Col md={6} className="p-5 bg-light">
+              
+              <div className="order-summary-container">
               <OrderSummary subtotal={cart.precioTotal} discountAmount={cart.discount} totalAmount={cart.precioDiscount} />
               </div>
 
@@ -205,9 +205,7 @@ const Checkout = () => {
                 Modificar Pedido
               </Button>
 
-              <p className="mt-3 text-muted">
-                Tus datos personales se utilizarán para procesar tu pedido y mejorar tu experiencia en esta web.
-              </p>
+              <p></p>
               
               <Button variant="primary" type="submit" className="mt-3">
                 Continuar a Finalizar Compra
