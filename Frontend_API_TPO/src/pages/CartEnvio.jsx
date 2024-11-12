@@ -21,10 +21,10 @@ const CartEnvio = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(true);  // Estado para loading
-  const [error, setError] = useState(null);      // Estado para error
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null);     
 
-  // Utilizar los datos del contexto para prellenar los campos
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -39,10 +39,10 @@ const CartEnvio = () => {
         telefono: '',
         notaPedido: '',
       });
-      setLoading(false);  // Datos cargados, detener loading
+      setLoading(false);  
     } else {
       setError('No se encontró el usuario.');
-      setLoading(false);  // Finalizar loading en caso de error
+      setLoading(false);  
     }
   }, [user]);
 
@@ -86,7 +86,7 @@ const CartEnvio = () => {
   const handleCartEnvio = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      await saveShippingData(); // Guarda los datos antes de navegar
+      await saveShippingData(); 
       navigate('/Checkout');
     }
   };

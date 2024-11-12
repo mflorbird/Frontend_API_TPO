@@ -1,33 +1,33 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
-import { getFavoritos } from '../services/catalogService'; // Importamos el servicio para obtener los favoritos
+import { getFavoritos } from '../services/catalogService'; 
 import '../styles/profile.css';
 import usePedidosFinalizados from '../hooks/usePedidosFinalizados';
 
 const Perfil = () => {
     const [activeTab, setActiveTab] = useState('datos');
-    const { user } = useContext(AppContext); // Datos del usuario desde AppContext
-    const pedidos = usePedidosFinalizados(); // Pedidos finalizados del usuario
-    const [favoritos, setFavoritos] = useState([]); // Estado para los favoritos
-    const [loading, setLoading] = useState(true); // Estado para cargar los favoritos
+    const { user } = useContext(AppContext); 
+    const pedidos = usePedidosFinalizados(); 
+    const [favoritos, setFavoritos] = useState([]);
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        // Verificar si el usuario tiene favoritos y obtenerlos
+        
         if (user && user.favoritos) {
             const fetchFavoritos = async () => {
                 try {
-                    const productosFavoritos = await getFavoritos(user); // Llamamos al servicio para obtener los favoritos
-                    setFavoritos(productosFavoritos); // Actualizamos el estado con los productos favoritos
+                    const productosFavoritos = await getFavoritos(user); 
+                    setFavoritos(productosFavoritos); 
                 } catch (error) {
                     console.error('Error al cargar los productos favoritos:', error);
                 } finally {
-                    setLoading(false); // Terminamos la carga
+                    setLoading(false); 
                 }
             };
 
-            fetchFavoritos(); // Ejecutamos la función al cargar el componente
+            fetchFavoritos(); 
         }
-    }, [user]); // Solo se ejecuta cuando el usuario cambia
+    }, [user]); 
 
     if (!user) {
         return <p>No se encontró el usuario.</p>;

@@ -9,11 +9,9 @@ const Cart = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
 
-  // Ver si se agrega una logica temporal para manejar el carrito 
   useEffect(() => {
-    // aca va lo de postman
-    // aca el ejemplo como el de pokemon que dio en clase
-    axios.get("/api/cart") // revisar la api y como hacemos si no llamamos. 
+    
+    axios.get("/api/cart") 
       .then(response => {
         setCartItems(response.data.items);
         setTotalAmount(response.data.totalAmount);
