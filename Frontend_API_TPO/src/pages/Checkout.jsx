@@ -191,9 +191,9 @@ const Checkout = () => {
             <Col md={4} className="p-5 bg-light">
               <h3>Tu Pedido</h3>
               <div className="order-summary">
-                <hr />
-                {/* <OrderSummary cartItems={cartItems} subtotal={subtotal} discount={discount} /> */}
-                <hr />
+                <p>Subtotal: ${ (subtotal || 0).toFixed(2) }</p>
+                <p>Descuento: ${ (discount || 0).toFixed(2) }</p>
+                <p>Total: ${ ((subtotal || 0) - (discount || 0)).toFixed(2) }</p>
               </div>
 
               <Button variant="secondary" className="mt-3" onClick={() => navigate('/Cart')}>
