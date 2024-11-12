@@ -3,6 +3,8 @@ import { AppContext } from '../context/AppContext';
 import { getFavoritos } from '../services/catalogService'; 
 import '../styles/profile.css';
 import usePedidosFinalizados from '../hooks/usePedidosFinalizados';
+import ProductCard from '../components/catalog/ProductCard';
+import { Link } from 'react-router-dom';
 
 const Perfil = () => {
     const [activeTab, setActiveTab] = useState('datos');
@@ -120,6 +122,9 @@ const Perfil = () => {
                                                 <h4>{producto.name}</h4>
                                                 <p>{producto.description}</p>
                                                 <span>${producto.price}</span>
+                                                <Link to={`/producto/${producto.id}`} className="btn btn-primary mt-2">
+                                                  Ver Producto
+                                                </Link>
                                             </div>
                                         </div>
                                     ))
