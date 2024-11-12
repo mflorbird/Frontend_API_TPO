@@ -192,7 +192,7 @@ const Checkout = () => {
               <h3>Tu Pedido</h3>
               <div className="order-summary">
                 <hr />
-                <OrderSummary cartItems={cartItems} subtotal={subtotal} discount={discount} />
+                {/* <OrderSummary cartItems={cartItems} subtotal={subtotal} discount={discount} /> */}
                 <hr />
               </div>
 
