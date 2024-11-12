@@ -9,7 +9,8 @@ import {
   removeItem,
   updateItemQuantity,
   closeCart,
-  checkout
+  checkout,
+  emptyCart
 } from '../services/cartService';
 
 
@@ -45,7 +46,6 @@ export const AppProvider = ({ children }) => {
     initializeCart();
   }, [user]);
 
-  const cartItems = cart?.items ? Object.values(cart.items) : [];
 
   const addItemToCart = async (item) => {
     if (!user || !cart) return;
@@ -66,7 +66,9 @@ export const AppProvider = ({ children }) => {
           item.id,
           item.size,
           newQuantity,
-          item.price
+          item.price,
+          item.model,
+          item.image
       );
 
       setCart(updatedCart);
@@ -78,12 +80,12 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const updateCartItemQuantity = async (item, newQuantity) => {
+  const updateCartItemQuantity = async (itemId, newQuantity) => {
     if (!user || !cart) return;
 
     try {
       setLoading(true);
-      const updatedCart = await updateItemQuantity(cart.id, item, newQuantity);
+      const updatedCart = await updateItemQuantity(cart.id, itemId, newQuantity);
       setCart(updatedCart);
     } catch (error) {
       console.error('Error al actualizar cantidad:', error);
@@ -93,12 +95,12 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const removeItemFromCart = async (item) => {
+  const removeItemFromCart = async (itemId) => {
     if (!user || !cart) return;
 
     try {
       setLoading(true);
-      const updatedCart = await removeItem(cart.id, item);
+      const updatedCart = await removeItem(cart.id, itemId);
       setCart(updatedCart);
     } catch (error) {
       console.error('Error al eliminar item del carrito:', error);
@@ -113,16 +115,20 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-      await closeCart(cart.id);
-      const newCart = await createCart(user.id);
-      setCart(newCart);
-    } catch (error) {
-      console.error('Error al limpiar el carrito:', error);
-      throw error;
-    } finally {
-      setLoading(false);
+     await emptyCart(cart.id);
+     cart.items = {};
+        cart.precioTotal = 0;
+        setCart(cart);
     }
-  };
+    catch (error) {
+        console.error('Error al vaciar el carrito:', error);
+        throw error;
+    }
+    finally {
+        setLoading(false);
+    }
+    };
+
 
   const cartTotals = {
     items: cart?.items ? Object.values(cart.items).reduce((total, item) => total + item.quantity, 0) : 0,
@@ -207,7 +213,6 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       cart,
-      cartItems,
       cartTotals,
       addItemToCart,
       removeItemFromCart,
