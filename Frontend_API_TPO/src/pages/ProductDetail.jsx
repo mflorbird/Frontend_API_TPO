@@ -1,10 +1,9 @@
-
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { getProductById } from '../services/catalogService';
 import { Button, ToggleButton, ButtonGroup } from 'react-bootstrap';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { BsHeart, BsHeartFill, BsCheckCircleFill  } from 'react-icons/bs';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ProductDetail.css';
@@ -18,7 +17,7 @@ const ProductDetail = () => {
     const [selectedSize, setSelectedSize] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const [quantity, setQuantity] = useState(1);
-
+    const [showConfirmation, setShowConfirmation] = useState(false); // Nuevo estado para el mensaje
 
     useEffect(() => {
         const loadProduct = async () => {
@@ -45,7 +44,6 @@ const ProductDetail = () => {
                 nuevosVisitados.push(product.id);
             }
             actualizarVisitados(user, nuevosVisitados);
-
         }
     }, [user, id, product]);
 
@@ -65,7 +63,6 @@ const ProductDetail = () => {
         }
 
         try {
-
             const cartItem = {
                 id: product.id,
                 size: selectedSize,
@@ -77,14 +74,15 @@ const ProductDetail = () => {
 
             await addItemToCart(cartItem);
 
+            // Mostrar mensaje de confirmación
+            setShowConfirmation(true);
+
+            // Ocultar mensaje después de 3 segundos
+            setTimeout(() => setShowConfirmation(false), 1500);
+
             console.log('Producto agregado exitosamente', cartItem);
             console.log('Producto agregado exitosamente', cart);
             console.log('Carrito actualizado', cart);
-
-            const willNavigate = window.confirm("Producto agregado al carrito. ¿Deseas ir al carrito?");
-            if (willNavigate) {
-                navigate("/cart");
-            }
         } catch (error) {
             console.error("Error al agregar al carrito:", error);
             alert("Hubo un error al agregar el producto al carrito.");
@@ -102,17 +100,12 @@ const ProductDetail = () => {
             const productId = product.id;
 
             if (isFavorite) {
-                // Si ya es favorito, lo eliminamos
                 nuevosFavoritos = user.favoritos.filter(fav => fav !== productId);
             } else {
-                // Si no es favorito, lo agregamos
                 nuevosFavoritos = [...user.favoritos, productId];
             }
 
-            // Actualiza en el backend
             await actualizarFavoritos(user, nuevosFavoritos);
-
-            // Actualiza el estado local
             setIsFavorite(!isFavorite);
         } catch (error) {
             console.error("Error al actualizar favoritos:", error);
@@ -149,7 +142,7 @@ const ProductDetail = () => {
                         <div className="sizes mb-3">
                             <h5>Talle</h5>
                             <ButtonGroup className="mb-3">
-                                {product.stockTotal.map(({ size, stock }) => (
+                                {product.stockTotal.map(({size, stock}) => (
                                     <ToggleButton
                                         key={size}
                                         type="radio"
@@ -195,13 +188,25 @@ const ProductDetail = () => {
                                 Agregar al carrito
                             </Button>
                             {user && (
-                                <Button
-                                    variant="outline-secondary"
-                                    onClick={toggleFavorite}
-                                    className="btn-lg"
-                                >
-                                    {isFavorite ? <BsHeartFill color="red" /> : <BsHeart />}
-                                </Button>
+                                <>
+                                    <Button
+                                        variant="outline-secondary"
+                                        onClick={toggleFavorite}
+                                        className="btn-lg me-2"
+                                    >
+                                        {isFavorite ? <BsHeartFill color="red"/> : <BsHeart/>}
+                                    </Button>
+
+                                    {showConfirmation && (
+                                        <div
+                                            className="d-flex align-items-center"
+                                            style={{ color: 'green' }}
+                                        >
+                                            <BsCheckCircleFill  size={30} />
+                                            <p className="mb-0 ms-2"></p>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
@@ -209,6 +214,6 @@ const ProductDetail = () => {
             </div>
         </div>
     );
-};
+}
 
 export default ProductDetail;

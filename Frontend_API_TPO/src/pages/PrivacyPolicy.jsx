@@ -45,28 +45,28 @@ const PrivacyPolicy = () => {
             </ul>
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h3 className="mt-3">2. Transferencia y Conservación de Datos</h3>
           <p>
             Los datos personales se almacenan en Argentina, pero pueden transferirse a otros países, incluido Estados Unidos, bajo medidas de protección adecuadas. Conservamos los datos mientras sea necesario para cumplir con los fines descritos en esta política, incluyendo el cumplimiento de obligaciones legales.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h3 className="mt-3">3. Derechos de los Usuarios</h3>
           <p>
             Los usuarios tienen derecho a solicitar el acceso, corrección, eliminación o restricción de sus datos personales. También pueden revocar el consentimiento en cualquier momento y optar por no recibir comunicaciones de marketing. Los usuarios pueden ajustar sus preferencias de publicidad en su navegador o dispositivo móvil.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h3 className="mt-3">4. Cookies y Herramientas de Seguimiento</h3>
           <p>
             Utilizamos cookies y herramientas de seguimiento, como etiquetas de píxeles, para recopilar información sobre la interacción con la página. Esto nos ayuda a mejorar la experiencia y personalizar el contenido. Los usuarios pueden gestionar estas cookies desde la configuración de sus navegadores, aunque esto podría afectar algunas funcionalidades del sitio.
           </p>
 
-          <hr className="my-4" /> {/* Divider */}
+          <hr className="my-4" /> 
 
           <h3 className="mt-3">5. Contacto y Cambios en la Política</h3>
           <p>

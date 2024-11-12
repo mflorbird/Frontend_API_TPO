@@ -8,7 +8,7 @@ import OrderSummary from '../components/OrderSummary';
 
 const Checkout = () => {
   const navigate = useNavigate(); 
-  const { user, cartItems, subtotal, discount, cart, setDiscount,  } = useContext(AppContext);
+  const { user, cart } = useContext(AppContext);
   const [discountCode, setDiscountCode] = useState('');
   useEffect(() => {
     if (!user || !cart) {
