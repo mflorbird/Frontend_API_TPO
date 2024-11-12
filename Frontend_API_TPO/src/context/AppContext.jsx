@@ -137,7 +137,6 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-      // parse discount code to float
       const floatDiscount = parseFloat(discount);
       const updatedCart = await setDiscountAPI(cart.id, floatDiscount);
       setCart(updatedCart);
