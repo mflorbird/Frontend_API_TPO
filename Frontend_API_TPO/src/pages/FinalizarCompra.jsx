@@ -102,9 +102,9 @@ const FinalizarCompra = ({ formData }) => {
           </Col>
           <Col md={4} className="bg-light p-3">
             <h3>Resumen del Pedido</h3>
-            <p><strong>Subtotal:</strong> ${subtotal}</p>
-            <p><strong>Descuento:</strong> ${discount}</p>
-            <p><strong>Total:</strong> ${subtotal - discount}</p>
+            <p><strong>Subtotal:</strong> ${cart.precioTotal.toFixed(2)}</p>
+            <p><strong>Descuento:</strong> %{cart.discount * 100}</p>
+            <p><strong>Total:</strong> ${cart.precioDiscount.toFixed(2)}</p>
             <p><strong>Envío:</strong> Gratis</p>
             
           </Col>
