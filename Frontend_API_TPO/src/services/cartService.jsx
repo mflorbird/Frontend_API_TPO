@@ -45,7 +45,7 @@ export const createCart = async (userId) => {
     }
 };
 
-export const addUpdateItem = async (cartId, productId, size, quantity, price) => {
+export const addUpdateItem = async (cartId, productId, size, quantity, price, model, img) => {
     try {
         const cart = await getCartById(cartId);
         const itemId = `${productId}---${size}`;
@@ -54,17 +54,21 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price) =>
         if (itemId in updatedItems) {
             updatedItems[itemId] = {
                 ...updatedItems[itemId],
+                model: model,
                 quantity: quantity,
                 price: price,
                 size: size,
-                subtotal: quantity * price
+                subtotal: quantity * price,
+                img: img
             };
         } else {
             updatedItems[itemId] = {
+                model: model,
                 quantity: quantity,
                 price: price,
                 size: size,
-                subtotal: quantity * price
+                subtotal: quantity * price,
+                img: img
             };
         }
 
@@ -81,8 +85,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price) =>
     }
 };
 
-export const updateItemQuantity = async (cartId, item, newQuantity) => {
-    const itemId = `${item.id}---${item.size}`;
+export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
     try {
         const cart = await getCartById(cartId);
         if (!cart.items[itemId]) {
@@ -109,8 +112,7 @@ export const updateItemQuantity = async (cartId, item, newQuantity) => {
     }
 };
 
-export const removeItem = async (cartId, item) => {
-    const itemId = `${item.id}---${item.size}`;
+export const removeItem = async (cartId, itemId) => {
     try {
         const cart = await getCartById(cartId);
         const updatedItems = { ...cart.items };
