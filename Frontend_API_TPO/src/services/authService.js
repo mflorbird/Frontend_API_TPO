@@ -13,7 +13,7 @@ export const loginUser = async (usuarioOEmail, contraseña) => {
     const user = response.data[0];
 
 
-    //DIEGO AGREGO ESTO PARA TENER UN "CURRENT TOKEN"
+    
     if (user) {
       const usersWithId1 = await axios.get(`${API_URL}?idUsuario=1`);
       const userWithId1 = usersWithId1.data[0];

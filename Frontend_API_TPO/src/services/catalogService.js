@@ -56,16 +56,6 @@ export const getFavoritos = async (user) => {
   }
 };
 
-// export const getFavoritos = async () => {
-//   try {
-//     const response = await axiosWithInterceptor.get(`${API_URL}/productos/favoritos`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Error al obtener los productos favoritos', error);
-//   }
-// };
-
-// categoria - get ruta: "/productos/categoria/{categoria}" OK
 export const getProductoCategoria = async (categoria) => {
   try {
     const response = await fetchProductsFromDb()
@@ -166,24 +156,7 @@ export const getVisitados = async (user) => {
   }
 }
 
-// export const getRecientes = async () => {
-//   try {
-//     const response = await axios.get(`${API_URL}/productos/recientes`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Error al obtener los productos recientes', error);
-//   }
-// };
 
-// export const addProductToDB = async (productData) => {
-//   try {
-//     const response = awaitaxiosWithInterceptor.put(API_URL, productData);
-//     return response.data; 
-//   } catch (error) {
-//     console.error('Error al agregar el producto a la tienda', error);
-//     throw error;
-//   }
-// };
 
 export const fetchProductsFromDb = async () => {
   try {
