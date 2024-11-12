@@ -264,7 +264,6 @@
         }
       },
       "estado": "activo",
-<<<<<<< HEAD
       "precioTotal": 1019940,
       "createdAt": "2024-11-11T20:54:44.647Z"
     },
@@ -479,26 +478,6 @@
       "estado": "activo",
       "precioTotal": 200000,
       "createdAt": "2024-11-12T00:11:56.466Z"
-    },
-    {
-      "id": "d2d2",
-      "cartId": "7b4b3a06-9523-475d-9fec-6dcd8567be79",
-      "userId": "77f6",
-      "items": {
-        "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b---43": {
-          "quantity": 4,
-          "price": 40000,
-          "size": "43",
-          "subtotal": 160000
-        }
-      },
-      "estado": "activo",
-      "precioTotal": 160000,
-      "createdAt": "2024-11-12T00:15:50.453Z"
-=======
-      "precioTotal": 101994,
-      "createdAt": "2024-11-11T23:21:26.569Z"
->>>>>>> ad300c7c1aabf65de2c7d0c10064feb6f0303f27
     }
   ],
   "envio": [],
