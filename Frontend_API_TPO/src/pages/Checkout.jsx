@@ -152,6 +152,7 @@ const Checkout = () => {
                   name="cuitDni"
                   value={formData.cuitDni}
                   onChange={handleChange}
+                  placeholder="Ej: 18.625.111"
                   className={errors.cuitDni ? 'input-error' : ''}
                 />
                 {errors.cuitDni && <div className="error-text">{errors.cuitDni}</div>}
@@ -164,6 +165,7 @@ const Checkout = () => {
                   name="provincia"
                   value={formData.provincia}
                   onChange={handleChange}
+                  placeholder="Ej: Buenos Aires"
                   className={errors.provincia ? 'input-error' : ''}
                 />
                 {errors.provincia && <div className="error-text">{errors.provincia}</div>}
@@ -176,6 +178,7 @@ const Checkout = () => {
                   name="codigoPostal"
                   value={formData.codigoPostal}
                   onChange={handleChange}
+                  placeholder="Ej: 1607"
                   className={errors.codigoPostal ? 'input-error' : ''}
                 />
                 {errors.codigoPostal && <div className="error-text">{errors.codigoPostal}</div>}
