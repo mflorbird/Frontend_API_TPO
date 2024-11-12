@@ -108,7 +108,7 @@
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
         "ae7f582a-2317-4c8d-b342-74d9f83cd9a4"
       ],
-      "idUsuario": ""
+      "idUsuario": 1
     },
     {
       "id": "438f",
@@ -168,7 +168,7 @@
         "59aa868d-b448-4eb4-8842-f7bb9b7a9f3b",
         "59a3578d-501c-4372-99cc-ac05b332f4fc"
       ],
-      "idUsuario": 1
+      "idUsuario": ""
     },
     {
       "id": "04d6",
@@ -179,7 +179,8 @@
       "usuario": "natesta",
       "contraseña": "testa000",
       "favoritos": [],
-      "visitados": []
+      "visitados": [],
+      "idUsuario": ""
     }
   ],
   "products": [
@@ -250,7 +251,17 @@
     }
   ],
   "carts": [
-    {}
+    {
+      "id": "0d15",
+      "cartId": "dffec5b4-2c74-4609-b76c-f58ca9b2e48d",
+      "userId": "e0fe",
+      "items": {},
+      "estado": "activo",
+      "precioTotal": 0,
+      "precioDiscount": 0,
+      "discount": 0,
+      "createdAt": "2024-11-12T02:47:59.373Z"
+    }
   ],
   "envio": [],
   "checkout": [
