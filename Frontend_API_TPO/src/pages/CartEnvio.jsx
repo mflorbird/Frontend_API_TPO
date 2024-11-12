@@ -111,7 +111,7 @@ const CartEnvio = () => {
       </ul>
 
       <div className="CartEnvio-body">
-        <Button variant="secondary" className="mt-4" onClick={() => navigate('/Cart')}>
+        <Button variant="secondary" className=" mt-4 full-width-button1" onClick={() => navigate('/Cart')}>
           Modificar Pedido
         </Button>
 
