@@ -66,6 +66,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
             };
         } else {
             updatedItems[itemId] = {
+                cartId: uuidv4(),
                 model: model,
                 quantity: quantity,
                 price: price,
