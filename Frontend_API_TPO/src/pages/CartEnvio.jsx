@@ -158,7 +158,7 @@ const CartEnvio = () => {
                 name="direccionCalle"
                 value={formData.direccionCalle}
                 onChange={handleChange}
-                placeholder="Habana"
+                placeholder="Ej: Habana"
                 className={errors.direccionCalle ? 'input-error' : ''}
                 required
               />
@@ -174,7 +174,7 @@ const CartEnvio = () => {
                     name="direccionNumero"
                     value={formData.direccionNumero}
                     onChange={handleChange}
-                    placeholder="4310"
+                    placeholder="Ej: 4310"
                     className={errors.direccionNumero ? 'input-error' : ''}
                     required
                   />
@@ -201,7 +201,7 @@ const CartEnvio = () => {
                 name="localidad"
                 value={formData.localidad}
                 onChange={handleChange}
-                placeholder="Capital Federal"
+                placeholder="Ej: Capital Federal"
                 className={errors.localidad ? 'input-error' : ''}
                 required
               />
@@ -215,7 +215,7 @@ const CartEnvio = () => {
                 name="provincia"
                 value={formData.provincia}
                 onChange={handleChange}
-                placeholder="Buenos Aires"
+                placeholder="Ej: Buenos Aires"
                 className={errors.provincia ? 'input-error' : ''}
                 required
               />
@@ -229,7 +229,7 @@ const CartEnvio = () => {
                 name="codigoPostal"
                 value={formData.codigoPostal}
                 onChange={handleChange}
-                placeholder="1407"
+                placeholder="Ej: 1407"
                 className={errors.codigoPostal ? 'input-error' : ''}
                 required
               />
@@ -243,7 +243,7 @@ const CartEnvio = () => {
                 name="telefono"
                 value={formData.telefono}
                 onChange={handleChange}
-                placeholder="4563-4453 o 15-2344-0900"
+                placeholder="Ej: 4563-4453 o 15-2344-0900"
                 className={errors.telefono ? 'input-error' : ''}
                 required
               />
