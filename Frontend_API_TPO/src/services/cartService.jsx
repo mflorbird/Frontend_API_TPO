@@ -372,3 +372,13 @@ export const getCartItemsByUserId = async (userId) => {
         throw error;
     }
 };
+
+export const getClosedCartsByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}`, { params: { userId, estado: 'cerrado' } });
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los carritos cerrados:', error);
+        throw error;
+    }
+};
