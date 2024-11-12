@@ -54,14 +54,14 @@ const Cart = () => {
   return (
       <div className="cart-container">
         <div className="cart-container-body">
-          <h1>Hola {user?.nombre}</h1>
+          <h1 className='mb-4'>Hola {user?.nombre}</h1>
           <ul className="progress-steps">
             <li className="step current">Paso 1: Completa tu carrito</li>
             <li className="step pending">Paso 2: Datos de Envío</li>
             <li className="step pending">Paso 3: Detalle de Facturación</li>
             <li className="step pending">Paso 4: Realizar Pago</li>
           </ul>
-          <p>Visualizá los productos que tienes en tu carrito</p>
+          <p className='mt-4 mb-4'>Visualizá los productos que tienes en tu carrito</p>
           <div className="cart-content">
             <div className="cart-items">
               {cartItems.length === 0 ? (
@@ -116,7 +116,7 @@ const Cart = () => {
                 />
                 <button onClick={applyDiscount}>Aplicar Descuento</button>
               </div>
-              <button onClick={() => navigate("/cartEnvio")}>Siguiente</button>
+              <button className="mt-4" onClick={() => navigate("/cartEnvio")}>Siguiente</button>
             </div>
           </div>
         </div>
