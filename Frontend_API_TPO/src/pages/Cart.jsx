@@ -103,7 +103,6 @@ const Cart = () => {
                         </div>
                         <button
                             onClick={() => navigate("/cartEnvio")}
-                            style={{ marginLeft: '15px', marginTop: '15px' }}
                             disabled={cartItems.length === 0}
                         >
                             Siguiente
@@ -111,6 +110,7 @@ const Cart = () => {
                         <button
                             onClick={clearCart}
                             className="clear-cart-button"
+                            style={{ marginLeft: '15px', marginTop: '15px' }}
                             disabled={cartItems.length === 0}
                         >
                             Vaciar Carrito
