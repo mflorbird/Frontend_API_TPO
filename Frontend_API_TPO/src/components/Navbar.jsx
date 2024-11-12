@@ -14,11 +14,11 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [isCartVisible, setCartVisible] = useState(false); // Estado para controlar visibilidad del carrito
+  const [isCartVisible, setCartVisible] = useState(false); 
 
 
   const toggleCart = () => {
-    setCartVisible(!isCartVisible); // Alterna la visibilidad del carrito
+    setCartVisible(!isCartVisible); 
   };
 
   const isAdmin = user && user.role === 'admin';
@@ -35,21 +35,21 @@ const Navbar = () => {
         )}
 
         <div className="navbar-user">
-          {!isAdmin && user && cart && (  // Verifica si el usuario está logueado
+          {!isAdmin && user && cart && ( 
               <div className="container-icon">
-                <div onClick={toggleCart} className="cart-container"> {/* Cambiado a onClick */}
+                <div onClick={toggleCart} className="cart-container">
                   <img src={cartIcon} alt="Carrito" className="navbar-cart"/>
                   <span className="cart-badge">{cartItemCount}</span>
                 </div>
                 {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
-                    <div className={`container-cart-products ${isCartVisible ? '' : 'hidden-cart'}`}> {/* Visibilidad controlada */}
+                    <div className={`container-cart-products ${isCartVisible ? '' : 'hidden-cart'}`}> 
                       {Object.entries(cart.items).map(([itemId, item]) => (
                           <div key={itemId} className="cart-product">
                             <div className="info-cart-product">
                               <span className="cantidad-producto-carrito">{item.quantity}</span>
                               <p className="titulo-producto-carrito">{item.model}</p>
                               <span className="precio-producto-carrito">${item.price}</span>
-                              <img src={closeProduct} alt="Eliminar producto" className="close-product" />
+        
                             </div>
                           </div>
                       ))}
@@ -71,7 +71,7 @@ const Navbar = () => {
                   <img src={userPhoto} alt="Usuario" className="navbar-user-photo" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {!isAdmin && ( // Solo muestra "Mi Perfil" si el usuario no es admin
+                  {!isAdmin && ( 
                     <Dropdown.Item onClick={() => { navigate("/profile"); }}>
                       Mi Perfil
                     </Dropdown.Item>
