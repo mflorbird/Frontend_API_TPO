@@ -41,7 +41,10 @@ const Navbar = () => {
                   <img src={cartIcon} alt="Carrito" className="navbar-cart"/>
                   <span className="cart-badge">{cartItemCount}</span>
                 </div>
-                {location.pathname !== '/cart' && location.pathname !== '/checkout' && (
+                {location.pathname !== '/cart' && 
+                location.pathname !== '/Checkout' && 
+                location.pathname !== '/cartEnvio' && 
+                location.pathname !== '/finalizarCompra' && (
                     <div className={`container-cart-products ${isCartVisible ? '' : 'hidden-cart'}`}> 
                       {Object.entries(cart.items).map(([itemId, item]) => (
                           <div key={itemId} className="cart-product">
