@@ -5,19 +5,26 @@ import qr from '../assets/QRNAIKI.png';
 import '../styles/finalizarCompra.css';
 import { AppContext } from '../context/AppContext';
 import { checkout, getCartByUserId  } from '../services/cartService';  
+import OrderSummary from '../components/OrderSummary';
 
 const FinalizarCompra = ({ formData }) => {
   const navigate = useNavigate();
   const [metodoPago, setMetodoPago] = useState('');
-  const [subtotal] = useState(0); 
-  const [discount] = useState(0); 
-  const { user, cart } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+  
+  const { user, cart, cartItems, subtotal, discount, setDiscount,  } = useContext(AppContext);
+  const [discountCode, setDiscountCode] = useState('');
+  useEffect(() => {
+    if (!user || !cart) {
+        navigate('/error');
+    }
+}, [user, cart, navigate]);
+
   const [error, setError] = useState('');
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 2000);
+    setTimeout(() => setLoading(false));
   }, []);
 
 
@@ -101,11 +108,9 @@ const FinalizarCompra = ({ formData }) => {
             </div>
           </Col>
           <Col md={4} className="bg-light p-3">
-            <h3>Resumen del Pedido</h3>
-            <p><strong>Subtotal:</strong> ${subtotal}</p>
-            <p><strong>Descuento:</strong> ${discount}</p>
-            <p><strong>Total:</strong> ${subtotal - discount}</p>
-            <p><strong>Envío:</strong> Gratis</p>
+          
+              <OrderSummary subtotal={cart.precioTotal} discountAmount={cart.discount} totalAmount={cart.precioDiscount} />
+              
             
           </Col>
         </Row>
