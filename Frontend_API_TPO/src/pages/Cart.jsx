@@ -8,44 +8,29 @@ import { FaTrash } from 'react-icons/fa';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { user, cart, updateCartItemQuantity, removeItemFromCart, clearCart } = useContext(AppContext);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [shippingCost, setShippingCost] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
+  const { user, cart, setDiscount, clearCart, updateCartItemQuantity, removeItemFromCart } = useContext(AppContext);
   const [discountCode, setDiscountCode] = useState('');
-  const [discountAmount, setDiscountAmount] = useState(0);
-  const [subtotal, setSubtotal] = useState(0);
 
   // Redirecciona si user o cart son nulos o indefinidos
   useEffect(() => {
     if (!user || !cart) {
       navigate('/error');
-    } else {
-      const items = Object.values(cart.items || {});
-      const calculatedSubtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-      setSubtotal(calculatedSubtotal);
-      setTotalItems(items.reduce((sum, item) => sum + item.quantity, 0));
-      setTotalAmount(calculatedSubtotal + shippingCost - discountAmount);
     }
-  }, [user, cart, navigate, discountAmount, shippingCost]);
+  }, [user, cart, navigate]);
 
   const applyDiscount = () => {
     if (discountCode === 'NAIKI10') {
-      const discount = subtotal * 0.10;
-      setDiscountAmount(discount);
+      setDiscount(0.1); // 10% de descuento
     } else {
-      setDiscountAmount(0);
       alert("Código de descuento inválido");
     }
   };
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    console.log("Actualizando cantidad del item:", itemId, "Nueva cantidad:", newQuantity);
     updateCartItemQuantity(itemId, newQuantity);
   };
 
   const handleDeleteItem = (itemId) => {
-    console.log("Eliminando item del carrito:", itemId);
     removeItemFromCart(itemId);
   };
 
@@ -69,7 +54,7 @@ const Cart = () => {
               ) : (
                   cartItems.map(([key, item]) => (
                       <div key={key} className="cart-item">
-                        <img src={item.img} alt={item.model} width="50" height="50"/>
+                        <img src={item.img} alt={item.model} width="50" height="50" />
                         <div className="item-details">
                           <p><strong>{item.model}</strong></p>
                           <p>Talle: {item.size || 'N/A'}</p>
@@ -106,7 +91,7 @@ const Cart = () => {
               )}
             </div>
             <div className="cart-summary">
-              <OrderSummary subtotal={subtotal} discountAmount={discountAmount} totalAmount={totalAmount} />
+              <OrderSummary subtotal={cart.precioTotal} discountAmount={cart.discount} totalAmount={cart.precioDiscount} />
               <div className="summary-item">
                 <input
                     type="text"
@@ -116,7 +101,25 @@ const Cart = () => {
                 />
                 <button onClick={applyDiscount}>Aplicar Descuento</button>
               </div>
+<<<<<<< Updated upstream
               <button className="mt-4" onClick={() => navigate("/cartEnvio")}>Siguiente</button>
+=======
+              {/* Botones "Siguiente" y "Vaciar Carrito" deshabilitados si no hay items en el carrito */}
+              <button
+                  onClick={() => navigate("/cartEnvio")}
+                  disabled={cartItems.length === 0}
+              >
+                Siguiente
+              </button>
+              <button
+                  onClick={clearCart}
+                  className="clear-cart-button"
+                  style={{ marginLeft: '15px', marginTop: '15px' }}
+                  disabled={cartItems.length === 0}
+              >
+                Vaciar Carrito
+              </button>
+>>>>>>> Stashed changes
             </div>
           </div>
         </div>

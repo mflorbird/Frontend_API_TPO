@@ -3,8 +3,9 @@ import {v4 as uuidv4} from "uuid";
 
 const BASE_URL = 'http://localhost:3000/carts';
 
-export const calculateTotal = (items) => {
-    return Object.values(items).reduce((total, item) => total + item.subtotal, 0);
+
+export const calculateTotal = (items, discount=0) => {
+    return Object.values(items).reduce((total, item) => total + item.subtotal, 0) * (1 - discount);
 };
 
 export const getCartByUserId = async (userId) => {
@@ -35,6 +36,8 @@ export const createCart = async (userId) => {
             items: [],
             estado: 'activo',
             precioTotal: 0,
+            precioDiscount: 0,
+            discount: 0,
             createdAt: new Date().toISOString()
         };
         const response = await axios.post(`${BASE_URL}`, newCart);
@@ -72,11 +75,13 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
             };
         }
 
-        const precioTotal = calculateTotal(updatedItems);
+        const precioTotal = calculateTotal(updatedItems)
+        const precioDiscount = precioTotal * (1 - cart.discount);
 
         const response = await axios.patch(`${BASE_URL}/${cartId}`, {
             items: updatedItems,
-            precioTotal
+            precioTotal,
+            precioDiscount
         });
         return response.data;
     } catch (error) {
@@ -99,11 +104,13 @@ export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
             subtotal: newQuantity * updatedItems[itemId].price
         };
 
-        const precioTotal = calculateTotal(updatedItems);
+        const precioTotal = calculateTotal(updatedItems)
+        const precioDiscount = precioTotal * (1 - cart.discount);
 
         const response = await axios.patch(`${BASE_URL}/${cartId}`, {
             items: updatedItems,
-            precioTotal
+            precioTotal,
+            precioDiscount
         });
         return response.data;
     } catch (error) {
@@ -118,11 +125,13 @@ export const removeItem = async (cartId, itemId) => {
         const updatedItems = { ...cart.items };
         delete updatedItems[itemId];
 
-        const precioTotal = calculateTotal(updatedItems);
+        const precioTotal = calculateTotal(updatedItems)
+        const precioDiscount = precioTotal * (1 - cart.discount);
 
         const response = await axios.patch(`${BASE_URL}/${cartId}`, {
             items: updatedItems,
-            precioTotal
+            precioTotal,
+            precioDiscount
         });
         return response.data;
     } catch (error) {
@@ -144,6 +153,24 @@ export const closeCart = async (cartId) => {
     }
 };
 
+export const setDiscountAPI = async (cartId, discount) => {
+    try {
+        const cart = await getCartById(cartId);
+        const precioTotal = calculateTotal(cart.items, discount);
+        const precioDiscount = precioTotal * (1 - discount);
+        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+            discount,
+            precioTotal,
+            precioDiscount
+        }
+        );
+        return response.data;
+        }
+    catch (error) {
+        console.error('Error al aplicar descuento:', error);
+        throw error;
+    }
+};
 
 export const validateStock = async (cart) => {
     try {
@@ -259,7 +286,12 @@ export const checkout = async (cart) => {
 
 export const emptyCart = async (cartId) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, { items: {}, precioTotal: 0 });
+        const response = await axios.patch(`${BASE_URL}/${cartId}`,
+            { items: {},
+                precioTotal: 0,
+                precioDiscount: 0,
+                discount: 0
+            });
         return response.data;
     } catch (error) {
         console.error('Error al vaciar el carrito:', error);

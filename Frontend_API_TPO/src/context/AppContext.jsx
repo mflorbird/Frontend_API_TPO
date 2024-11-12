@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addProductToDb, fetchProductsFromDb } from '../services/catalogService';
+import { fetchProductsFromDb } from '../services/catalogService';
 import { updateFavorites, updateVisitados } from '../services/userService';
 import {
   getCartByUserId,
@@ -10,7 +10,8 @@ import {
   updateItemQuantity,
   closeCart,
   checkout,
-  emptyCart
+  emptyCart,
+  setDiscountAPI
 } from '../services/cartService';
 
 
@@ -118,6 +119,8 @@ export const AppProvider = ({ children }) => {
      await emptyCart(cart.id);
      cart.items = {};
         cart.precioTotal = 0;
+        cart.discount = 0;
+        cart.precioDiscount = 0;
         setCart(cart);
     }
     catch (error) {
@@ -129,11 +132,22 @@ export const AppProvider = ({ children }) => {
     }
     };
 
+  const setDiscount = async (discount) => {
+    if (!user || !cart) return;
 
-  const cartTotals = {
-    items: cart?.items ? Object.values(cart.items).reduce((total, item) => total + item.quantity, 0) : 0,
-    amount: cart?.precioTotal || 0
-  };
+    try {
+      setLoading(true);
+      // parse discount code to float
+      const floatDiscount = parseFloat(discount);
+      const updatedCart = await setDiscountAPI(cart.id, floatDiscount);
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error al aplicar el código de descuento:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const checkoutCart = async () => {
     if (!user || !cart) return;
@@ -214,7 +228,6 @@ export const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider value={{
       cart,
-      cartTotals,
       addItemToCart,
       removeItemFromCart,
       updateCartItemQuantity,
@@ -222,6 +235,7 @@ export const AppProvider = ({ children }) => {
       checkoutCart,
       cartItems,
       setCartItems,
+      setDiscount,
       setUser,
       loading,
       getProductList,
