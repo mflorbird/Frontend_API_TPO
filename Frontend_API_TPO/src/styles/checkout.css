@@ -79,6 +79,16 @@
   }
 
 
+  .cart-summary-container {
+    max-width: 100%; /* Hace que el contenedor se ajuste al 100% del espacio disponible */
+    margin-bottom: 20px;
+    width: 100%; /* o el valor en píxeles que prefieras, por ejemplo, 400px */
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+
+
   /*PROGRESO */
 /* Contenedor más pequeño y centrado */
 .steps-container {
