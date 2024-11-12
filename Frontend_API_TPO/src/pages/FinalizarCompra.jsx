@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Button, Form, Image, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import qr from '../assets/QRNAIKI.png';
 import '../styles/finalizarCompra.css';
 import { AppContext } from '../context/AppContext';
-import { checkout, getCartByUserId  } from '../services/cartService';  
 import OrderSummary from '../components/OrderSummary';
 
 const FinalizarCompra = ({ formData }) => {
@@ -12,8 +11,7 @@ const FinalizarCompra = ({ formData }) => {
   const [metodoPago, setMetodoPago] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { user, cart, cartItems, subtotal, discount, setDiscount,  } = useContext(AppContext);
-  const [discountCode, setDiscountCode] = useState('');
+  const { user, cart, checkoutCart } = useContext(AppContext);
   useEffect(() => {
     if (!user || !cart) {
         navigate('/error');
@@ -40,21 +38,26 @@ const FinalizarCompra = ({ formData }) => {
             throw new Error('El carrito está vacío o no tiene productos');
         }
 
-        const cartId = cart.cartId;
-        const cartData = {
-            cartId,
-            items: Object.values(cart.items),  // Convertir los items en un array para el checkout
-        };
-
         // Ejecutar el checkout
-        const result = await checkout(cartData);
+        const result = await checkoutCart();
 
         if (result.isValid) {
             alert('¡Gracias por comprar en NAIKII!');
             navigate('/');  // Redirigir a la página de inicio
         } else {
-            alert(`Error: ${result.message}`);
+          // isValid: false,
+          //     invalidItems: validation.invalidItems,
+          //     message: 'No se puede realizar el checkout, hay productos sin stock suficiente',
+          //     validations: validation.validations
+
+          // hacer un alert con los productos que no tienen stock suficiente y decir que no se puede realizar la compra
             setError(result.message);
+          const invalidItems = result.invalidItems.map(({ model, size }) => ({ model, size }));
+          alert(`No se puede completar la compra. Los siguientes productos no tienen stock suficiente:
+              ${invalidItems.map(item => `- Modelo: ${item.model}, Talle: ${item.size}`).join('\n')}
+                Por favor, ajusta la cantidad o revisa los productos.`);
+            navigate('/cart');
+
         }
     } catch (error) {
         console.error('Error al confirmar la compra:', error);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {v4 as uuidv4} from "uuid";
+import {getProductById} from "./catalogService";
 
 const BASE_URL = 'http://localhost:3000/carts';
 
@@ -31,7 +32,6 @@ export const getCartById = async (cartId) => {
 export const createCart = async (userId) => {
     try {
         const newCart = {
-            cartId: uuidv4(),
             userId,
             items: [],
             estado: 'activo',
@@ -142,10 +142,12 @@ export const removeItem = async (cartId, itemId) => {
 
 export const closeCart = async (cartId) => {
     try {
+        console.log('Cerrando carrito:', cartId);
         const response = await axios.patch(`${BASE_URL}/${cartId}`, {
             estado: 'cerrado',
             closedAt: new Date().toISOString()
         });
+        console.log('Carrito cerrado:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error al cerrar el carrito:', error);
@@ -172,14 +174,17 @@ export const setDiscountAPI = async (cartId, discount) => {
     }
 };
 
+
 export const validateStock = async (cart) => {
     try {
         const items = Object.entries(cart.items);
         const promises = items.map(async ([itemId, cartItem]) => {
             try {
                 const [productId, size] = itemId.split('---');
-                const response = await axios.get(`http://localhost:3000/products/${productId}`);
-                const product = response.data;
+                console.log('Validating item:', itemId, cartItem);
+                console.log('Product:', productId, 'Size:', size);
+                const product = await  getProductById(productId);
+                console.log('Product:', product);
 
                 if (!product) {
                     return {
@@ -188,13 +193,16 @@ export const validateStock = async (cart) => {
                         message: `El producto ${productId} ya no está disponible`
                     };
                 }
-
+                console.log('Validating stock for product:', product.model, size, cartItem.quantity);
                 const sizeStock = product.stockTotal.find(s => s.size === size);
+                console.log('Prducto:', product, 'SizeStock:', sizeStock, 'Size:', size);
 
                 if (!sizeStock) {
                     return {
                         isValid: false,
                         itemId,
+                        model: product.model,
+                        size,
                         message: `El talle ${size} del modelo ${product.model} ya no está disponible`
                     };
                 }
@@ -205,6 +213,8 @@ export const validateStock = async (cart) => {
                     return {
                         isValid: false,
                         itemId,
+                        model: product.model,
+                        size,
                         message: `Stock insuficiente para ${product.model} talle ${size}. Stock disponible: ${availableStock}`
                     };
                 }
@@ -243,6 +253,51 @@ export const validateStock = async (cart) => {
     }
 };
 
+const deductStock = async (cart) => {
+    const items = Object.entries(cart.items);
+
+    const groupedItems = items.reduce((acc, [itemId, cartItem]) => {
+        const [productId, size] = itemId.split('---');
+        if (!acc[productId]) acc[productId] = [];
+        acc[productId].push({ size, quantity: cartItem.quantity });
+        return acc;
+    }, {});
+
+    try {
+        const promises = Object.keys(groupedItems).map(async (productId) => {
+            try {
+                const product = await getProductById(productId);
+                const updatedStockTotal = product.stockTotal.map((stockItem) => {
+                    const itemInCart = groupedItems[productId].find(({ size }) => size === stockItem.size);
+
+                    if (itemInCart) {
+                        const availableStock = parseInt(stockItem.stock);
+                        const newStock = availableStock - itemInCart.quantity;
+                        return { ...stockItem, stock: newStock.toString() };
+                    }
+                    return stockItem;
+                });
+
+                const response = await axios.patch(`http://localhost:3000/products/${productId}`, {
+                    stockTotal: updatedStockTotal
+                });
+
+                return response.data;
+            } catch (error) {
+                console.error(`Error descontando stock para producto ${productId}:`, error);
+                throw new Error(`Error al descontar stock para producto ${productId}`);
+            }
+        });
+
+        await Promise.all(promises);
+        return true;
+    } catch (error) {
+        console.error('Error al descontar stock:', error);
+        throw new Error('Error al descontar stock');
+    }
+};
+
+
 export const checkout = async (cart) => {
     try {
         const validation = await validateStock(cart);
@@ -256,26 +311,17 @@ export const checkout = async (cart) => {
             };
         }
 
-        const deductStock = async (cart) => {
-            const promises = cart.items.map(async (item) => {
-                const { productId, size, quantity } = item;
-                console.log('Deducting stock for product:', productId, size, quantity); 
-                await axios.patch(`http://localhost:3000/products/${productId}/deductStock`, {
-                    size,
-                    quantity,
-                });
-            });
-            await Promise.all(promises);
-        };
+        const stockDeduction = await deductStock(cart);
+        console.log('Stock deduction:', stockDeduction);
 
-        await deductStock(cart);
+        const responseCart = await closeCart(cart.id);
+        console.log('Cart closed:', responseCart);
 
-        const response = await closeCart(cart.cartId);
         return {
             isValid: true,
             invalidItems: [],
             message: 'Compra realizada exitosamente',
-            cart: response
+            cart: responseCart
         }
     } catch (error) {
         console.error('Error al realizar el checkout:', error);

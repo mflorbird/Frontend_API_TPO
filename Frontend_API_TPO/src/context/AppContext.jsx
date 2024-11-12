@@ -154,14 +154,16 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const cartStatus = await checkout(cart);
+      console.log('Estado del carrito:', cartStatus);
       if (cartStatus.isValid) {
         const newCart = await createCart(user.id);
         setCart(newCart);
+        return cartStatus;
         } else {
-        console.error('Error al finalizar la compra:', cartStatus.message);
+        return cartStatus;
       }
     } catch (error) {
-        console.error('Error al finalizar la compra:', error);
+        console.error('Error al finalizar la compra 2:', error);
         throw error;
     }
     finally {
