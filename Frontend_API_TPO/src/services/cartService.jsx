@@ -392,9 +392,11 @@ export const emptyCart = async (cartId) => {
 
 export const getCartItemsByUserId = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_URL}`, { params: { userId } });
-        const cart = response.data[0];
-        if (!cart) {
+        // const response = await axios.get(`${BASE_URL}`, { params: { userId } });
+        // const cart = response.data[0];
+        // if (!cart) {}
+        const cart = await getCartByUserId(userId);
+        if (!cart || !cart.items){
             throw new Error('Carrito no encontrado');
         }
 
