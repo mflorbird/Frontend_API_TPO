@@ -41,16 +41,19 @@ export const getCartById = async (cartId) => {
 
 export const createCart = async (userId) => {
     try {
-        const newCart = {
-            userId,
-            items: [],
-            estado: 'activo',
-            precioTotal: 0,
-            precioDiscount: 0,
-            discount: 0,
-            createdAt: new Date().toISOString()
-        };
-        const response = await axios.post(`${BASE_URL}`, newCart);
+        // const newCart = {
+        //     userId,
+        //     items: [],
+        //     estado: 'activo',
+        //     precioTotal: 0,
+        //     precioDiscount: 0,
+        //     discount: 0,
+        //     createdAt: new Date().toISOString()
+        // };
+        const token = getAuthToken();
+        const response = await axios.post(`${BASE_URL}/create`, null,{
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al crear el carrito:', error);
