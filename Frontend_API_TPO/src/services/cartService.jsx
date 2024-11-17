@@ -41,16 +41,19 @@ export const getCartById = async (cartId) => {
 
 export const createCart = async (userId) => {
     try {
-        const newCart = {
-            userId,
-            items: [],
-            estado: 'activo',
-            precioTotal: 0,
-            precioDiscount: 0,
-            discount: 0,
-            createdAt: new Date().toISOString()
-        };
-        const response = await axios.post(`${BASE_URL}`, newCart);
+        // const newCart = {
+        //     userId,
+        //     items: [],
+        //     estado: 'activo',
+        //     precioTotal: 0,
+        //     precioDiscount: 0,
+        //     discount: 0,
+        //     createdAt: new Date().toISOString()
+        // };
+        const token = getAuthToken();
+        const response = await axios.post(`${BASE_URL}/create`, null,{
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al crear el carrito:', error);
@@ -60,39 +63,47 @@ export const createCart = async (userId) => {
 
 export const addUpdateItem = async (cartId, productId, size, quantity, price, model, img) => {
     try {
-        const cart = await getCartById(cartId);
-        const itemId = `${productId}---${size}`;
-        const updatedItems = { ...cart.items };
+        // const cart = await getCartById(cartId);
+        // const itemId = `${productId}---${size}`;
+        // const updatedItems = { ...cart.items };
 
-        if (itemId in updatedItems) {
-            updatedItems[itemId] = {
-                ...updatedItems[itemId],
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img
-            };
-        } else {
-            updatedItems[itemId] = {
-                cartId: uuidv4(),
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img
-            };
-        }
+        // if (itemId in updatedItems) {
+        //     updatedItems[itemId] = {
+        //         ...updatedItems[itemId],
+        //         model: model,
+        //         quantity: quantity,
+        //         price: price,
+        //         size: size,
+        //         subtotal: quantity * price,
+        //         img: img
+        //     };
+        // } else {
+        //     updatedItems[itemId] = {
+        //         cartId: uuidv4(),
+        //         model: model,
+        //         quantity: quantity,
+        //         price: price,
+        //         size: size,
+        //         subtotal: quantity * price,
+        //         img: img
+        //     };
+        // }
 
-        const precioTotal = calculateTotal(updatedItems)
-        const precioDiscount = precioTotal * (1 - cart.discount);
+        // const precioTotal = calculateTotal(updatedItems)
+        // const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            items: updatedItems,
-            precioTotal,
-            precioDiscount
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     items: updatedItems,
+        //     precioTotal,
+        //     precioDiscount
+        // });
+        const token = getAuthToken();
+        const productoRequest = {
+            productoId: productId,
+            cantidad: quantity
+        };
+        const response = await axios.post('${BASE_URL}/agregarProducto', productoRequest, {
+            headers: {'Authorization': 'Bearer ${token}'}
         });
         return response.data;
     } catch (error) {
@@ -100,7 +111,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
         throw error;
     }
 };
-
+/*este aun no lo hago */
 export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
     try {
         const cart = await getCartById(cartId);
@@ -129,20 +140,31 @@ export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
         throw error;
     }
 };
+/* hasta acá solo updateItemQuantity */
 
 export const removeItem = async (cartId, itemId) => {
     try {
-        const cart = await getCartById(cartId);
-        const updatedItems = { ...cart.items };
-        delete updatedItems[itemId];
+        // const cart = await getCartById(cartId);
+        // const updatedItems = { ...cart.items };
+        // delete updatedItems[itemId];
 
-        const precioTotal = calculateTotal(updatedItems)
-        const precioDiscount = precioTotal * (1 - cart.discount);
+        // const precioTotal = calculateTotal(updatedItems)
+        // const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            items: updatedItems,
-            precioTotal,
-            precioDiscount
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     items: updatedItems,
+        //     precioTotal,
+        //     precioDiscount
+        // });
+        const token = getAuthToken();
+        const productoRequest={
+            carritoId: cartId,
+            productoId: itemId,
+            cantidad: 1
+        };
+        const response = await axios.delete('${BASE_URL}/eliminarProducto',{
+            data: productoRequest,
+            headers: {'Authorization': 'Bearer ${token}'}
         });
         return response.data;
     } catch (error) {
@@ -150,7 +172,7 @@ export const removeItem = async (cartId, itemId) => {
         throw error;
     }
 };
-
+ /* closeCart falta */
 export const closeCart = async (cartId) => {
     try {
         console.log('Cerrando carrito:', cartId);
@@ -165,18 +187,23 @@ export const closeCart = async (cartId) => {
         throw error;
     }
 };
+ /* closeCart falta */
 
 export const setDiscountAPI = async (cartId, discount) => {
     try {
-        const cart = await getCartById(cartId);
-        const precioTotal = calculateTotal(cart.items, discount);
-        const precioDiscount = precioTotal * (1 - discount);
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            discount,
-            precioTotal,
-            precioDiscount
-        }
-        );
+        // const cart = await getCartById(cartId);
+        // const precioTotal = calculateTotal(cart.items, discount);
+        // const precioDiscount = precioTotal * (1 - discount);
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     discount,
+        //     precioTotal,
+        //     precioDiscount
+        // }
+        // );
+        const token = getAuthToken();
+        const response = await axios.put('${BASE_URL}/descuento', {codigoDescuento: discountCode}, {
+            headers: {'Authorization': 'Bearer $ {token}'}
+        });
         return response.data;
         }
     catch (error) {
@@ -340,15 +367,21 @@ export const checkout = async (cart) => {
     }
 };
 
+/* hasta aca esta actualizado con las salvedades mencionadas anteriormente. */
+
 
 export const emptyCart = async (cartId) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${cartId}`,
-            { items: {},
-                precioTotal: 0,
-                precioDiscount: 0,
-                discount: 0
-            });
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`,
+        //     { items: {},
+        //         precioTotal: 0,
+        //         precioDiscount: 0,
+        //         discount: 0
+        //     });
+        const token = getAuthToken();
+        const response = await axios.delete('${BASE_URL}/vaciarCarrito',{
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al vaciar el carrito:', error);
@@ -359,9 +392,11 @@ export const emptyCart = async (cartId) => {
 
 export const getCartItemsByUserId = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_URL}`, { params: { userId } });
-        const cart = response.data[0];
-        if (!cart) {
+        // const response = await axios.get(`${BASE_URL}`, { params: { userId } });
+        // const cart = response.data[0];
+        // if (!cart) {}
+        const cart = await getCartByUserId(userId);
+        if (!cart || !cart.items){
             throw new Error('Carrito no encontrado');
         }
 
