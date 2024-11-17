@@ -63,39 +63,47 @@ export const createCart = async (userId) => {
 
 export const addUpdateItem = async (cartId, productId, size, quantity, price, model, img) => {
     try {
-        const cart = await getCartById(cartId);
-        const itemId = `${productId}---${size}`;
-        const updatedItems = { ...cart.items };
+        // const cart = await getCartById(cartId);
+        // const itemId = `${productId}---${size}`;
+        // const updatedItems = { ...cart.items };
 
-        if (itemId in updatedItems) {
-            updatedItems[itemId] = {
-                ...updatedItems[itemId],
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img
-            };
-        } else {
-            updatedItems[itemId] = {
-                cartId: uuidv4(),
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img
-            };
-        }
+        // if (itemId in updatedItems) {
+        //     updatedItems[itemId] = {
+        //         ...updatedItems[itemId],
+        //         model: model,
+        //         quantity: quantity,
+        //         price: price,
+        //         size: size,
+        //         subtotal: quantity * price,
+        //         img: img
+        //     };
+        // } else {
+        //     updatedItems[itemId] = {
+        //         cartId: uuidv4(),
+        //         model: model,
+        //         quantity: quantity,
+        //         price: price,
+        //         size: size,
+        //         subtotal: quantity * price,
+        //         img: img
+        //     };
+        // }
 
-        const precioTotal = calculateTotal(updatedItems)
-        const precioDiscount = precioTotal * (1 - cart.discount);
+        // const precioTotal = calculateTotal(updatedItems)
+        // const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            items: updatedItems,
-            precioTotal,
-            precioDiscount
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     items: updatedItems,
+        //     precioTotal,
+        //     precioDiscount
+        // });
+        const token = getAuthToken();
+        const productoRequest = {
+            productoId: productId,
+            cantidad: quantity
+        };
+        const response = await axios.post('${BASE_URL}/agregarProducto', productoRequest, {
+            headers: {'Authorization': 'Bearer ${token}'}
         });
         return response.data;
     } catch (error) {
