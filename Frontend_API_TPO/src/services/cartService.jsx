@@ -28,7 +28,10 @@ export const getCartByUserId = async (userId) => {
 
 export const getCartById = async (cartId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/${cartId}`);
+        const token = getAuthToken();
+        const response = await axios.get(`${BASE_URL}/${cartId}`, {
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al obtener el carrito:', error);
