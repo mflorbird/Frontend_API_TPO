@@ -367,15 +367,21 @@ export const checkout = async (cart) => {
     }
 };
 
+/* hasta aca esta actualizado con las salvedades mencionadas anteriormente. */
+
 
 export const emptyCart = async (cartId) => {
     try {
-        const response = await axios.patch(`${BASE_URL}/${cartId}`,
-            { items: {},
-                precioTotal: 0,
-                precioDiscount: 0,
-                discount: 0
-            });
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`,
+        //     { items: {},
+        //         precioTotal: 0,
+        //         precioDiscount: 0,
+        //         discount: 0
+        //     });
+        const token = getAuthToken();
+        const response = await axios.delete('${BASE_URL}/vaciarCarrito',{
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al vaciar el carrito:', error);
