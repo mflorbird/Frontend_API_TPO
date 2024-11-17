@@ -26,6 +26,39 @@ export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   
+  // Cargar usuario y token desde localStorage cuando se monta el proveedor
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    const savedCart = localStorage.getItem('cart');
+
+    if (savedToken) setToken(savedToken);
+    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedCart) setCart(JSON.parse(savedCart)); // Cargar el carrito si existe en localStorage
+  }, []);
+
+  // Guardar token y usuario en localStorage al iniciar sesión
+  const login = (userData) => {
+    setUser(userData);
+    setToken(userData.token);
+    localStorage.setItem('token', userData.token);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const saveCartToLocalStorage = (updatedCart) => {
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart)); // Guardar carrito en localStorage
+  };
+
+  // Limpiar sesión y carrito en localStorage al cerrar sesión
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+  };
+
   useEffect(() => {
     const initializeCart = async () => {
       if (!user) return;
@@ -182,18 +215,6 @@ export const AppProvider = ({ children }) => {
       return []; 
     }
   };
-
-  const login = (userData) => {
-    setUser(userData);
-  };
-
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    clearCart();
-    navigate('/');
-    };
-
 
   const actualizarFavoritos = async (user, nuevosFavoritos) => {
     try
