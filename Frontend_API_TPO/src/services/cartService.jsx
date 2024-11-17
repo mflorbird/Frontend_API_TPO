@@ -4,6 +4,8 @@ import {getProductById} from "./catalogService";
 
 const BASE_URL = 'http://localhost:8080/api/v1/carritos';
 
+// Recuperar el token cuando lo tengamos 
+const getAuthToken = () => localStorage.getItem('authToken');
 
 export const calculateTotal = (items, discount=0) => {
     return Object.values(items).reduce((total, item) => total + item.subtotal, 0) * (1 - discount);
@@ -11,8 +13,13 @@ export const calculateTotal = (items, discount=0) => {
 
 export const getCartByUserId = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_URL}`, { params: { userId } });
-        return response.data[0];
+        // const response = await axios.get(`${BASE_URL}`, { params: { userId } });
+        // return response.data[0];
+        const token = getAuthToken();
+        const response = await axios.get(`${BASE_URL}/obtenerCarrito`, { 
+            headers: { 'Authorization': `Bearer ${token}` } 
+        }); 
+        return response.data;
     } catch (error) {
         console.error('Error al buscar el carrito:', error);
         throw error;
@@ -21,7 +28,10 @@ export const getCartByUserId = async (userId) => {
 
 export const getCartById = async (cartId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/${cartId}`);
+        const token = getAuthToken();
+        const response = await axios.get(`${BASE_URL}/${cartId}`, {
+            headers: {'Authorization': 'Bearer ${token}'}
+        });
         return response.data;
     } catch (error) {
         console.error('Error al obtener el carrito:', error);
