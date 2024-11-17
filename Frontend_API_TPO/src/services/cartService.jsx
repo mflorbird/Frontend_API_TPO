@@ -172,7 +172,7 @@ export const removeItem = async (cartId, itemId) => {
         throw error;
     }
 };
-
+ /* closeCart falta */
 export const closeCart = async (cartId) => {
     try {
         console.log('Cerrando carrito:', cartId);
@@ -187,18 +187,23 @@ export const closeCart = async (cartId) => {
         throw error;
     }
 };
+ /* closeCart falta */
 
 export const setDiscountAPI = async (cartId, discount) => {
     try {
-        const cart = await getCartById(cartId);
-        const precioTotal = calculateTotal(cart.items, discount);
-        const precioDiscount = precioTotal * (1 - discount);
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            discount,
-            precioTotal,
-            precioDiscount
-        }
-        );
+        // const cart = await getCartById(cartId);
+        // const precioTotal = calculateTotal(cart.items, discount);
+        // const precioDiscount = precioTotal * (1 - discount);
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     discount,
+        //     precioTotal,
+        //     precioDiscount
+        // }
+        // );
+        const token = getAuthToken();
+        const response = await axios.put('${BASE_URL}/descuento', {codigoDescuento: discountCode}, {
+            headers: {'Authorization': 'Bearer $ {token}'}
+        });
         return response.data;
         }
     catch (error) {
