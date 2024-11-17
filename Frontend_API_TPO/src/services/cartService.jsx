@@ -2,7 +2,7 @@ import axios from 'axios';
 import {v4 as uuidv4} from "uuid";
 import {getProductById} from "./catalogService";
 
-const BASE_URL = 'http://localhost:3000/carts';
+const BASE_URL = 'http://localhost:8080/api/v1/carritos';
 
 
 export const calculateTotal = (items, discount=0) => {
