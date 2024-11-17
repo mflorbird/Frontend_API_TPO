@@ -111,7 +111,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
         throw error;
     }
 };
-
+/*este aun no lo hago */
 export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
     try {
         const cart = await getCartById(cartId);
@@ -140,20 +140,31 @@ export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
         throw error;
     }
 };
+/* hasta acá solo updateItemQuantity */
 
 export const removeItem = async (cartId, itemId) => {
     try {
-        const cart = await getCartById(cartId);
-        const updatedItems = { ...cart.items };
-        delete updatedItems[itemId];
+        // const cart = await getCartById(cartId);
+        // const updatedItems = { ...cart.items };
+        // delete updatedItems[itemId];
 
-        const precioTotal = calculateTotal(updatedItems)
-        const precioDiscount = precioTotal * (1 - cart.discount);
+        // const precioTotal = calculateTotal(updatedItems)
+        // const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            items: updatedItems,
-            precioTotal,
-            precioDiscount
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     items: updatedItems,
+        //     precioTotal,
+        //     precioDiscount
+        // });
+        const token = getAuthToken();
+        const productoRequest={
+            carritoId: cartId,
+            productoId: itemId,
+            cantidad: 1
+        };
+        const response = await axios.delete('${BASE_URL}/eliminarProducto',{
+            data: productoRequest,
+            headers: {'Authorization': 'Bearer ${token}'}
         });
         return response.data;
     } catch (error) {
