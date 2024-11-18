@@ -185,7 +185,7 @@ export const closeCart = async (cartId) => {
         const response = await axios.patch('${BASE_URL}/${cartId}/cerrar', null,{
             headers: {'Authorization': 'Bearer ${token}'}
         });
-        
+
         console.log('Carrito cerrado:', response.data);
         return response.data;
     } catch (error) {
@@ -218,7 +218,7 @@ export const setDiscountAPI = async (cartId, discount) => {
     }
 };
 
-
+/// validarStock y deducir stock. entiendo que ya no son necesarios porque los traemos con el checkout. pero los dejo para revisar juntos. 
 export const validateStock = async (cart) => {
     try {
         const items = Object.entries(cart.items);
@@ -322,7 +322,7 @@ const deductStock = async (cart) => {
                     return stockItem;
                 });
 
-                const response = await axios.patch(`http://localhost:3000/products/${productId}`, {
+                const response = await axios.patch(`http://localhost:8080/api/v1/productos/${productId}/stock`, {
                     stockTotal: updatedStockTotal
                 });
 
@@ -342,38 +342,56 @@ const deductStock = async (cart) => {
 };
 
 
-export const checkout = async (cart) => {
+export const checkout = async (cartId) => {
     try {
-        const validation = await validateStock(cart);
-
-        if (!validation.isValid) {
-            return {
-                isValid: false,
-                invalidItems: validation.invalidItems,
-                message: 'No se puede realizar el checkout, hay productos sin stock suficiente',
-                validations: validation.validations
-            };
-        }
-
-        const stockDeduction = await deductStock(cart);
-        console.log('Stock deduction:', stockDeduction);
-
-        const responseCart = await closeCart(cart.id);
-        console.log('Cart closed:', responseCart);
-
-        return {
-            isValid: true,
-            invalidItems: [],
-            message: 'Compra realizada exitosamente',
-            cart: responseCart
-        }
-    } catch (error) {
-        console.error('Error al realizar el checkout:', error);
-        throw error;
-    }
+        const token = localStorage.getItem('authToken'); 
+        const response = await axios.put(`${BASE_URL}/${cartId}/checkout`, null, { 
+            headers: { 'Authorization': `Bearer ${token}` } 
+        });
+        console.log('Carrito cerrado:', response.data); 
+        return { 
+            isValid: true, 
+            message: 'Compra realizada exitosamente', 
+            cart: response.data 
+        }; 
+    } catch (error) { 
+        console.error('Error al realizar el checkout:', error); 
+        return { 
+            isValid: false, 
+            message: 'Error al realizar el checkout', 
+            error: error.response ? error.response.data : error.message 
+        }; 
+    } 
 };
+//         const validation = await validateStock(cart);
 
-/* hasta aca esta actualizado con las salvedades mencionadas anteriormente. */
+//         if (!validation.isValid) {
+//             return {
+//                 isValid: false,
+//                 invalidItems: validation.invalidItems,
+//                 message: 'No se puede realizar el checkout, hay productos sin stock suficiente',
+//                 validations: validation.validations
+//             };
+//         }
+
+//         const stockDeduction = await deductStock(cart);
+//         console.log('Stock deduction:', stockDeduction);
+
+//         const responseCart = await closeCart(cart.id);
+//         console.log('Cart closed:', responseCart);
+
+//         return {
+//             isValid: true,
+//             invalidItems: [],
+//             message: 'Compra realizada exitosamente',
+//             cart: responseCart
+//         }
+//     } catch (error) {
+//         console.error('Error al realizar el checkout:', error);
+//         throw error;
+//     }
+// };
+
 
 
 export const emptyCart = async (cartId) => {
