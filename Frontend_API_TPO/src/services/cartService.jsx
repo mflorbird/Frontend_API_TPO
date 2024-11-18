@@ -218,7 +218,7 @@ export const setDiscountAPI = async (cartId, discount) => {
     }
 };
 
-
+/// validarStock y deducir stock. entiendo que ya no son necesarios porque los traemos con el checkout. pero los dejo para revisar juntos. 
 export const validateStock = async (cart) => {
     try {
         const items = Object.entries(cart.items);
@@ -392,7 +392,6 @@ export const checkout = async (cartId) => {
 //     }
 // };
 
-/* hasta aca esta actualizado con las salvedades mencionadas anteriormente. */
 
 
 export const emptyCart = async (cartId) => {
