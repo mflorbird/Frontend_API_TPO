@@ -442,9 +442,16 @@ export const getCartItemsByUserId = async (userId) => {
     }
 };
 
+
+
 export const getClosedCartsByUserId = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_URL}`, { params: { userId, estado: 'cerrado' } });
+        // const response = await axios.get(`${BASE_URL}`, { params: { userId, estado: 'cerrado' } });
+        const token= localStorage.getItem('authToken');
+        const response = await axios.get ('${BASE_URL}',{
+            params: {userId, estado: 'cerrado'},
+            headers: {'Authorization': 'Bearer ${token}'}
+        })
         return response.data;
     } catch (error) {
         console.error('Error al obtener los carritos cerrados:', error);
