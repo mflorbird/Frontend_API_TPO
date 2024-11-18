@@ -111,36 +111,44 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
         throw error;
     }
 };
-/*este aun no lo hago */
+
 export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
     try {
-        const cart = await getCartById(cartId);
-        if (!cart.items[itemId]) {
-            throw new Error('Item no encontrado en el carrito');
-        }
+        const response = await axios.patch('${BASE_URL}/${cartId}/items/${itemId}/quantity',
+            {quantity: newQuantity},
+            {
+                headers:{'Authorization': 'bEARER ${token}',
+                    'Content-Type':'application/json'
+                }
+            }
+        );
+        // const cart = await getCartById(cartId);
+        // if (!cart.items[itemId]) {
+        //     throw new Error('Item no encontrado en el carrito');
+        // }
 
-        const updatedItems = { ...cart.items };
-        updatedItems[itemId] = {
-            ...updatedItems[itemId],
-            quantity: newQuantity,
-            subtotal: newQuantity * updatedItems[itemId].price
-        };
+        // const updatedItems = { ...cart.items };
+        // updatedItems[itemId] = {
+        //     ...updatedItems[itemId],
+        //     quantity: newQuantity,
+        //     subtotal: newQuantity * updatedItems[itemId].price
+        // };
 
-        const precioTotal = calculateTotal(updatedItems)
-        const precioDiscount = precioTotal * (1 - cart.discount);
+        // const precioTotal = calculateTotal(updatedItems)
+        // const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            items: updatedItems,
-            precioTotal,
-            precioDiscount
-        });
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     items: updatedItems,
+        //     precioTotal,
+        //     precioDiscount
+        // });
         return response.data;
     } catch (error) {
         console.error('Error al actualizar cantidad:', error);
         throw error;
     }
 };
-/* hasta acá solo updateItemQuantity */
+
 
 export const removeItem = async (cartId, itemId) => {
     try {
