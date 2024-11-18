@@ -172,14 +172,20 @@ export const removeItem = async (cartId, itemId) => {
         throw error;
     }
 };
- /* closeCart falta */
+
 export const closeCart = async (cartId) => {
     try {
+        // console.log('Cerrando carrito:', cartId);
+        // const response = await axios.patch(`${BASE_URL}/${cartId}`, {
+        //     estado: 'cerrado',
+        //     closedAt: new Date().toISOString()
+        // });
+        const token = localStorage.getItem('authToken');
         console.log('Cerrando carrito:', cartId);
-        const response = await axios.patch(`${BASE_URL}/${cartId}`, {
-            estado: 'cerrado',
-            closedAt: new Date().toISOString()
+        const response = await axios.patch('${BASE_URL}/${cartId}/cerrar', null,{
+            headers: {'Authorization': 'Bearer ${token}'}
         });
+        
         console.log('Carrito cerrado:', response.data);
         return response.data;
     } catch (error) {
@@ -187,7 +193,7 @@ export const closeCart = async (cartId) => {
         throw error;
     }
 };
- /* closeCart falta */
+
 
 export const setDiscountAPI = async (cartId, discount) => {
     try {
