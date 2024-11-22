@@ -63,7 +63,9 @@ export const getFavoritos = async (user) => {
   let productosFavoritos= [];
   try {
     for (const productoId of user.favoritos) {
-      const producto = await getProductById(productoId);
+      // const producto = await getProductById(productoId);
+        // productosFavoritos.push(producto);
+        const producto = await axiosWithInterceptor.get(`${API_URL}/gestionCatalogo/productos/favoritos/${user.id}`); 
         productosFavoritos.push(producto);
     }
     return productosFavoritos;
