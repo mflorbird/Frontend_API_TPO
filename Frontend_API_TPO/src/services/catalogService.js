@@ -33,10 +33,12 @@ export const addProductToDb = async ({productData, productId}) => {
     console.log(productId)
     if (!productId) {
       const productWithId = { ...productData, id: uuidv4() };
-      const response = await axios.post(API_URL, productWithId);
+      // const response = await axios.post(API_URL, productWithId);
+      const response = await axios.post(`${API_URL}/gestionProductos/productos`, productData);
       return response.data;
     } else {
-      const response = await axios.patch(`${API_URL}/${productId}`, productData);
+      // const response = await axios.patch(`${API_URL}/${productId}`, productData);
+      const response = await axios.patch(`${API_URL}/gestionProductos/productos/${productId}`, productData);
       return response.data;
     }
   } catch (error) {
