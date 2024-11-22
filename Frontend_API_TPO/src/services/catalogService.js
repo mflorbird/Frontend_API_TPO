@@ -50,7 +50,8 @@ export const addProductToDb = async ({productData, productId}) => {
 // destacados - get: '/productos/destacados' OK
 export const getDestacados = async () => {
   try {
-    const response = await axios.get(`${API_URL}/productos/destacados`);
+    // const response = await axios.get(`${API_URL}/productos/destacados`);
+    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/destacados`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener los productos destacados', error);
