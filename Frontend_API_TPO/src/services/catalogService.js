@@ -86,8 +86,10 @@ export const getFavoritos = async (user) => {
 // categoria - get ruta: "/productos/categoria/{categoria}" OK
 export const getProductoCategoria = async (categoria) => {
   try {
-    const response = await fetchProductsFromDb()
-    return response.filter(product => product.category === categoria);
+    // const response = await fetchProductsFromDb()
+    // return response.filter(product => product.category === categoria);
+    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/categoria/${categoria}`); 
+    return response.data;
     } catch (error) {
         throw new Error('Error al obtener los productos por categoria', error);
   }
