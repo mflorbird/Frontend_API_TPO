@@ -21,7 +21,7 @@ const Navbar = () => {
     setCartVisible(!isCartVisible); 
   };
 
-  const isAdmin = user && user.role === 'admin';
+  const isAdmin = user && user.role === 'ADMIN' ;
 
   return (
       <nav className="custom-navbar">

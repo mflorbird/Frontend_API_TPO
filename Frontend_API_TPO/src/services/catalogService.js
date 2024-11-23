@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 // const API_URL = 'http://localhost:3000/products';
 
-const API_URL = 'http://localhost:8080/api/v1';
+const API_URL_PRODUCTO = 'http://localhost:8080/api/v1/gestionProductos';
+const API_URL_CATALOGO = 'http://localhost:8080/api/v1/gestionCatalogo';
 
 const axiosWithInterceptor = axios.create();
 
@@ -34,11 +35,11 @@ export const addProductToDb = async ({productData, productId}) => {
     if (!productId) {
       const productWithId = { ...productData, id: uuidv4() };
       // const response = await axios.post(API_URL, productWithId);
-      const response = await axios.post(`${API_URL}/gestionProductos/productos`, productData);
+      const response = await axios.post(`${API_URL_PRODUCTO}/gestionProductos/productos`, productData);
       return response.data;
     } else {
       // const response = await axios.patch(`${API_URL}/${productId}`, productData);
-      const response = await axios.patch(`${API_URL}/gestionProductos/productos/${productId}`, productData);
+      const response = await axios.patch(`${API_URL_PRODUCTO}/gestionProductos/productos/${productId}`, productData);
       return response.data;
     }
   } catch (error) {
@@ -51,7 +52,7 @@ export const addProductToDb = async ({productData, productId}) => {
 export const getDestacados = async () => {
   try {
     // const response = await axios.get(`${API_URL}/productos/destacados`);
-    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/destacados`);
+    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/destacados`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener los productos destacados', error);
@@ -65,7 +66,7 @@ export const getFavoritos = async (user) => {
     for (const productoId of user.favoritos) {
       // const producto = await getProductById(productoId);
         // productosFavoritos.push(producto);
-        const producto = await axiosWithInterceptor.get(`${API_URL}/gestionCatalogo/productos/favoritos/${user.id}`); 
+        const producto = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/favoritos/${user.id}`); 
         productosFavoritos.push(producto);
     }
     return productosFavoritos;
@@ -78,7 +79,7 @@ export const getProductoCategoria = async (categoria) => {
   try {
     // const response = await fetchProductsFromDb()
     // return response.filter(product => product.category === categoria);
-    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/categoria/${categoria}`); 
+    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/categoria/${categoria}`); 
     return response.data;
     } catch (error) {
         throw new Error('Error al obtener los productos por categoria', error);
@@ -103,7 +104,7 @@ export const getCategorias = async () => {
 
 export const getCategoria = async (categoria) => {
   try {
-    const response = await axios.get(`${API_URL}/productos/categoria/${categoria}`);
+    const response = await axios.get(`${API_URL_CATALOGO}/productos/categoria/${categoria}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener los productos por categoria', error);
@@ -114,7 +115,7 @@ export const getCategoria = async (categoria) => {
 export const getTodos = async () => {
   try {
     // const response = await axios.get(`${API_URL}/productos`);
-    const response = await axios.get(`${API_URL}/gestionCatalogo/productos`);
+    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener todos los productos', error);
@@ -125,7 +126,7 @@ export const getTodos = async () => {
 export const getDetalle = async (productoId) => {
   try {
     // const response = await axiosWithInterceptor.get(`${API_URL}/productos/${productoId}`);
-    const response = await axiosWithInterceptor.get(`${API_URL}/gestionCatalogo/productos/${productoId}`);
+    const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/${productoId}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener el detalle del producto', error);
@@ -137,7 +138,7 @@ export const getDetalle = async (productoId) => {
 export const getDetalleSinLogin = async (productoId) => {
   try {
     // const response = await axios.get(`${API_URL}/productos/${productoId}`);
-    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/${productoId}`);
+    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/${productoId}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener el detalle del producto', error);
@@ -148,7 +149,7 @@ export const getDetalleSinLogin = async (productoId) => {
 
 export const agregarFavorito = async (productoId) => {
   try {
-    const response = await axiosWithInterceptor.put(`${API_URL}/productos/favoritos/${productoId}`);
+    const response = await axiosWithInterceptor.put(`${API_URL_CATALOGO}/productos/favoritos/${productoId}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al agregar producto a favoritos', error);
@@ -158,7 +159,7 @@ export const agregarFavorito = async (productoId) => {
 // eliminar de favoritos - delete ruta: "/productos/favoritos/{productoId}" OK
 export const eliminiarFavorito = async (productoId) => {
   try {
-    const response = await axiosWithInterceptor.delete(`${API_URL}/productos/favoritos/${productoId}`);
+    const response = await axiosWithInterceptor.delete(`${API_URL_CATALOGO}/productos/favoritos/${productoId}`);
     return response.data;
   } catch (error) {
     throw new Error('Error al quitar producto de favoritos', error);
@@ -183,7 +184,7 @@ export const getVisitados = async (user) => {
 
 export const fetchProductsFromDb = async () => {
   try {
-    const response = await axiosWithInterceptor.get(`${API_URL}`);
+    const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener la lista de productos:', error);
@@ -194,7 +195,7 @@ export const fetchProductsFromDb = async () => {
 export const deleteProductById = async (id) => {
   try {
     // const response = await axiosWithInterceptor.delete(`${API_URL}/${id}`);
-    const response = await axiosWithInterceptor.delete(`${API_URL}/gestionProductos/productos/${id}`);
+    const response = await axiosWithInterceptor.delete(`${API_URL_PRODUCTO}/gestionProductos/productos/${id}`);
     return response.data; 
   } catch (error) {
     console.error('Error al eliminar el producto:', error);
@@ -205,7 +206,7 @@ export const deleteProductById = async (id) => {
 export const getProductById = async (id) => {
   try {
     // const response = await axiosWithInterceptor.get(`${API_URL}/${id}`);
-    const response = await axiosWithInterceptor.get(`${API_URL}/gestionCatalogo/productos/${id}`);
+    const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/${id}`);
     return response.data; 
   } catch (error) {
     console.error('Error al obtener el producto:', error);
@@ -215,7 +216,7 @@ export const getProductById = async (id) => {
 export const getFeaturedProducts = async () => {
   try {
     // const response = await axios.get(API_URL, { params: { featured: true } });
-    const response = await axios.get(`${API_URL}/gestionCatalogo/productos/destacados`);
+    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/destacados`);
     return response.data;
   } catch (error) {
     console.error('Error al obtener los productos destacados:', error);
