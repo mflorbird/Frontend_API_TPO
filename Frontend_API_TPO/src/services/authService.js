@@ -16,7 +16,8 @@ export const loginUser = async (usuarioOEmail, contraseña) => {
     if (user) {
 
       // save user as JWT in local storage
-        localStorage.setItem('JWT', JSON.stringify(user));
+        localStorage.setItem('token', JSON.stringify(user));
+        console.log(localStorage.getItem('token'));
 
       // const usersWithId1 = await axios.get(`${API_URL}?idUsuario=1`);
       // const userWithId1 = usersWithId1.data[0];
