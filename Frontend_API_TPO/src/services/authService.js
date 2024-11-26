@@ -22,15 +22,6 @@ export const loginUser = async (usuarioOEmail, contraseña) => {
         delete user.sub;
         console.log(user);
 
-      // const usersWithId1 = await axios.get(`${API_URL}?idUsuario=1`);
-      // const userWithId1 = usersWithId1.data[0];
-      //
-      // if (userWithId1 && userWithId1.id !== user.id) {
-      //   await axios.patch(`${API_URL}/${userWithId1.id}`, { idUsuario: '' });
-      // }
-      //
-      // await axios.patch(`${API_URL}/${user.id}`, { idUsuario: 1 });
-
       return user;
     } else {
       return null;
