@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchProductsFromDb } from '../services/catalogService';
-import { updateFavorites, updateVisitados } from '../services/userService';
+import {fetchProductsFromDb, updateFavorites, updateVisitados} from '../services/catalogService';
 import {
   getCartByUserId,
   createCart,

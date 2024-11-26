@@ -5,7 +5,7 @@ import {getProductById} from "./catalogService";
 const BASE_URL = 'http://localhost:8080/api/v1/carritos';
 
 // Recuperar el token cuando lo tengamos 
-const getAuthToken = () => localStorage.getItem('authToken');
+const getAuthToken = () => localStorage.getItem('token');
 
 export const calculateTotal = (items, discount=0) => {
     return Object.values(items).reduce((total, item) => total + item.subtotal, 0) * (1 - discount);
@@ -449,8 +449,6 @@ export const getCartItemsByUserId = async (userId) => {
         throw error;
     }
 };
-
-
 
 export const getClosedCartsByUserId = async (userId) => {
     try {

@@ -66,11 +66,11 @@ export const fetchProductsFromDb = async () => {
 export const getProductById = async (id) => {
   try {
     if (localStorage.getItem('token') === null) {
-        const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/${id}`);
+        const response = await axios.get(`${API_URL_CATALOGO}/productos/${id}`);
         return response.data;
     }
     else {
-        const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/${id}`);
+        const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/productos/${id}`);
         return response.data;
     }
     } catch (error) {
@@ -110,29 +110,29 @@ export const getFavoritos = async () => {
   }
 };
 
-export const agregarFavorito = async (id) => {
+export const updateFavorites = async (id, nuevosFavoritos) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axiosWithInterceptor.put(`${API_URL_CATALOGO}/productos/favoritos/${id}`);
+    const response = await axiosWithInterceptor.patch(`${API_URL_CATALOGO}/favoritos`, {
+      favoritos: nuevosFavoritos
+    });
     return response.data;
-  }
-  catch (error) {
-    throw new Error('Error al agregar el producto a favoritos', error);
+  } catch (error) {
+    throw error;
   }
 };
 
-export const eliminarFavorito = async (id) => {
+export const updateVisitados = async (id, nuevosVisitados) => {
+  // eslint-disable-next-line no-useless-catch
   try {
-    const response = await axiosWithInterceptor.delete(`${API_URL_CATALOGO}/productos/favoritos/${id}`);
+    const response = await axiosWithInterceptor.patch(`${API_URL_CATALOGO}/visitados`, {
+      visitados: nuevosVisitados
+    });
     return response.data;
-  }
-  catch (error) {
-    throw new Error('Error al eliminar el producto de favoritos', error);
+  } catch (error) {
+    throw error;
   }
 };
-
-
-
-
 
 
 //// FIN GESTION DE CATALOGO ////
