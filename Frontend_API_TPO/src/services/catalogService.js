@@ -11,7 +11,8 @@ axiosWithInterceptor.interceptors.request.use((config) => {
   const token = localStorage.getItem('token'); 
   if (token) { 
     config.headers.Authorization = `Bearer ${token}`; 
-  } 
+  }
+  console.log('Request:', config);
   return config; 
 }, (error) => { 
   return Promise.reject(error); 
@@ -61,6 +62,7 @@ export const fetchProductsFromDb = async () => {
   try {
     const response = await axios.get(`${API_URL_CATALOGO}/`);
     return response.data;
+    console.log("fetchProductsFromDb", response.data)
   } catch (error) {
     console.error('Error al obtener la lista de productos:', error);
     throw new Error('Error al obtener la lista de productos');
@@ -115,6 +117,9 @@ export const getFavoritos = async () => {
 };
 
 export const updateFavorites = async (id, nuevosFavoritos) => {
+  console.log("id", id)
+    console.log("nuevosFavoritos", nuevosFavoritos)
+
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await axiosWithInterceptor.patch(`${API_URL_CATALOGO}/favoritos`, {

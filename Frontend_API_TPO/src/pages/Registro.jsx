@@ -16,7 +16,8 @@ const RegistroPage = () => {
     usuario: '',
     contraseña: '',
     favoritos: [],
-    visitados: []
+    visitados: [],
+    role: 'USER'
   });
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
