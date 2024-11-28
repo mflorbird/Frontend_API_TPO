@@ -67,7 +67,6 @@ export const AppProvider = ({ children }) => {
           if (!userCart || userCart.estado === 'cerrado') {
             userCart = await createCart(user.id);
           }
-
           setCart(userCart);
         } catch (error) {
           console.error('Error al inicializar el carrito:', error);

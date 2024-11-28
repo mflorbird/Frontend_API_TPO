@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 // const API_URL = 'http://localhost:3000/products';
 
@@ -21,13 +21,17 @@ axiosWithInterceptor.interceptors.request.use((config) => {
 // EN USO
 export const addProductToDb = async ({productData, productId}) => {
   try {
+
     console.log(productId)
     if (!productId) {
-      // const productWithId = { ...productData, id: uuidv4() };
+      const productWithId = { ...productData, id: uuidv4() };
+      console.log("productWithId", productWithId)
+      console.log("token", localStorage.getItem('token'))
       // const response = await axios.post(API_URL, productWithId);
-      const response = await axiosWithInterceptor.post(`${API_URL_PRODUCTO}/productos`, productData);
+      const response = await axiosWithInterceptor.post(`${API_URL_PRODUCTO}/productos`, productWithId);
       return response.data;
     } else {
+      console.log("productData", productData)
       // const response = await axios.patch(`${API_URL}/${productId}`, productData);
       const response = await axiosWithInterceptor.patch(`${API_URL_PRODUCTO}/productos/${productId}`, productData);
       return response.data;
