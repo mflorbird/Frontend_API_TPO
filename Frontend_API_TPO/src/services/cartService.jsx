@@ -48,55 +48,43 @@ export const getCartById = async (cartId) => {
     }
 };
 
-
 export const addUpdateItem = async (cartId, productId, size, quantity, price, model, img) => {
     try {
+        console.log('Agregando item al carrito:', cartId, productId, size, quantity, price, model);
         const cart = await getCartById(cartId);
+        console.log('Carrito de la API:', cart);
         const itemId = `${productId}---${size}`;
         const updatedItems = { ...cart.items };
 
-        if (itemId in updatedItems) {
-            console.log('Item ya en el carrito:', updatedItems[itemId]);
-            updatedItems[itemId] = {
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img,
-                cart: cartId
-            };
-        } else {
-            console.log('Item nuevo:', itemId);
-            updatedItems[itemId] = {
-                model: model,
-                quantity: quantity,
-                price: price,
-                size: size,
-                subtotal: quantity * price,
-                img: img,
-                cart: cartId
-            };
-        }
+        updatedItems[itemId] = {
+            model,
+            quantity,
+            price,
+            size,
+            subtotal: quantity * price,
+            img,
+            cart: cartId
+        };
 
-        const precioTotal = calculateTotal(updatedItems)
+        const precioTotal = calculateTotal(updatedItems);
         const precioDiscount = precioTotal * (1 - cart.discount);
 
         const params = {
             items: updatedItems,
             precioTotal,
             precioDiscount
-        }
-        console.log('Actualizando carrito:', params);
+        };
 
         const response = await axiosWithInterceptor.patch(`${BASE_URL}/${cartId}`, params);
-        console.log('Carrito actualizado:', response.data);
+        console.log('Carrito actualizado de la API:', response.data);
         return response.data;
+
     } catch (error) {
         console.error('Error al agregar/actualizar item:', error);
         throw error;
     }
 };
+
 
 export const updateItemQuantity = async (cartId, itemId, newQuantity) => {
     try {

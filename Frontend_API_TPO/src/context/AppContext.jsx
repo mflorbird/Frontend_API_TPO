@@ -93,6 +93,7 @@ export const AppProvider = ({ children }) => {
         }
 
         setCart(userCart); // Guardar carrito en el contexto
+
       } catch (error) {
         console.error("Error al inicializar el carrito:", error);
       } finally {
@@ -130,7 +131,8 @@ export const AppProvider = ({ children }) => {
       );
 
       console.log('Carrito actualizado:', updatedCart);
-      setCart(updatedCart);
+      // setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
     } catch (error) {
       console.error('Error al agregar item al carrito:', error);
       throw error;
@@ -145,7 +147,8 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const updatedCart = await updateItemQuantity(cart.id, itemId, newQuantity);
-      setCart(updatedCart);
+      // setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
     } catch (error) {
       console.error('Error al actualizar cantidad:', error);
       throw error;
@@ -160,7 +163,8 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const updatedCart = await removeItem(cart.id, itemId);
-      setCart(updatedCart);
+      // setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
     } catch (error) {
       console.error('Error al eliminar item del carrito:', error);
       throw error;
@@ -179,7 +183,8 @@ export const AppProvider = ({ children }) => {
         cart.precioTotal = 0;
         cart.discount = 0;
         cart.precioDiscount = 0;
-        setCart(cart);
+        // setCart(cart);
+      saveCartToLocalStorage(cart);
     }
     catch (error) {
         console.error('Error al vaciar el carrito:', error);
@@ -197,7 +202,8 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const floatDiscount = parseFloat(discount);
       const updatedCart = await setDiscountAPI(cart.id, floatDiscount);
-      setCart(updatedCart);
+      // setCart(updatedCart);
+        saveCartToLocalStorage(updatedCart);
     } catch (error) {
       console.error('Error al aplicar el código de descuento:', error);
       throw error;
@@ -215,7 +221,8 @@ export const AppProvider = ({ children }) => {
       console.log('Estado del carrito:', cartStatus);
       if (cartStatus.isValid) {
         const newCart = await createCart(user.id);
-        setCart(newCart);
+        // setCart(newCart);
+        saveCartToLocalStorage(newCart);
         return cartStatus;
         } else {
         return cartStatus;
