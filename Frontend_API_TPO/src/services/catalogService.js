@@ -22,7 +22,6 @@ axiosWithInterceptor.interceptors.request.use((config) => {
 // EN USO
 export const addProductToDb = async ({productData, productId}) => {
   try {
-
     console.log(productId)
     if (!productId) {
       const productWithId = { ...productData, id: uuidv4() };

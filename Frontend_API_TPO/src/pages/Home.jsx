@@ -14,7 +14,7 @@ import "../styles/Home.css";
 
 const Home = () => {
 
-    const { user } = useContext(AppContext)
+    const { user, loading } = useContext(AppContext)
     const [carouselImages] = useState([
         { src: carousel1, alt: 'Carousel 1' },
         { src: carousel2, alt: 'Carousel 2' },
@@ -22,7 +22,9 @@ const Home = () => {
     ]);
 
     console.log(user);
-
+    if (loading) {
+        return <div>Cargando carrito...</div>;
+    }
     return (
         <div className="home-container">
             <div className="carousel-wrapper">

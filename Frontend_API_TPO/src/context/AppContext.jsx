@@ -58,25 +58,50 @@ export const AppProvider = ({ children }) => {
     navigate('/');
   };
 
+  // useEffect(() => {
+  //   const initializeCart = async () => {
+  //     if (!user) return;
+  //       try {
+  //         setLoading(true);
+  //         let userCart = await getCartByUserId(user.id);
+  //         if (!userCart || userCart.estado === 'cerrado') {
+  //           userCart = await createCart(user.id);
+  //         }
+  //         setCart(userCart);
+  //       } catch (error) {
+  //         console.error('Error al inicializar el carrito:', error);
+  //       } finally {
+  //         setLoading(false);
+  //     }
+  //   };
+  //
+  //   initializeCart();
+  // }, [user]);
+
   useEffect(() => {
     const initializeCart = async () => {
-      if (!user) return;
-        try {
-          setLoading(true);
-          let userCart = await getCartByUserId(user.id);
-          if (!userCart || userCart.estado === 'cerrado') {
-            userCart = await createCart(user.id);
-          }
-          setCart(userCart);
-        } catch (error) {
-          console.error('Error al inicializar el carrito:', error);
-        } finally {
-          setLoading(false);
+      if (!user) return; // Detener si no hay usuario
+
+      try {
+        setLoading(true); // Mostrar indicador de carga
+        let userCart = await getCartByUserId(user.id);
+        console.log('Carrito del usuario:', userCart);
+        if (!userCart || userCart.estado === 'cerrado') {
+          // Si no hay carrito activo, crear uno nuevo
+          console.info("No se encontró un carrito activo. Creando uno nuevo...");
+          userCart = await createCart(user.id);
+        }
+
+        setCart(userCart); // Guardar carrito en el contexto
+      } catch (error) {
+        console.error("Error al inicializar el carrito:", error);
+      } finally {
+        setLoading(false); // Ocultar indicador de carga
       }
     };
 
     initializeCart();
-  }, [user]);
+  }, [user]); // Se ejecuta cuando cambia el usuario
 
 
   const addItemToCart = async (item) => {
@@ -85,6 +110,7 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const itemId = `${item.id}---${item.size}`;
+      console.log('Carrito actual:', cart);
       const currentItem = cart.items[itemId];
 
       console.log('Item actual:', currentItem);
@@ -103,6 +129,7 @@ export const AppProvider = ({ children }) => {
           item.image
       );
 
+      console.log('Carrito actualizado:', updatedCart);
       setCart(updatedCart);
     } catch (error) {
       console.error('Error al agregar item al carrito:', error);

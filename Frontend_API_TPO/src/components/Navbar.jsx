@@ -9,7 +9,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 
 const Navbar = () => {
-  const { cart, user, logout } = useContext(AppContext);
+  const { cart, user, logout, loading } = useContext(AppContext);
   const cartItemCount = cart?.items ? Object.values(cart.items).reduce((acc, item) => acc + item.quantity, 0) : 0;
 
   const navigate = useNavigate();
@@ -22,6 +22,10 @@ const Navbar = () => {
   };
 
   const isAdmin = user && user.role === 'ADMIN' ;
+
+    if (loading) {
+        return <div>Cargando carrito...</div>;
+    }
 
   return (
       <nav className="custom-navbar">

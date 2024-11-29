@@ -20,7 +20,7 @@ export const calculateTotal = (items, discount=0) => {
 
 export const getCartByUserId = async (userId) => {
     try {
-        const response = await axiosWithInterceptor.get(`${BASE_URL}`);
+        const response = await axiosWithInterceptor.get(`${BASE_URL}/`);
         return response.data;
     } catch (error) {
         console.error('Error al obtener el carrito:', error);
@@ -56,6 +56,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
         const updatedItems = { ...cart.items };
 
         if (itemId in updatedItems) {
+            console.log('Item ya en el carrito:', updatedItems[itemId]);
             updatedItems[itemId] = {
                 model: model,
                 quantity: quantity,
@@ -66,6 +67,7 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
                 cart: cartId
             };
         } else {
+            console.log('Item nuevo:', itemId);
             updatedItems[itemId] = {
                 model: model,
                 quantity: quantity,
@@ -80,11 +82,15 @@ export const addUpdateItem = async (cartId, productId, size, quantity, price, mo
         const precioTotal = calculateTotal(updatedItems)
         const precioDiscount = precioTotal * (1 - cart.discount);
 
-        const response = await axiosWithInterceptor.patch(`${BASE_URL}/${cartId}`, {
+        const params = {
             items: updatedItems,
             precioTotal,
             precioDiscount
-        });
+        }
+        console.log('Actualizando carrito:', params);
+
+        const response = await axiosWithInterceptor.patch(`${BASE_URL}/${cartId}`, params);
+        console.log('Carrito actualizado:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error al agregar/actualizar item:', error);
