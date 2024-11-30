@@ -1,7 +1,7 @@
 // ProductList.jsx
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
-import {getFeaturedProducts} from "../../services/catalogService.js";
+import {catalogService} from "../../services/catalogService.js";
 
 const DestacadosList = () => {
     const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const DestacadosList = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const products = await getFeaturedProducts();
+                const products = await catalogService.getFeaturedProducts();
                 setData(products);
                 setLoading(false);
             } catch (error) {

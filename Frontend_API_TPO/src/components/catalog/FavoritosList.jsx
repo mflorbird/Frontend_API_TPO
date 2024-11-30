@@ -1,7 +1,7 @@
 // ProductList.jsx
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
-import {getFavoritos, getVisitados} from "../../services/catalogService.js";
+import {catalogService} from "../../services/catalogService.js";
 import { AppContext } from '../../context/AppContext';
 import { useContext } from 'react';
 
@@ -21,7 +21,7 @@ const FavoritosList = () => {
             }
             setLoading(true);
             try {
-                const products = await getFavoritos(user);
+                const products = await catalogService.getFavoriteProducts();
                 setData(products);
             } catch (error) {
                 console.error(`Error loading products: ${error}`);

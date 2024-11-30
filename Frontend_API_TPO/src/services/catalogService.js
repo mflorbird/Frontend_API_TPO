@@ -1,159 +1,165 @@
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
-// const API_URL = 'http://localhost:3000/products';
+class CatalogService {
+  constructor(
+      catalogUrl = 'http://localhost:8080/api/v1/gestionCatalogo'
+  ) {
+    this.axiosInstance = axios.create({
+      baseURL: catalogUrl,
+      timeout: 10000, // Timeout de 10 segundos
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
 
-const API_URL_PRODUCTO = 'http://localhost:8080/api/v1/gestionProductos';
-const API_URL_CATALOGO = 'http://localhost:8080/api/v1/gestionCatalogo';
+    this.axiosInstance.interceptors.request.use(
+        (config) => {
+          const token = this.getAuthToken();
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+          return config;
+        },
+        (error) => Promise.reject(error)
+    );
 
-const axiosWithInterceptor = axios.create();
-axiosWithInterceptor.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); 
-  if (token) { 
-    config.headers.Authorization = `Bearer ${token}`; 
+    this.axiosInstance.interceptors.response.use(
+        (response) => response,
+        this.handleError
+    );
   }
-  console.log('Request:', config);
-  return config; 
-}, (error) => { 
-  return Promise.reject(error); 
-});
 
-//// GESTION DE PRODUCTOS ////
-// EN USO
-export const addProductToDb = async ({productData, productId}) => {
-  try {
-    console.log(productId)
-    if (!productId) {
-      const productWithId = { ...productData, id: uuidv4() };
-      console.log("productWithId", productWithId)
-      console.log("token", localStorage.getItem('token'))
-      // const response = await axios.post(API_URL, productWithId);
-      const response = await axiosWithInterceptor.post(`${API_URL_PRODUCTO}/productos`, productWithId);
-      return response.data;
+  getAuthToken() {
+    return localStorage.getItem('token');
+  }
+
+  handleError = (error) => {
+    if (error.code === 'ERR_NETWORK') {
+        window.location.href = '/no-connection';
+      return Promise.reject(error);
+    }
+
+    if (error.response) {
+      switch (error.response.status) {
+        case 400:
+          console.error('Error de solicitud:', error.response.data);
+          break;
+        case 401:
+          this.handleUnauthorizedError();
+          break;
+        case 403:
+          console.error('Acceso denegado');
+          break;
+        case 404:
+          console.error('Recurso no encontrado');
+          break;
+        case 500:
+          console.error('Error interno del servidor');
+          break;
+        default:
+          console.error('Error desconocido');
+      }
+    } else if (error.request) {
+      console.error('No se recibió respuesta del servidor');
     } else {
-      console.log("productData", productData)
-      // const response = await axios.patch(`${API_URL}/${productId}`, productData);
-      const response = await axiosWithInterceptor.patch(`${API_URL_PRODUCTO}/productos/${productId}`, productData);
-      return response.data;
+      console.error('Error al configurar la solicitud', error.message);
     }
-  } catch (error) {
-    console.error('Detalles del error:', error.response ? error.response.data : error.message);
-    throw new Error('Error al agregar o actualizar producto');
+
+    return Promise.reject(error);
   }
-};
 
-export const deleteProductById = async (id) => {
-  try {
-    // const response = await axiosWithInterceptor.delete(`${API_URL}/${id}`);
-    const response = await axiosWithInterceptor.delete(`${API_URL_PRODUCTO}/productos/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al eliminar el producto:', error);
-    throw new Error('Error al eliminar el producto');
+  handleUnauthorizedError() {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
   }
-};
 
-//// FIN GESTION DE PRODUCTOS ////
-
-//// GESTION DE CATALOGO ////
-
-export const fetchProductsFromDb = async () => {
-  try {
-    const response = await axios.get(`${API_URL_CATALOGO}/`);
-    return response.data;
-    console.log("fetchProductsFromDb", response.data)
-  } catch (error) {
-    console.error('Error al obtener la lista de productos:', error);
-    throw new Error('Error al obtener la lista de productos');
-  }
-};
-
-export const getProductById = async (id) => {
-  try {
-    if (localStorage.getItem('token') === null) {
-        const response = await axios.get(`${API_URL_CATALOGO}/productos/${id}`);
-        return response.data;
-    }
-    else {
-        const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/productos/${id}`);
-        return response.data;
-    }
-    } catch (error) {
-        console.error('Error al obtener el producto:', error);
-        throw new Error('Error al obtener el producto');
-    }
-};
-
-export const getVisitados = async () => {
+  async getRecentProducts() {
     try {
-        const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/productos/recientes`);
-        return response.data;
-    }
-    catch (error) {
-        throw new Error('Error al obtener los productos visitados', error);
-    }
-};
-
-export const getFeaturedProducts = async () => {
-  try {
-    // const response = await axios.get(API_URL, { params: { featured: true } });
-    const response = await axios.get(`${API_URL_CATALOGO}/productos/destacados`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener los productos destacados:', error);
-    throw new Error('Error al obtener los productos destacados');
-  }
-};
-
-export const getFavoritos = async () => {
-  try {
-    const response = await axiosWithInterceptor.get(`${API_URL_CATALOGO}/productos/favoritos`);
-    return response.data;
-  }
-  catch (error) {
-    throw new Error('Error al obtener los productos favoritos', error);
-  }
-};
-
-export const updateFavorites = async (id, nuevosFavoritos) => {
-  console.log("id", id)
-    console.log("nuevosFavoritos", nuevosFavoritos)
-
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const response = await axiosWithInterceptor.patch(`${API_URL_CATALOGO}/favoritos`, {
-      favoritos: nuevosFavoritos
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const updateVisitados = async (id, nuevosVisitados) => {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const response = await axiosWithInterceptor.patch(`${API_URL_CATALOGO}/visitados`, {
-      visitados: nuevosVisitados
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-
-//// FIN GESTION DE CATALOGO ////
-
-//// EXTRA ////
-
-export const getProductoCategoria = async (categoria) => {
-  try {
-    // const response = await fetchProductsFromDb()
-    // return response.filter(product => product.category === categoria);
-    const response = await axios.get(`${API_URL_CATALOGO}/gestionCatalogo/productos/categoria/${categoria}`); 
-    return response.data;
+      const response = await this.axiosInstance.get('/productos/recientes');
+      return response.data;
     } catch (error) {
-        throw new Error('Error al obtener los productos por categoria', error);
+      console.error('Error al obtener productos recientes:', error);
+      throw new Error('No se pudieron obtener los productos visitados');
+    }
   }
-};
+
+  async getFeaturedProducts() {
+    try {
+      const response = await this.axiosInstance.get('/productos/destacados');
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener productos destacados:', error);
+      throw new Error('No se pudieron obtener los productos destacados');
+    }
+  }
+
+  async getFavoriteProducts() {
+    try {
+      const response = await this.axiosInstance.get('/productos/favoritos');
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener productos favoritos:', error);
+      throw new Error('No se pudieron obtener los productos favoritos');
+    }
+  }
+
+  async updateFavorites(favoriteProductIds) {
+    try {
+      console.log("Actualizando favoritos:", favoriteProductIds);
+      const response = await this.axiosInstance.patch('/favoritos', {
+        favoritos: favoriteProductIds
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error al actualizar favoritos:', error);
+      throw error;
+    }
+  }
+
+  async updateVisitedProducts(visitedProductIds) {
+    try {
+      const response = await this.axiosInstance.patch('/visitados', {
+        visitados: visitedProductIds
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error al actualizar productos visitados:', error);
+      throw error;
+    }
+  }
+
+  async getProductById(id) {
+    try {
+      const response = await this.axiosInstance.get(`/productos/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener producto:', error);
+      throw error;
+    }
+  }
+
+  async listProducts() {
+    try {
+      const response = await this.axiosInstance.get('/');
+      return response.data;
+    } catch (error) {
+      console.error('Error al listar productos:', error);
+      throw error;
+    }
+  }
+
+  async listAvailableProducts() {
+    try {
+      const response = await this.axiosInstance.get('/disponibles');
+      return response.data;
+    } catch (error) {
+      console.error('Error al listar productos disponibles:', error);
+      throw error;
+    }
+  }
+
+
+
+}
+
+export const catalogService = new CatalogService();

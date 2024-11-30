@@ -16,7 +16,6 @@ export const loginUser = async (usuarioOEmail, contraseña) => {
     if (token) {
 
         // localStorage.setItem('token', token);
-        console.log(localStorage.getItem('token'));
         const user = jwtDecode(token);
         user.email = user.sub; // renombrar sub a email
         user.token = token;

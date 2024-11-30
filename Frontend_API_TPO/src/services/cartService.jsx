@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getProductById} from "./catalogService";
+import {catalogService} from "./catalogService";
 
 const BASE_URL = 'http://localhost:8080/api/v1/carritos';
 
@@ -197,7 +197,7 @@ export const validateStock = async (cart) => {
                 const [productId, size] = itemId.split('---');
                 console.log('Validating item:', itemId, cartItem);
                 console.log('Product:', productId, 'Size:', size);
-                const product = await  getProductById(productId);
+                const product = await  catalogService.getProductById(productId);
                 console.log('Product:', product);
 
                 if (!product) {
@@ -280,7 +280,7 @@ const deductStock = async (cart) => {
     try {
         const promises = Object.keys(groupedItems).map(async (productId) => {
             try {
-                const product = await getProductById(productId);
+                const product = await catalogService.getProductById(productId);
                 const updatedStockTotal = product.stockTotal.map((stockItem) => {
                     const itemInCart = groupedItems[productId].find(({ size }) => size === stockItem.size);
 

@@ -1,7 +1,7 @@
 // ProductList.jsx
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
-import { fetchProductsFromDb } from "../../services/catalogService";
+import { catalogService} from "../../services/catalogService.js";
 
 const ProductList = () => {
     const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ const ProductList = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const products = await fetchProductsFromDb();
+                const products = await catalogService.listProducts()
                 setData(products);
                 setLoading(false);
 

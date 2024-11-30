@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import { Button } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
-import { getProductById, addProductToDb } from '../services/catalogService'; 
+import {catalogService} from '../services/catalogService';
+import { productService } from '../services/productService';
 import '../styles/ProductManagementPage.css';
 
 const AddProductPage = () => {
-  const { addProduct, error } = useContext(AppContext);
+  const { error } = useContext(AppContext);
   const [formValues, setFormValues] = useState({
     model: '',
     category: '',
@@ -29,7 +30,7 @@ const AddProductPage = () => {
   useEffect(() => {
     if (productId) {
       setIsEditMode(true);
-      getProductById(productId)
+      catalogService.getProductById(productId)
         .then((product) => {
           setFormValues({
             model: product.model,
@@ -99,10 +100,11 @@ const AddProductPage = () => {
 
     try {
       if (isEditMode) {
-        await addProductToDb({productData, productId}); 
+        productData.id = productId;
+        await productService.saveProduct(productData);
         console.log('Se actualizó el producto con éxito.');
       } else {
-        await addProductToDb({productData}); 
+        await productService.saveProduct(productData);
         console.log('Se agregó un nuevo producto.');
       }
       navigate('/product-management'); 

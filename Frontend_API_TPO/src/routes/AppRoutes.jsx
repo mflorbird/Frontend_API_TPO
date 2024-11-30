@@ -19,9 +19,9 @@ import PrivacyPolicy from '../pages/PrivacyPolicy.jsx';
 import Contact from '../pages/Contact.jsx';
 import ProductDetail from '../pages/ProductDetail.jsx';
 import Error from '../pages/Error.jsx';
-import CategoriaPage from "../pages/CategoriaPage.jsx";
 import FAQ from '../pages/FAQ.jsx';
 import SizeGuide from '../pages/SizeGuide.jsx';
+import NoConnection from "../pages/NoConnection.jsx";
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -46,7 +46,6 @@ const AppRoutes = () => {
           <Route path="/politicas-de-privacidad" element={<PrivacyPolicy />} />
           <Route path="/contacto" element={<Contact/>} />
           <Route path="/producto/:id" element={<ProductDetail />} />
-          <Route path="/categoria/:categoria" element={<CategoriaPage />} />
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/size-guide" element={<SizeGuide />} />
         </Route>
@@ -56,6 +55,7 @@ const AppRoutes = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/add-product" element={<AddProductPage />} />
           <Route path="/error" element={<Error />} />
+          <Route path="/no-connection" element={<NoConnection />} />
         </Route>
       </Routes>
     </AppProvider>

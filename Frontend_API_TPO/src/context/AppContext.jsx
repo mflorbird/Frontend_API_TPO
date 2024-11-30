@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {fetchProductsFromDb, updateFavorites, updateVisitados} from '../services/catalogService';
+import {catalogService} from '../services/catalogService';
 import {
   getCartByUserId,
   createCart,
@@ -20,28 +20,102 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    type: null,
+    message: null
+  });
   const [cart, setCart] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  // Cargar usuario y token desde localStorage cuando se monta el proveedor
+
+  const handleError = (errorType, errorMessage) => {
+    setError({ type: errorType, message: errorMessage });
+    console.error(`${errorType}: ${errorMessage}`);
+  };
+
+
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
-    const savedCart = localStorage.getItem('cart');
 
-    if (savedToken) setToken(savedToken);
-    if (savedUser) setUser(JSON.parse(savedUser));
-    if (savedCart) setCart(JSON.parse(savedCart)); // Cargar el carrito si existe en localStorage
-  }, []);
 
-  // Guardar token y usuario en localStorage al iniciar sesión
+    if (savedToken && savedUser) {
+      if (isTokenValid()) {
+        setToken(savedToken);
+        setUser(JSON.parse(savedUser));
+      } else {
+        logout();
+      }
+    }
+    }, []);
+
+  useEffect(() => {
+    const initializeCart = async () => {
+      if (!user) {
+        setCart(null);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        let userCart = await getCartByUserId(user.id);
+
+        if (!userCart || userCart.estado === 'cerrado') {
+          userCart = await createCart(user.id);
+        }
+
+        userCart.items = userCart.items || {};
+
+        saveCartToLocalStorage(userCart);
+      } catch (error) {
+        console.error("Cart Initialization Error:", error);
+
+        setError({
+          type: 'CART_INIT_ERROR',
+          message: error.message
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializeCart();
+  }, [user]);
+
+  const isTokenValid = () => {
+    const token = localStorage.getItem('token');
+    const tokenExpiry = localStorage.getItem('tokenExpiry');
+
+    if (!token || !tokenExpiry) return false;
+
+    return Date.now() <= parseInt(tokenExpiry, 10);
+  };
+
   const login = (userData) => {
-    setUser(userData);
-    setToken(userData.token);
-    localStorage.setItem('token', userData.token);
-    localStorage.setItem('user', JSON.stringify(userData));
+    try {
+      if (!userData || !userData.token) {
+        throw new Error('Credenciales inválidas');
+      }
+      setUser(userData);
+      setToken(userData.token);
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('tokenExpiry', userData.exp);
+      localStorage.setItem('user', JSON.stringify(userData));
+      setError(null);
+    } catch (err) {
+      handleError('LOGIN_ERROR', err.message);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    setCart(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('tokenExpiry');
+    navigate('/');
   };
 
   const saveCartToLocalStorage = (updatedCart) => {
@@ -49,77 +123,26 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('cart', JSON.stringify(updatedCart)); // Guardar carrito en localStorage
   };
 
-  // Limpiar sesión y carrito en localStorage al cerrar sesión
-  const logout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/');
-  };
-
-  // useEffect(() => {
-  //   const initializeCart = async () => {
-  //     if (!user) return;
-  //       try {
-  //         setLoading(true);
-  //         let userCart = await getCartByUserId(user.id);
-  //         if (!userCart || userCart.estado === 'cerrado') {
-  //           userCart = await createCart(user.id);
-  //         }
-  //         setCart(userCart);
-  //       } catch (error) {
-  //         console.error('Error al inicializar el carrito:', error);
-  //       } finally {
-  //         setLoading(false);
-  //     }
-  //   };
-  //
-  //   initializeCart();
-  // }, [user]);
-
-  useEffect(() => {
-    const initializeCart = async () => {
-      if (!user) return; // Detener si no hay usuario
-
-      try {
-        setLoading(true); // Mostrar indicador de carga
-        let userCart = await getCartByUserId(user.id);
-        console.log('Carrito del usuario:', userCart);
-        if (!userCart || userCart.estado === 'cerrado') {
-          // Si no hay carrito activo, crear uno nuevo
-          console.info("No se encontró un carrito activo. Creando uno nuevo...");
-          userCart = await createCart(user.id);
-        }
-
-        setCart(userCart); // Guardar carrito en el contexto
-
-      } catch (error) {
-        console.error("Error al inicializar el carrito:", error);
-      } finally {
-        setLoading(false); // Ocultar indicador de carga
-      }
-    };
-
-    initializeCart();
-  }, [user]); // Se ejecuta cuando cambia el usuario
-
 
   const addItemToCart = async (item) => {
-    if (!user || !cart) return;
+    if (!user || !cart) {
+      handleError('CART_ERROR', "Carrito no encontrado");
+      return;
+    }
 
     try {
       setLoading(true);
       const itemId = `${item.id}---${item.size}`;
-      console.log('Carrito actual:', cart);
       const currentItem = cart.items[itemId];
 
-      console.log('Item actual:', currentItem);
-      console.log('Item nuevo:', item);
+      if (item.quantity <= 0) {
+        handleError('ADD_TO_CART_ERROR', "La cantidad debe ser mayor a 0");
+      }
 
-      const newQuantity = currentItem ? currentItem.quantity + item.quantity : item.quantity;
+      const newQuantity = currentItem
+          ? currentItem.quantity + item.quantity
+          : item.quantity;
 
-      console.log('Cantidad de items:', newQuantity);
       const updatedCart = await addUpdateItem(
           cart.id,
           item.id,
@@ -130,12 +153,9 @@ export const AppProvider = ({ children }) => {
           item.image
       );
 
-      console.log('Carrito actualizado:', updatedCart);
-      // setCart(updatedCart);
       saveCartToLocalStorage(updatedCart);
     } catch (error) {
-      console.error('Error al agregar item al carrito:', error);
-      throw error;
+      handleError('ADD_TO_CART_ERROR', error.message);
     } finally {
       setLoading(false);
     }
@@ -147,11 +167,9 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const updatedCart = await updateItemQuantity(cart.id, itemId, newQuantity);
-      // setCart(updatedCart);
       saveCartToLocalStorage(updatedCart);
     } catch (error) {
-      console.error('Error al actualizar cantidad:', error);
-      throw error;
+      handleError('UPDATE_CART_ITEM_ERROR', error.message);
     } finally {
       setLoading(false);
     }
@@ -163,11 +181,9 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const updatedCart = await removeItem(cart.id, itemId);
-      // setCart(updatedCart);
       saveCartToLocalStorage(updatedCart);
     } catch (error) {
-      console.error('Error al eliminar item del carrito:', error);
-      throw error;
+        handleError('REMOVE_CART_ITEM_ERROR', error.message);
     } finally {
       setLoading(false);
     }
@@ -187,8 +203,7 @@ export const AppProvider = ({ children }) => {
       saveCartToLocalStorage(cart);
     }
     catch (error) {
-        console.error('Error al vaciar el carrito:', error);
-        throw error;
+        handleError('CLEAR_CART_ERROR', error.message);
     }
     finally {
         setLoading(false);
@@ -202,48 +217,43 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const floatDiscount = parseFloat(discount);
       const updatedCart = await setDiscountAPI(cart.id, floatDiscount);
-      // setCart(updatedCart);
         saveCartToLocalStorage(updatedCart);
     } catch (error) {
-      console.error('Error al aplicar el código de descuento:', error);
-      throw error;
+        handleError('SET_DISCOUNT_ERROR', error.message);
     } finally {
       setLoading(false);
     }
   }
 
-  const checkoutCart = async () => {
-    if (!user || !cart) return;
+  const trackUserAction = (action, details) => {
+    console.log(`User Action: ${action}`, details);
+  };
 
+  const checkoutCart = async () => {
     try {
-      setLoading(true);
-      const cartStatus = await checkout(cart);
-      console.log('Estado del carrito:', cartStatus);
-      if (cartStatus.isValid) {
-        const newCart = await createCart(user.id);
-        // setCart(newCart);
-        saveCartToLocalStorage(newCart);
-        return cartStatus;
-        } else {
-        return cartStatus;
-      }
+      const result = await checkout(cart.id);
+      trackUserAction('CHECKOUT', {
+        cartId: cart.id,
+        total: cart.precioTotal,
+        success: result.isValid
+      });
+      return result;
     } catch (error) {
-        console.error('Error al finalizar la compra 2:', error);
-        throw error;
+      trackUserAction('CHECKOUT_FAILED', {
+        error: error.message
+      });
+      throw error;
     }
-    finally {
-        setLoading(false);
-    }
-    };
+  };
 
 
   const getProductList = async () => {
     try {
-      const products = await fetchProductsFromDb(); 
+      const products = await catalogService.listProducts();
       console.log('Lista de productos obtenida exitosamente', products);
       return products;
     } catch (err) {
-      console.error('Error al obtener la lista de productos:', err);
+      handleError('GET_PRODUCTS_ERROR', err.message);
       return []; 
     }
   };
@@ -253,26 +263,24 @@ export const AppProvider = ({ children }) => {
     {
       if (JSON.stringify(user.favoritos) !== JSON.stringify(nuevosFavoritos))
       {
-      const updatedUser = await updateFavorites(user.id, nuevosFavoritos);
+      const updatedUser = await catalogService.updateFavorites(nuevosFavoritos)
       setUser(updatedUser);
     }
     }
     catch (error)
     {
-      console.error("Error al actualizar favoritos:", error);
-      throw error;
+      handleError('UPDATE_FAVORITES_ERROR', error.message);
     }
     };
 
   const actualizarVisitados = async (user, nuevosVisitados) => {
     try {
       if (JSON.stringify(user.visitados) !== JSON.stringify(nuevosVisitados)) {
-        const updatedUser = await updateVisitados(user.id, nuevosVisitados);
+        const updatedUser = await catalogService.updateVisitedProducts(nuevosVisitados);
         setUser(updatedUser);
       }
     } catch (error) {
-      console.error("Error al actualizar visitados:", error);
-      throw error;
+        handleError('UPDATE_VISITADOS_ERROR', error.message);
     }
   };
 

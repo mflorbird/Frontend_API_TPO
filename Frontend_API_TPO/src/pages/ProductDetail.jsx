@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import { getProductById } from '../services/catalogService';
+import {catalogService} from '../services/catalogService';
 import { Button, ToggleButton, ButtonGroup } from 'react-bootstrap';
 import { BsHeart, BsHeartFill, BsCheckCircleFill  } from 'react-icons/bs';
 
@@ -23,7 +23,7 @@ const ProductDetail = () => {
         const loadProduct = async () => {
             try {
                 setLoading(true);
-                const data = await getProductById(id);
+                const data = await catalogService.getProductById(id);
                 setProduct(data);
             } catch (error) {
                 console.error("Error loading product:", error);
@@ -76,10 +76,8 @@ const ProductDetail = () => {
 
             await addItemToCart(cartItem);
 
-            // Mostrar mensaje de confirmación
             setShowConfirmation(true);
 
-            // Ocultar mensaje después de 3 segundos
             setTimeout(() => setShowConfirmation(false), 1500);
 
             console.log('Producto agregado exitosamente', cartItem);
@@ -113,10 +111,6 @@ const ProductDetail = () => {
             console.error("Error al actualizar favoritos:", error);
         }
     };
-
-    if (loading) {
-        return <div className="container mt-5">Cargando...</div>;
-    }
 
     if (!product) {
         return <div className="container mt-5">Producto no encontrado</div>;

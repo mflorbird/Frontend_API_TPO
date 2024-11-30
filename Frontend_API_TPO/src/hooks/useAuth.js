@@ -15,7 +15,6 @@ const useAuth = () => {
       const user = await loginUser(usuarioOEmail, contraseña);
       if (user) {
         login(user);
-        console.log(user)
         if (user.role === 'admin' || user.role === 'ADMIN' ) {
           navigate('/product-management');
         } else {

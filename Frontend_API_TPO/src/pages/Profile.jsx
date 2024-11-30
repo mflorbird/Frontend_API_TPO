@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
-import { getFavoritos } from '../services/catalogService';
+import {catalogService} from '../services/catalogService';
 import '../styles/profile.css';
 import { getClosedCartsByUserId } from '../services/cartService';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,7 @@ const Perfil = () => {
         if (user && user.favoritos) {
             const fetchFavoritos = async () => {
                 try {
-                    const productosFavoritos = await getFavoritos(user);
+                    const productosFavoritos = await catalogService.getFavoriteProducts();
                     setFavoritos(productosFavoritos);
                 } catch (error) {
                     console.error('Error al cargar los productos favoritos:', error);

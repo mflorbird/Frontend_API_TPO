@@ -148,3 +148,35 @@
     align-items: right;
     margin-left: 20rem;
   }
+
+.cart-item.item-unavailable {
+  background-color: #fff0f0;
+  opacity: 0.7;
+}
+
+.cart-item.item-out-of-stock {
+  background-color: #fff5e0;
+  opacity: 0.7;
+}
+
+.availability-warning,
+.stock-warning {
+  color: #d9534f;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.availability-warning .warning-icon,
+.stock-warning .warning-icon {
+  margin-right: 10px;
+  color: #d9534f;
+}
+
+.stock-warning {
+  color: #ffa500;
+}
+
+.stock-warning .warning-icon {
+  color: #ffa500;
+}

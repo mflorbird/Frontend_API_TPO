@@ -21,10 +21,8 @@ const Home = () => {
         { src: carousel3, alt: 'Carousel 3' }
     ]);
 
-    console.log(user);
-    if (loading) {
-        return <div>Cargando carrito...</div>;
-    }
+    if (loading) return <p>Loading...</p>;
+
     return (
         <div className="home-container">
             <div className="carousel-wrapper">

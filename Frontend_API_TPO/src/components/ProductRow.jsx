@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';  
-import { deleteProductById } from '../services/catalogService';
+import { productService} from "../services/productService.js";
 
 const ProductRow = ({ product, onProductDeleted }) => {
   const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ const ProductRow = ({ product, onProductDeleted }) => {
 
   const handleDeleteProduct = async () => {
     try {
-      await deleteProductById(product.id);
+      await productService.deleteProduct(product.id);
       setShowModal(false);
       onProductDeleted();
     } catch (error) {

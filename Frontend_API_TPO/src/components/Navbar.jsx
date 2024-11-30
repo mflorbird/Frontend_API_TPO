@@ -23,9 +23,6 @@ const Navbar = () => {
 
   const isAdmin = user && user.role === 'ADMIN' ;
 
-    if (loading) {
-        return <div>Cargando carrito...</div>;
-    }
 
   return (
       <nav className="custom-navbar">
