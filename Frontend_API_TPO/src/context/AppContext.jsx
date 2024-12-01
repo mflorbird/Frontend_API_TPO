@@ -185,13 +185,8 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-     await cartService.emptyCart(cart.id);
-     cart.items = {};
-        cart.precioTotal = 0;
-        cart.discount = 0;
-        cart.precioDiscount = 0;
-        // setCart(cart);
-      saveCartToLocalStorage(cart);
+      const updatedCart = await cartService.emptyCart(cart.id);
+      saveCartToLocalStorage(updatedCart);
     }
     catch (error) {
         handleError('CLEAR_CART_ERROR', error.message);

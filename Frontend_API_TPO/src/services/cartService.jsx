@@ -187,7 +187,7 @@ class CartService {
             console.log('Precio total:', precioTotal, 'Precio con descuento:', precioDiscount, 'Descuento:', cart.discount);
             console.log('Items actualizados:', updatedItems);
 
-            const responseDelete = await this.axiosInstance.delete(`/${itemId}`);
+            const responseDelete = await this.axiosInstance.delete(`/item/${itemId}`);
             console.log('Nuevo carrito con item borrado:', responseDelete.data);
 
             const responsePatch = await this.axiosInstance.patch(`/${cartId}`, {
@@ -235,12 +235,7 @@ class CartService {
 
     async emptyCart(cartId) {
         try {
-            const response = await this.axiosInstance.patch(`/${cartId}`, {
-                items: {},
-                precioTotal: 0,
-                precioDiscount: 0,
-                discount: 0,
-            });
+            const response = await this.axiosInstance.delete(`/cart/${cartId}`);
             return response.data;
         } catch (error) {
             console.error('Error al vaciar el carrito:', error);

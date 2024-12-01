@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import '../styles/navbar.css';
 import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cart.svg';
 import userPhoto from '../assets/UserPhoto.jpeg';
-import closeProduct from '../assets/x.svg';
 import { AppContext } from '../context/AppContext.jsx';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 
 const Navbar = () => {
-  const { cart, user, logout, loading } = useContext(AppContext);
+  const { cart, user, logout } = useContext(AppContext);
   const cartItemCount = cart?.items ? Object.values(cart.items).reduce((acc, item) => acc + item.quantity, 0) : 0;
 
   const navigate = useNavigate();

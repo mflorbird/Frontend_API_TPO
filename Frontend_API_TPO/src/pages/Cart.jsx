@@ -13,6 +13,7 @@ const Cart = () => {
     const [discountCode, setDiscountCode] = useState('');
     const [availableProducts, setAvailableProducts] = useState([]);
     const [cartItemsWithAvailability, setCartItemsWithAvailability] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         if (!user || !cart) {
@@ -71,6 +72,11 @@ const Cart = () => {
     const hasUnavailableItems = cartItemsWithAvailability.some(
         item => !item.isAvailable || (item.maxStock === 0 && item.exceedsStock)
     );
+
+    const handleClearCart = () => {
+        clearCart();
+        setRefresh(prev => !prev);
+    };
 
     return (
         <div className="cart-container">
@@ -174,16 +180,15 @@ const Cart = () => {
                                     !item.isAvailable ||
                                     (item.maxStock === 0 && item.exceedsStock) ||
                                     (item.quantity > item.maxStock && item.maxStock > 0)
-
                                 )
                             }
                         >
                             Siguiente
                         </button>
                         <button
-                            onClick={clearCart}
+                            onClick={handleClearCart}
                             className="clear-cart-button"
-                            style={{ marginLeft: '15px', marginTop: '15px' }}
+                            style={{marginLeft: '15px', marginTop: '15px'}}
                             disabled={cartItemsWithAvailability.length === 0}
                         >
                             Vaciar Carrito
