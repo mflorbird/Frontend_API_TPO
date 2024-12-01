@@ -79,8 +79,6 @@ export const AppProvider = ({ children }) => {
     if (!token || !tokenExpiry) return false;
 
     const now = Date.now().toString().slice(0, 10);
-    console.log('Token exp', tokenExpiry);
-    console.log('Token now:', now);
     return parseInt(now, 10) <= parseInt(tokenExpiry, 10);
   };
 
@@ -243,7 +241,6 @@ export const AppProvider = ({ children }) => {
   const getProductList = async () => {
     try {
       const products = await catalogService.listProducts();
-      console.log('Lista de productos obtenida exitosamente', products);
       return products;
     } catch (err) {
       handleError('GET_PRODUCTS_ERROR', err.message);
