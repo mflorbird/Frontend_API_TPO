@@ -22,6 +22,7 @@ import Error from '../pages/Error.jsx';
 import FAQ from '../pages/FAQ.jsx';
 import SizeGuide from '../pages/SizeGuide.jsx';
 import NoConnection from "../pages/NoConnection.jsx";
+import CheckoutSuccess from "../pages/CheckoutSuccess.jsx";
 
 // import AddProductPage from '../pages/AddProductPage.jsx';
 
@@ -54,7 +55,8 @@ const AppRoutes = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/add-product" element={<AddProductPage />} />
-          <Route path="/error/:code" element={<Error />} />
+          <Route path="/error/:code" element={<Error />} /> 
+          <Route path="/checkout-success" element={<CheckoutSuccess />} /> 
           <Route path="/no-connection" element={<NoConnection />} />
         </Route>
       </Routes>
