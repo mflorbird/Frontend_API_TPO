@@ -64,6 +64,8 @@ const ProductManagementPage = () => {
 
   const onProductDeleted = () => {
     fetchProducts();
+    setSuccessMessage('El producto se eliminó correctamente.');
+    setTimeout(() => setSuccessMessage(''), 3000);
   }
 
 

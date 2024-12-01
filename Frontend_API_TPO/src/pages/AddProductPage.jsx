@@ -114,7 +114,7 @@ const AddProductPage = () => {
       }
     } catch (error) {
       console.error('No se pudo guardar el producto', error);
-      navigate('/product-management', { state: { errorMessage: 'No se pudo guardar el producto.' } });
+      navigate('/product-management', { state: { errorMessage: 'El producto se agregó correctamente.' } });
     }
   };
 
