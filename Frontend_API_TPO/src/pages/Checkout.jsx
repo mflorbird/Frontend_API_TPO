@@ -77,7 +77,7 @@ const Checkout = () => {
   
   const saveShippingData = async () => {
     try {
-      if (!user || !user.id) throw new Error("Falta el ID de usuario.");
+      if (!user ) throw new Error("Falta el usuario");
       
       // saco de aca el setcartitems
       const shippingDataToSave = {

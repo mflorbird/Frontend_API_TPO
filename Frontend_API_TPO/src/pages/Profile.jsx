@@ -34,7 +34,7 @@ const Perfil = () => {
         if (user) {
             const fetchPedidos = async () => {
                 try {
-                    const pedidos = await cartService.getClosedCartsByUserId(user.id);
+                    const pedidos = await cartService.getClosedCartsByUserId();
                     setPedidos(pedidos);
                 } catch (error) {
                     console.error('Error al cargar los pedidos:', error);

@@ -10,13 +10,20 @@ const FinalizarCompra = ({ formData }) => {
   const navigate = useNavigate();
   const [metodoPago, setMetodoPago] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user, setUser, cart, checkoutCart } = useContext(AppContext);
 
-  const { user, cart, checkoutCart } = useContext(AppContext);
   useEffect(() => {
-    if (!user || !cart) {
-        navigate('/error');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (!user && storedUser) {
+      setUser(storedUser);
     }
-}, [user, cart, navigate]);
+  }, []);
+
+  useEffect(() => {
+    if (!loading && (!user || !cart)) {
+      navigate('/error');
+    }
+  }, [user, cart, loading, navigate]);
 
   const [error, setError] = useState('');
 
@@ -30,7 +37,7 @@ const FinalizarCompra = ({ formData }) => {
     setLoading(true);
     
     try {
-      if (!user?.id)  { // si no hay usuario que log. 
+      if (!user)  { // si no hay usuario que log.
             throw new Error('Usuario no encontrado');
         }
 
@@ -41,7 +48,7 @@ const FinalizarCompra = ({ formData }) => {
         // Ejecutar el checkout
         const result = await checkoutCart();
 
-        if (result.isValid) {
+        if (result.valid) {
             alert('¡Gracias por comprar en NAIKII!');
             navigate('/');  // Redirigir a la página de inicio
         } else {

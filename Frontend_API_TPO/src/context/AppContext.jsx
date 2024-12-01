@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { catalogService } from '../services/catalogService';
 import { cartService } from '../services/cartService';
-import {checkout} from '../services/cartService';
 
 
 export const AppContext = createContext();
@@ -38,6 +37,20 @@ export const AppProvider = ({ children }) => {
       }
     }
     }, []);
+
+  useEffect(() => {
+    if (cart && cart.items) {
+      setCartItems(cart.items);
+      const itemCount = Object.values(cart.items).reduce((acc, item) => acc + item.quantity, 0);
+        setCartItemCount(itemCount);
+    }
+    else {
+      setCartItems({});
+        setCartItemCount(0);
+
+    }
+  }, [cart]);
+
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -111,7 +124,7 @@ export const AppProvider = ({ children }) => {
 
   const saveCartToLocalStorage = (updatedCart) => {
     setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart)); // Guardar carrito en localStorage
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
 
@@ -196,6 +209,8 @@ export const AppProvider = ({ children }) => {
     }
     };
 
+    const getCart = () => cart;
+
   const setDiscount = async (discount) => {
     if (!user || !cart) return;
 
@@ -217,12 +232,16 @@ export const AppProvider = ({ children }) => {
 
   const checkoutCart = async () => {
     try {
-      const result = await checkout(cart.id);
+      const result = await cartService.checkout(cart.id);
       trackUserAction('CHECKOUT', {
         cartId: cart.id,
         total: cart.precioTotal,
-        success: result.isValid
+        success: result.valid
       });
+      if (result.valid) {
+        const newUserCart = await cartService.createCart();
+        saveCartToLocalStorage(newUserCart);
+      }
       return result;
     } catch (error) {
       trackUserAction('CHECKOUT_FAILED', {
@@ -269,12 +288,13 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const [cartItems, setCartItems] = useState([]);
-
+  const [cartItems, setCartItems] = useState(cart?.items || {});
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   return (
     <AppContext.Provider value={{
       cart,
+      getCart,
       addItemToCart,
       removeItemFromCart,
       updateCartItemQuantity,
@@ -282,6 +302,7 @@ export const AppProvider = ({ children }) => {
       checkoutCart,
       cartItems,
       setCartItems,
+      cartItemCount,
       setDiscount,
       setUser,
       loading,

@@ -73,7 +73,7 @@ const CartEnvio = () => {
 
   const saveShippingData = async () => {
     try {
-      if (!user || !user.id) throw new Error("Falta el ID de usuario.");
+      if (!user) throw new Error("Falta el ID de usuario.");
       setCartItems((prevCarrito) => ({
         ...prevCarrito,
         envio: formData,

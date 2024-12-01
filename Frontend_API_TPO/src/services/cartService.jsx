@@ -243,17 +243,28 @@ class CartService {
         }
     }
 
-    async getClosedCartsByUserId(userId) {
+    async getClosedCartsByUserId() {
         try {
-            const response = await axiosWithInterceptor.get(`${BASE_URL}`, {
-                params: { userId, estado: 'cerrado' }
-            });
+            const response = await axiosWithInterceptor.get(`${BASE_URL}/closed`);
             return response.data;
         } catch (error) {
             console.error('Error al obtener los carritos cerrados:', error);
             throw error;
         }
     };
+
+    async checkout(cartId) {
+        try {
+            const response = await this.axiosInstance.post(`/checkout`);
+            console.log('Carrito cerrado:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error al vaciar el carrito:', error);
+            throw error;
+        }
+    }
+
+
 
 }
 
@@ -279,17 +290,6 @@ export const calculateTotal = (items, discount=0) => {
 };
 
 
-
-
-export const getCartById = async (cartId) => {
-    try {
-        const response = await axiosWithInterceptor.get(`${BASE_URL}/${cartId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error al obtener el carrito:', error);
-        throw error;
-    }
-};
 
 
 /// validarStock y deducir stock. entiendo que ya no son necesarios porque los traemos con el checkout. pero los dejo para revisar juntos. 
@@ -419,7 +419,7 @@ const deductStock = async (cart) => {
 export const checkout = async (cartId) => {
     try {
         const token = localStorage.getItem('authToken'); 
-        const response = await axios.put(`${BASE_URL}/${cartId}/checkout`, null, { 
+        const response = await axios.post(`${BASE_URL}/checkout`, null, {
             headers: { 'Authorization': `Bearer ${token}` } 
         });
         console.log('Carrito cerrado:', response.data); 

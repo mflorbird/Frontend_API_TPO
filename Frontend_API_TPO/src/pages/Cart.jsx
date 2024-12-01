@@ -9,7 +9,7 @@ import { FaTrash, FaExclamationCircle } from 'react-icons/fa';
 
 const Cart = () => {
     const navigate = useNavigate();
-    const { user, cart, setDiscount, clearCart, updateCartItemQuantity, removeItemFromCart } = useContext(AppContext);
+    let { user, cart, getCart, setDiscount, clearCart, updateCartItemQuantity, removeItemFromCart } = useContext(AppContext);
     const [discountCode, setDiscountCode] = useState('');
     const [availableProducts, setAvailableProducts] = useState([]);
     const [cartItemsWithAvailability, setCartItemsWithAvailability] = useState([]);
@@ -17,7 +17,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (!user || !cart) {
-            navigate('/error');
+            getCart();
             return;
         }
 
@@ -78,6 +78,7 @@ const Cart = () => {
         setRefresh(prev => !prev);
     };
 
+
     return (
         <div className="cart-container">
             <div className="cart-container-body">
@@ -105,7 +106,7 @@ const Cart = () => {
                                                 : ''
                                     }`}
                                 >
-                                    <img src={item.img} alt={item.model} width="50" height="50" />
+                                    <img src={item.img} alt={item.model} width="50" height="50"/>
                                     <div className="item-details">
                                         <p><strong>{item.model}</strong></p>
                                         <p>Talle: {item.size || 'N/A'}</p>
@@ -113,7 +114,7 @@ const Cart = () => {
                                         <p>Total: ${item.price * item.quantity}</p>
                                         {(!item.isAvailable || (item.exceedsStock && item.maxStock === 0)) && (
                                             <div className="availability-warning">
-                                                <FaExclamationCircle className="warning-icon" />
+                                                <FaExclamationCircle className="warning-icon"/>
                                                 {!item.isAvailable
                                                     ? "Producto no disponible"
                                                     : "Sin stock disponible"}
@@ -121,7 +122,7 @@ const Cart = () => {
                                         )}
                                         {(item.exceedsStock && item.maxStock > 0) && (
                                             <div className="stock-warning">
-                                                <FaExclamationCircle className="warning-icon" />
+                                                <FaExclamationCircle className="warning-icon"/>
                                                 {`Solo quedan ${item.maxStock} unidades en stock`}
                                             </div>
                                         )}
@@ -149,51 +150,58 @@ const Cart = () => {
                                     <Button
                                         variant="outline-danger"
                                         onClick={() => handleDeleteItem(item.key)}
-                                        style={{ marginLeft: '15px', marginTop: '15px' }}
+                                        style={{marginLeft: '15px', marginTop: '15px'}}
                                     >
-                                        <FaTrash />
+                                        <FaTrash/>
                                     </Button>
                                 </div>
                             ))
                         )}
                     </div>
                     <div className="cart-summary">
-                        <OrderSummary
-                            subtotal={cart.precioTotal}
-                            discountAmount={cart.discount}
-                            totalAmount={cart.precioDiscount}
-                        />
-                        <div className="summary-item">
-                            <input
-                                type="text"
-                                placeholder="Código de descuento"
-                                value={discountCode}
-                                onChange={(e) => setDiscountCode(e.target.value)}
-                            />
-                            <button onClick={applyDiscount}>Aplicar Descuento</button>
-                        </div>
-                        <button
-                            onClick={() => navigate("/cartEnvio")}
-                            disabled={
-                                cartItemsWithAvailability.length === 0 ||
-                                cartItemsWithAvailability.some(item =>
-                                    !item.isAvailable ||
-                                    (item.maxStock === 0 && item.exceedsStock) ||
-                                    (item.quantity > item.maxStock && item.maxStock > 0)
-                                )
-                            }
-                        >
-                            Siguiente
-                        </button>
-                        <button
-                            onClick={handleClearCart}
-                            className="clear-cart-button"
-                            style={{marginLeft: '15px', marginTop: '15px'}}
-                            disabled={cartItemsWithAvailability.length === 0}
-                        >
-                            Vaciar Carrito
-                        </button>
+                        {cart ? (
+                            <>
+                                <OrderSummary
+                                    subtotal={cart.precioTotal || 0}
+                                    discountAmount={cart.discount || 0}
+                                    totalAmount={cart.precioDiscount || 0}
+                                />
+                                <div className="summary-item">
+                                    <input
+                                        type="text"
+                                        placeholder="Código de descuento"
+                                        value={discountCode}
+                                        onChange={(e) => setDiscountCode(e.target.value)}
+                                    />
+                                    <button onClick={applyDiscount}>Aplicar Descuento</button>
+                                </div>
+                                <button
+                                    onClick={() => navigate("/cartEnvio")}
+                                    disabled={
+                                        cartItemsWithAvailability.length === 0 ||
+                                        cartItemsWithAvailability.some(item =>
+                                            !item.isAvailable ||
+                                            (item.maxStock === 0 && item.exceedsStock) ||
+                                            (item.quantity > item.maxStock && item.maxStock > 0)
+                                        )
+                                    }
+                                >
+                                    Siguiente
+                                </button>
+                                <button
+                                    onClick={handleClearCart}
+                                    className="clear-cart-button"
+                                    style={{marginLeft: "15px", marginTop: "15px"}}
+                                    disabled={cartItemsWithAvailability.length === 0}
+                                >
+                                    Vaciar Carrito
+                                </button>
+                            </>
+                        ) : (
+                            <p>El carrito está vacío o no se ha cargado correctamente.</p>
+                        )}
                     </div>
+
                 </div>
             </div>
         </div>
