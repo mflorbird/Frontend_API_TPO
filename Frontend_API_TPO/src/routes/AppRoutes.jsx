@@ -54,7 +54,7 @@ const AppRoutes = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/add-product" element={<AddProductPage />} />
-          <Route path="/error" element={<Error />} />
+          <Route path="/error/:code" element={<Error />} />
           <Route path="/no-connection" element={<NoConnection />} />
         </Route>
       </Routes>
