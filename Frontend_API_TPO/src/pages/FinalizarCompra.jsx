@@ -49,8 +49,8 @@ const FinalizarCompra = ({ formData }) => {
         const result = await checkoutCart();
 
         if (result.valid) {
-            alert('¡Gracias por comprar en NAIKII!');
-            navigate('/');  // Redirigir a la página de inicio
+            //alert('¡Gracias por comprar en NAIKII!');
+            navigate('/checkout-success');  // Redirigir a la página de éxito
         } else {
           // isValid: false,
           //     invalidItems: validation.invalidItems,
