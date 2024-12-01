@@ -6,6 +6,7 @@ import Search from '../components/Search';
 import { Button } from 'react-bootstrap';
 import { AppContext } from '../context/AppContext';
 import '../styles/ProductManagementPage.css';
+import { useLocation } from 'react-router-dom';
 
 const ProductManagementPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,24 @@ const ProductManagementPage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]); 
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
+
+
+  
+  const location = useLocation();
+  const [successMessage, setSuccessMessage] = useState(location.state?.successMessage || '');
+
+  useEffect(() => {
+    if (successMessage) {
+      // BORRA EL MENSAJE LUEGO DE 3 SEGUNDOS
+      const timer = setTimeout(() => setSuccessMessage(''), 3000);
+      
+      // BORRA EL STATE DEL NAVEGADOR PARA QUE NO SIGA APARECIENDO EL MENSAJE CUANDO RECARGO O VUELVO ATRÁS
+      navigate(location.pathname, { replace: true, state: null });
+      
+      return () => clearTimeout(timer); 
+    }
+  }, [successMessage, navigate, location.pathname]);
+  
 
   const fetchProducts = async () => {
     try {
@@ -47,17 +66,30 @@ const ProductManagementPage = () => {
     fetchProducts();
   }
 
+
+
   return (
     <div className="product-management">
       <Navbar />
       <h2>Mis productos</h2>
+
       <p className="description">Aquí podrás agregar, modificar y eliminar los productos de tu tienda.</p>
+      
+
       <div className="search-container">
         <Search  onSearch={setSearchTerm} onSearchClick={handleSearchClick} />
         <Button onClick={handleAddProduct} variant="primary" className="add-product-button">
           Agregar producto
         </Button>
       </div>
+
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
+
+
       {loading ? (
         <p>Cargando productos...</p>
       ) : error ? (

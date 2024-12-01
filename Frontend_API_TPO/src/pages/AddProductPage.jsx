@@ -24,6 +24,9 @@ const AddProductPage = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  
+
   
   const productId = new URLSearchParams(location.search).get('productId'); 
 
@@ -103,15 +106,20 @@ const AddProductPage = () => {
         productData.id = productId;
         await productService.saveProduct(productData);
         console.log('Se actualizó el producto con éxito.');
+        navigate('/product-management', { state: { successMessage: 'El producto se actualizó correctamente.' } });
       } else {
         await productService.saveProduct(productData);
         console.log('Se agregó un nuevo producto.');
+        navigate('/product-management', { state: { successMessage: 'El producto se agregó correctamente.' } });
       }
-      navigate('/product-management'); 
     } catch (error) {
       console.error('No se pudo guardar el producto', error);
+      navigate('/product-management', { state: { errorMessage: 'No se pudo guardar el producto.' } });
     }
   };
+
+
+  
 
   return (
     <div className="container mt-5">

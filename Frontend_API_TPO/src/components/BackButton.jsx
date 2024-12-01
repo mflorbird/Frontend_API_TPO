@@ -8,7 +8,7 @@ const BackButton = () => {
 
   
   const handleBackClick = () => {
-    navigate(-1); 
+    navigate(-1), { state: null };; 
   };
 
   return (

@@ -127,3 +127,22 @@ h4 {
 .product-form, .stock-container {
   background-color: #fff !important;
 }
+
+.alert {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.aler-error {
+  color: #B02A37;
+  background-color: #F8D7DA;
+  border-color: #E35D6A;
+}
