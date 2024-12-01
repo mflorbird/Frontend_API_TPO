@@ -106,24 +106,33 @@ const Perfil = () => {
 
                 {activeTab === 'pedidos' && (
                     <div>
-                        <h2>Mis Pedidos Finalizados</h2>
+                        <h2>Mis pedidos finalizados</h2>
                         {pedidos.length > 0 ? (
                             pedidos.map((pedido) => (
-                                <div key={pedido.id} className="pedido-card">
-                                    <p>Fecha de compra: {formatDate(pedido.closedAt)}</p>
+                                <div key={pedido.id} className="pedido-card" style={{
+                                    backgroundColor: '#fff', // Fondo blanco
+                                    border: '1px solid #ddd' }}>
+                                    {/* <img src={pedido.img} alt={pedido.model} width="50" height="50"/> */}
+                                    <BsBagCheckFill  style={{ fontSize: '2rem', color: '#3D8BFD', marginRight: '1rem', marginBottom: '1rem' }} />
                                     <div className="pedido-content">
-                                        <BsBagCheckFill  style={{ fontSize: '2rem', color: 'darkblue', marginRight: '1rem', marginBottom: '1rem' }} />
                                         <div className="pedido-detalle">
                                             <p>
                                                 {pedido.items && Object.values(pedido.items).map((item, index) => (
                                                     <div key={index}>
-                                                        {item.model} - {item.quantity} unidades - Talle {item.size}
+                                                        <div className='mb-2'>
+                                                            <strong>{item.model}</strong>
+                                                        </div>
+                                                        <div>
+                                                            {item.quantity} unidades - Talle {item.size}
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </p>
                                         </div>
-                                        <p className="pedido-total">Total: ${pedido.precioDiscount}</p>
                                     </div>
+                                    <p className="pedido-total">Total: ${pedido.precioDiscount}</p>
+                                    <p>Fecha de compra: {formatDate(pedido.closedAt)}</p>
+                                   
                                 </div>
                             ))
                         ) : (
@@ -134,7 +143,7 @@ const Perfil = () => {
 
                 {activeTab === 'favoritos' && (
                     <div>
-                        <h2>Mis Favoritos</h2>
+                        <h2>Mis favoritos</h2>
                         {loading ? (
                             <p>Cargando favoritos...</p>
                         ) : (
