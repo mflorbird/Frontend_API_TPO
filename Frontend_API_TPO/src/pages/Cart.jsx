@@ -33,7 +33,6 @@ const Cart = () => {
     }, [user, cart, navigate]);
 
     useEffect(() => {
-        // Process cart items with availability information
         if (cart && availableProducts.length > 0) {
             const processedCartItems = Object.entries(cart.items || {}).map(([key, item]) => {
                 const availableProduct = availableProducts.find((p) => p.itemId === key);
@@ -69,7 +68,6 @@ const Cart = () => {
         removeItemFromCart(itemId);
     };
 
-    // Check if any item is unavailable or out of stock
     const hasUnavailableItems = cartItemsWithAvailability.some(
         item => !item.isAvailable || (item.maxStock === 0 && item.exceedsStock)
     );
@@ -174,7 +172,9 @@ const Cart = () => {
                                 cartItemsWithAvailability.length === 0 ||
                                 cartItemsWithAvailability.some(item =>
                                     !item.isAvailable ||
-                                    (item.maxStock === 0 && item.exceedsStock)
+                                    (item.maxStock === 0 && item.exceedsStock) ||
+                                    (item.quantity > item.maxStock && item.maxStock > 0)
+
                                 )
                             }
                         >
