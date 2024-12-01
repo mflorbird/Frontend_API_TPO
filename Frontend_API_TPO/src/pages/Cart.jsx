@@ -116,14 +116,14 @@ const Cart = () => {
                                             <div className="availability-warning">
                                                 <FaExclamationCircle className="warning-icon"/>
                                                 {!item.isAvailable
-                                                    ? "Producto no disponible"
-                                                    : "Sin stock disponible"}
+                                                    ? "Lo sentimos, este producto ya no está disponible."
+                                                    : "Lo sentimos, este producto se ha agotado."}
                                             </div>
                                         )}
                                         {(item.exceedsStock && item.maxStock > 0) && (
                                             <div className="stock-warning">
                                                 <FaExclamationCircle className="warning-icon"/>
-                                                {`Solo quedan ${item.maxStock} unidades en stock`}
+                                                {`Solo quedan ${item.maxStock} unidades en stock, ajusta la cantidad a ${item.maxStock} o menos.`}
                                             </div>
                                         )}
                                     </div>
