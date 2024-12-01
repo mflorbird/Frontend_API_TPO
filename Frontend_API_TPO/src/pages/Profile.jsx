@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import {catalogService} from '../services/catalogService';
 import '../styles/profile.css';
-import { getClosedCartsByUserId } from '../services/cartService';
+import {cartService} from '../services/cartService';
 import { Link } from 'react-router-dom';
 import { BsBagCheckFill  } from "react-icons/bs";
 
@@ -34,7 +34,7 @@ const Perfil = () => {
         if (user) {
             const fetchPedidos = async () => {
                 try {
-                    const pedidos = await getClosedCartsByUserId(user.id);
+                    const pedidos = await cartService.getClosedCartsByUserId(user.id);
                     setPedidos(pedidos);
                 } catch (error) {
                     console.error('Error al cargar los pedidos:', error);

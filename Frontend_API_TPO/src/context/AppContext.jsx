@@ -1,17 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {catalogService} from '../services/catalogService';
-import {
-  getCartByUserId,
-  createCart,
-  addUpdateItem,
-  removeItem,
-  updateItemQuantity,
-  closeCart,
-  checkout,
-  emptyCart,
-  setDiscountAPI
-} from '../services/cartService';
+import { catalogService } from '../services/catalogService';
+import { cartService } from '../services/cartService';
+import {checkout} from '../services/cartService';
 
 
 export const AppContext = createContext();
@@ -37,13 +28,12 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const savedToken = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
-
-
     if (savedToken && savedUser) {
       if (isTokenValid()) {
         setToken(savedToken);
         setUser(JSON.parse(savedUser));
       } else {
+        handleError('TOKEN_EXPIRED', 'Token de sesión expirado');
         logout();
       }
     }
@@ -58,10 +48,10 @@ export const AppProvider = ({ children }) => {
 
       try {
         setLoading(true);
-        let userCart = await getCartByUserId(user.id);
+        let userCart = await cartService.getCartByUserId();
 
         if (!userCart || userCart.estado === 'cerrado') {
-          userCart = await createCart(user.id);
+          userCart = await cartService.createCart();
         }
 
         userCart.items = userCart.items || {};
@@ -88,7 +78,10 @@ export const AppProvider = ({ children }) => {
 
     if (!token || !tokenExpiry) return false;
 
-    return Date.now() <= parseInt(tokenExpiry, 10);
+    const now = Date.now().toString().slice(0, 10);
+    console.log('Token exp', tokenExpiry);
+    console.log('Token now:', now);
+    return parseInt(now, 10) <= parseInt(tokenExpiry, 10);
   };
 
   const login = (userData) => {
@@ -143,7 +136,7 @@ export const AppProvider = ({ children }) => {
           ? currentItem.quantity + item.quantity
           : item.quantity;
 
-      const updatedCart = await addUpdateItem(
+      const updatedCart = await cartService.addUpdateItem(
           cart.id,
           item.id,
           item.size,
@@ -166,7 +159,7 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-      const updatedCart = await updateItemQuantity(cart.id, itemId, newQuantity);
+      const updatedCart = await cartService.updateItemQuantity(cart.id, itemId, newQuantity);
       saveCartToLocalStorage(updatedCart);
     } catch (error) {
       handleError('UPDATE_CART_ITEM_ERROR', error.message);
@@ -180,7 +173,7 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-      const updatedCart = await removeItem(cart.id, itemId);
+      const updatedCart = await cartService.removeItem(cart.id, itemId);
       saveCartToLocalStorage(updatedCart);
     } catch (error) {
         handleError('REMOVE_CART_ITEM_ERROR', error.message);
@@ -194,7 +187,7 @@ export const AppProvider = ({ children }) => {
 
     try {
       setLoading(true);
-     await emptyCart(cart.id);
+     await cartService.emptyCart(cart.id);
      cart.items = {};
         cart.precioTotal = 0;
         cart.discount = 0;
@@ -216,7 +209,7 @@ export const AppProvider = ({ children }) => {
     try {
       setLoading(true);
       const floatDiscount = parseFloat(discount);
-      const updatedCart = await setDiscountAPI(cart.id, floatDiscount);
+      const updatedCart = await cartService.setDiscountAPI(cart.id, floatDiscount);
         saveCartToLocalStorage(updatedCart);
     } catch (error) {
         handleError('SET_DISCOUNT_ERROR', error.message);

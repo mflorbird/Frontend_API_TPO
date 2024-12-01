@@ -38,8 +38,6 @@ const ProductDetail = () => {
 
     useEffect(() => {
         if (user && product) {
-            console.log('Producto:', product);
-            console.log('Usuario:', user);
             setIsFavorite(user.favoritos.includes(product.id));
             const nuevosVisitados = [...user.visitados];
             if (!nuevosVisitados.includes(product.id)) {

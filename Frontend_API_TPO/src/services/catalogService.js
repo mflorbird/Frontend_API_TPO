@@ -38,6 +38,11 @@ class CatalogService {
         window.location.href = '/no-connection';
       return Promise.reject(error);
     }
+    // timeout error
+    if (error.code === 'ECONNABORTED') {
+        window.location.href = '/error';
+        return Promise.reject(error);
+    }
 
     if (error.response) {
       switch (error.response.status) {
@@ -72,6 +77,7 @@ class CatalogService {
     localStorage.removeItem('token');
     window.location.href = '/login';
   }
+
 
   async getRecentProducts() {
     try {
