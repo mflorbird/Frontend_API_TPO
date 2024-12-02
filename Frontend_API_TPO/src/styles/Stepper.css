@@ -1,0 +1,47 @@
+.stepper-container {
+    margin: 20px 0;
+}
+
+.stepper {
+    display: flex;
+    gap: 15px;
+}
+
+.step-item {
+    flex: 1;
+    position: relative;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.step-label {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.step-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% + 15px);
+    height: 3px;
+    background-color: #ddd;
+    z-index: -1;
+    transform: translateX(50%);
+    transition: background-color 0.3s ease;
+}
+
+.step-item:not(:last-child)::after {
+    background-color: var(--bs-primary);
+}
