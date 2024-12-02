@@ -110,9 +110,8 @@ const Perfil = () => {
                         {pedidos.length > 0 ? (
                             pedidos.map((pedido) => (
                                 <div key={pedido.id} className="pedido-card" style={{
-                                    backgroundColor: '#fff', // Fondo blanco
+                                    backgroundColor: '#fff', 
                                     border: '1px solid #ddd' }}>
-                                    {/* <img src={pedido.img} alt={pedido.model} width="50" height="50"/> */}
                                     <BsBagCheckFill  style={{ fontSize: '2rem', color: '#3D8BFD', marginRight: '1rem', marginBottom: '1rem' }} />
                                     <div className="pedido-content">
                                         <div className="pedido-detalle">

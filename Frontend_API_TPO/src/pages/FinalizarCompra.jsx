@@ -29,7 +29,7 @@ const FinalizarCompra = () => {
   const [error, setError] = useState('');
   const { user, cart, checkoutCart } = useContext(AppContext);
 
-  // Memoized navigation effect
+
   const handleNavigation = useCallback(() => {
     if (!loading && (!user || !cart)) {
       navigate('/error');
@@ -40,21 +40,21 @@ const FinalizarCompra = () => {
     handleNavigation();
   }, [handleNavigation]);
 
-  // Loading simulation with cleanup
+
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Payment method change handler
+  
   const handleMetodoPagoChange = (e) => {
     const selectedMethod = e.target.value;
     setMetodoPago(selectedMethod);
     setFormularioValido(false);
   };
 
-  // Purchase confirmation handler
+  
   const handleConfirmPurchase = async () => {
     setLoading(true);
     try {
@@ -84,7 +84,7 @@ const FinalizarCompra = () => {
     }
   };
 
-  // Render loading or error states
+  
   if (loading) return <p>Cargando datos...</p>;
   if (error) return <p>Error al obtener los datos: {error}</p>;
 
@@ -134,7 +134,7 @@ const FinalizarCompra = () => {
   );
 };
 
-// Extracted user info display component
+
 const UserInfoDisplay = ({ user }) => (
     <>
       <p><strong>Nombre:</strong> {user.nombre}</p>
@@ -143,7 +143,7 @@ const UserInfoDisplay = ({ user }) => (
     </>
 );
 
-// Payment method selector component
+
 const PaymentMethodSelector = ({
                                  metodoPago,
                                  onMetodoPagoChange,
@@ -173,7 +173,7 @@ const PaymentMethodSelector = ({
   );
 };
 
-// Checkout action buttons component
+
 const CheckoutActionButtons = ({
                                  formularioValido,
                                  onConfirmPurchase,
@@ -205,7 +205,7 @@ const CheckoutActionButtons = ({
     </>
 );
 
-// Credit Card Form Component
+
 const CreditCardForm = ({ onValid }) => {
   const [formData, setFormData] = useState({
     numeroTarjeta: '',
@@ -282,7 +282,7 @@ const CreditCardForm = ({ onValid }) => {
   );
 };
 
-// Digital Wallet Form Component
+
 const DigitalWalletForm = ({ onValid }) => {
   const [comprobante, setComprobante] = useState(null);
 
@@ -307,7 +307,7 @@ const DigitalWalletForm = ({ onValid }) => {
   );
 };
 
-// Bank Transfer Form Component
+
 const BankTransferForm = ({ onValid }) => {
   const [comprobante, setComprobante] = useState(null);
 

@@ -107,7 +107,7 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem('user');
     localStorage.removeItem('cart');
     localStorage.removeItem('tokenExpiry');
-    navigate('/');
+    navigate('/login');
   };
 
   const saveCartToLocalStorage = (updatedCart) => {

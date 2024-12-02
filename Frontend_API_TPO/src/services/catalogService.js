@@ -34,48 +34,10 @@ class CatalogService {
     return localStorage.getItem('token');
   }
 
-  // handleError = (error) => {
-  //   if (error.code === 'ERR_NETWORK') {
-  //       window.location.href = '/no-connection';
-  //     return Promise.reject(error);
-  //   }
-  //   // timeout error
-  //   if (error.code === 'ECONNABORTED') {
-  //       window.location.href = '/error';
-  //       return Promise.reject(error);
-  //   }
-
-  //   if (error.response) {
-  //     switch (error.response.status) {
-  //       case 400:
-  //         console.error('Error de solicitud:', error.response.data);
-  //         break;
-  //       case 401:
-  //         this.handleUnauthorizedError();
-  //         break;
-  //       case 403:
-  //         console.error('Acceso denegado');
-  //         break;
-  //       case 404:
-  //         console.error('Recurso no encontrado');
-  //         break;
-  //       case 500:
-  //         console.error('Error interno del servidor');
-  //         break;
-  //       default:
-  //         console.error('Error desconocido');
-  //     }
-  //   } else if (error.request) {
-  //     console.error('No se recibió respuesta del servidor');
-  //   } else {
-  //     console.error('Error al configurar la solicitud', error.message);
-  //   }
-
-  //   return Promise.reject(error);
-  // }
+  
 
   handleError = (error) => {
-    // Mapeo de códigos de error a títulos y bajadas
+    
     const errorMessages = {
       404: {
         title: '404',
@@ -107,7 +69,7 @@ class CatalogService {
       }
     };
   
-    // Verificación de diferentes errores
+    
     if (error.code === 'ERR_NETWORK') {
       window.location.href = `/error/${error.code}?title=${encodeURIComponent(errorMessages.ERR_NETWORK.title)}&message=${encodeURIComponent(errorMessages.ERR_NETWORK.message)}`;
       return Promise.reject(error);

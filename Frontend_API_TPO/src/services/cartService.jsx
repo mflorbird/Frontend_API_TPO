@@ -33,44 +33,67 @@ class CartService {
         return localStorage.getItem('token');
     }
 
+    
+
     handleError = (error) => {
+       
+        const errorMessages = {
+          404: {
+            title: '404',
+            message: 'Lo sentimos, no encontramos lo que estabas buscando'
+          },
+          401: {
+            title: '401',
+            message: 'Lo sentimos, pero no tienes acceso a esta página sin iniciar sesión'
+          },
+          403: {
+            title: '403',
+            message: 'No tienes autorización para acceder a esta página'
+          },
+          500: {
+            title: '500',
+            message: 'Lo sentimos, algo salió mal'
+          },
+          ECONNABORTED: {
+            title: 'Tiempo de espera agotado',
+            message: 'Esto podría deberse a un problema en tu conexión'
+          },
+          ERR_NETWORK: {
+            title: 'No hay conexión',
+            message: 'Por favor, revisa tu conexión a Internet'
+          },
+          UNKNOWN: {
+            title: 'Error',
+            message: 'Ocurrió un error inesperado al procesar tu solicitud'
+          }
+        };
+      
+        
         if (error.code === 'ERR_NETWORK') {
-            window.location.href = '/no-connection';
-            return Promise.reject(error);
+          window.location.href = `/error/${error.code}?title=${encodeURIComponent(errorMessages.ERR_NETWORK.title)}&message=${encodeURIComponent(errorMessages.ERR_NETWORK.message)}`;
+          return Promise.reject(error);
         }
+      
         if (error.code === 'ECONNABORTED') {
-            window.location.href = '/error';
-            return Promise.reject(error);
+          window.location.href = `/error/${error.code}?title=${encodeURIComponent(errorMessages.ECONNABORTED.title)}&message=${encodeURIComponent(errorMessages.ECONNABORTED.message)}`;
+          return Promise.reject(error);
         }
-
+      
         if (error.response) {
-            switch (error.response.status) {
-                case 400:
-                    console.error('Error de solicitud:', error.response.data);
-                    break;
-                case 401:
-                    this.handleUnauthorizedError();
-                    break;
-                case 403:
-                    console.error('Acceso denegado');
-                    break;
-                case 404:
-                    console.error('Recurso no encontrado');
-                    break;
-                case 500:
-                    console.error('Error interno del servidor');
-                    break;
-                default:
-                    console.error('Error desconocido');
-            }
+          const { status, data } = error.response;
+          const errorMessage = data ? data.message : 'Error desconocido';
+          const { title, message } = errorMessages[status] || errorMessages.UNKNOWN;
+          window.location.href = `/error/${status}?title=${encodeURIComponent(title)}&message=${encodeURIComponent(message)}`;
         } else if (error.request) {
-            console.error('No se recibió respuesta del servidor');
+          console.error('No se recibió respuesta del servidor');
+          window.location.href = `/error/no-response?title=No se recibió respuesta&message=El servidor no respondió a la solicitud`;
         } else {
-            console.error('Error al configurar la solicitud', error.message);
+          console.error('Error al configurar la solicitud', error.message);
+          window.location.href = `/error/unknown?title=${encodeURIComponent(errorMessages.UNKNOWN.title)}&message=${encodeURIComponent(error.message)}`;
         }
-
+      
         return Promise.reject(error);
-    };
+      }
 
     handleUnauthorizedError() {
         localStorage.removeItem('token');
