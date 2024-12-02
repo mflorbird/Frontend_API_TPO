@@ -1,143 +1,142 @@
 .cartEnvio-container {
+  padding: 3rem;
+  font-family: 'Arial', sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+
+.CartEnvio-body {
+  width: auto;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.full-width-button1 {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.custom-outline-button {
+  color: #0d6efd; /* Color de la tipografía */
+  border-color: #0d6efd; /* Color del borde */
+}
+
+.custom-outline-button:hover {
+  background-color: #0d6efd; /* Fondo azul cuando se pasa el ratón */
+  color: white; /* Cambiar el color de la tipografía a blanco cuando se pasa el ratón */
+  border-color: #0d6efd; /* Mantener el color del borde igual */
+}
+
+
+.FormDatos {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.error-text {
+  color: #b22222;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+input, select, textarea {
+  width: 100%; 
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.input-error {
+  border: 2px solid #b22222; 
+  color: #b22222;
+  background-color: #ffe6e6; 
+}
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .cartEnvio-container {
+      padding: 2rem;
+      margin-top: 150px;
+      margin-bottom: 150px;
+      background-color: #f9f9f9; /* Fondo gris claro */
+  }
+
+  .CartEnvio-body {
+      max-width: 80%; /* Aumenta el ancho para pantallas más pequeñas */
+      margin-top: 150px;
+      margin-bottom: 150px;
+  }
+
+  .steps-container {
+      width: 90%; /* Ajusta el tamaño del contenedor del progreso */
+  }
+
+  .progress-steps {
+      flex-direction: column; /* Pone los pasos en columna */
+  }
+
+  .progress-steps .step {
+      padding: 10px;
+      font-size: 0.9rem; /* Reduce el tamaño de fuente para mejor adaptación */
+  }
+
+  .form-container{
     padding: 3rem;
     font-family: 'Arial', sans-serif;
     width: 100%;
     margin: 0 auto;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Fondo gris claro */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
-    margin-bottom: 200px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartEnvio-container {
+      padding: 1.5rem;
+      margin-top: 150px;
+      margin-bottom: 150px;
+      background-color: #f9f9f9; /* Fondo gris claro */
   }
 
   .CartEnvio-body {
-    width: auto; /* Quitar el ancho fijo para permitir que se ajuste */
-    max-width: 50%; /* El mismo máximo que el ancho del botón */
-    margin: 0 auto;
-    margin-top: 40px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .full-width-button1 {
-    width: 100%;
-    margin-bottom: 20px;
+      max-width: 90%; /* Más amplio en pantallas muy pequeñas */
+      margin-top: 150px;
+      margin-bottom: 150px;
   }
 
- .FormDatos{
-    margin-top: 10px;
-    margin-bottom: 10px;
- }
-  
-  .error-text {
-    color: #b22222;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+  .steps-container {
+      width: 100%;
   }
 
-  input, select, textarea {
-    width: 100%; /* Hace que los campos de entrada ocupen todo el ancho disponible */
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    margin-bottom: 1rem;
+  .progress-steps .step {
+      padding: 8px;
+      font-size: 0.85rem;
   }
-
-  .form-group label {
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    
-  }
-  
-  .input-error {
-  border: 2px solid #b22222; /* rojo para indicar el error */
-  color: #b22222;
-  background-color: #ffe6e6; /* agrega un fondo para resaltar el campo esto me esta funcionando en metodo pero no en el form */
-  }
-
-
-
-
-
-  /*PROGRESO */
-/* Contenedor más pequeño y centrado */
-.steps-container {
-  width: 60%; 
-  margin: 0 auto;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-}
-
-/* Estilos de la lista de pasos */
-.progress-steps {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 10px;
-  background-color: #e0e0e0; /* Fondo gris claro */
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.progress-steps .step {
-  flex: 1;
-  text-align: center;
-  padding: 10px 15px;
-  font-weight: bold;
-  color: #666;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-/* Paso completado */
-.progress-steps .completed {
-  background-color: #555; /* Fondo gris oscuro para completado */
-  color: white;
-}
-
-/* Paso actual */
-.progress-steps .current {
-  background-color: #888; /* Fondo intermedio para el paso actual */
-  color: white;
-}
-
-/* Paso pendiente */
-.progress-steps .pending {
-  color: #999; /* Texto gris claro para pendiente */
-}
-
-/* Flechas en los bordes de cada paso */
-.progress-steps .step:not(:last-child) {
-  position: relative;
-}
-
-.progress-steps .step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -10px; /* Ajusta para alinear bien la flecha */
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 10px solid #e0e0e0;
-  z-index: 1;
-}
-
-.progress-steps .completed:not(:last-child)::after {
-  border-left-color: #555; /* Flecha del paso completado */
-}
-
-.progress-steps .current:not(:last-child)::after {
-  border-left-color: #888; /* Flecha del paso actual */
 }
