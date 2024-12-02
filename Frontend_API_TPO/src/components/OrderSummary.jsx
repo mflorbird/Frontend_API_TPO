@@ -2,8 +2,8 @@ import React from 'react';
 
 const OrderSummary = ({ subtotal, discountAmount, totalAmount }) => {
     return (
-        <div className="cart-summary">
-            <h3>Resumen de compra</h3>
+        <div>
+            <h3 >Resumen de compra</h3>
             <div className="summary-item">
                 <p>Subtotal: ${subtotal.toFixed(2)}</p>
             </div>
