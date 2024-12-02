@@ -1,5 +1,7 @@
 .container {
     max-width: 900px;
+    margin-top: 150px;
+    margin-bottom: 150px;
 }
 
 .sizes h5 {
