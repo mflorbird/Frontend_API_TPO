@@ -38,18 +38,6 @@ export const AppProvider = ({ children }) => {
     }
     }, []);
 
-  useEffect(() => {
-    if (cart && cart.items) {
-      setCartItems(cart.items);
-      const itemCount = Object.values(cart.items).reduce((acc, item) => acc + item.quantity, 0);
-        setCartItemCount(itemCount);
-    }
-    else {
-      setCartItems({});
-        setCartItemCount(0);
-
-    }
-  }, [cart]);
 
 
   useEffect(() => {
@@ -288,8 +276,6 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const [cartItems, setCartItems] = useState(cart?.items || {});
-  const [cartItemCount, setCartItemCount] = useState(0);
 
   return (
     <AppContext.Provider value={{
@@ -300,9 +286,8 @@ export const AppProvider = ({ children }) => {
       updateCartItemQuantity,
       clearCart,
       checkoutCart,
-      cartItems,
-      setCartItems,
-      cartItemCount,
+      cartItems: cart?.items || {},
+      cartItemCount: Object.values(cart?.items || {}).reduce((acc, item) => acc + item.quantity, 0),
       setDiscount,
       setUser,
       loading,

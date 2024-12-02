@@ -285,7 +285,7 @@ import BootstrapStepper from '../components/Stepper'; // Importa el Stepper actu
 
 const CartEnvio = () => {
   const navigate = useNavigate();
-  const { user, cartItems, setCartItems } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
