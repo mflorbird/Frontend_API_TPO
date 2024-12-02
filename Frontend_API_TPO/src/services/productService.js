@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+
 class ProductService {
     constructor(
         productUrl = 'http://localhost:8080/api/v1/gestionProductos',
@@ -69,7 +70,7 @@ class ProductService {
             message: 'Ocurrió un error inesperado al procesar tu solicitud'
           }
         };
-      
+        
         
         if (error.code === 'ERR_NETWORK') {
           window.location.href = `/error/${error.code}?title=${encodeURIComponent(errorMessages.ERR_NETWORK.title)}&message=${encodeURIComponent(errorMessages.ERR_NETWORK.message)}`;

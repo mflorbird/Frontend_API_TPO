@@ -1,69 +1,30 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
-import "../styles/NoConnection.css";
+import { useNavigate } from 'react-router-dom';
+import React from "react";
+import "../styles/Error.css"; 
+import errorImage from "../assets/Error.svg"; 
 
-function NoConnection() {
-    const [backendStatus, setBackendStatus] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
+const NoConnection = () => {
+   
+    const errorTitle = 'No hay conexión';  
+    const errorMessage = 'Por favor, revisa tu conexión a Internet'; 
     const navigate = useNavigate();
 
-    const checkBackendConnection = async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get("http://localhost:8080/status");
-            setBackendStatus(response.data.message || "Conexión exitosa");
-            setError(null);
-            setTimeout(() => navigate("/"), 2000); // Redirección después de 2 segundos
-        } catch (err) {
-            setBackendStatus(null);
-            setError(
-                err.response
-                    ? `Error: ${err.response.status} - ${err.response.data.message}`
-                    : "No se pudo conectar al backend"
-            );
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
-        <div className="container vh-100 d-flex justify-content-center align-items-center bg-light">
-            <div className="text-center p-4 border rounded bg-white shadow">
-                <h1 className="mb-4">Prueba de Conexión al Backend</h1>
-                <button
-                    className="btn btn-primary mb-3"
-                    onClick={checkBackendConnection}
-                    disabled={loading}
-                >
-                    {loading ? "Verificando..." : "Probar Conexión"}
-                </button>
-                <CSSTransition
-                    in={!!backendStatus}
-                    timeout={300}
-                    classNames="fade"
-                    unmountOnExit
-                >
-                    <div className="alert alert-success" role="alert">
-                        {backendStatus}
-                    </div>
-                </CSSTransition>
-                <CSSTransition
-                    in={!!error}
-                    timeout={300}
-                    classNames="fade"
-                    unmountOnExit
-                >
-                    <div className="alert alert-danger" role="alert">
-                        {error}
-                    </div>
-                </CSSTransition>
-            </div>
+        <div className="error-page d-flex flex-column align-items-center justify-content-center text-center">
+            <img src={errorImage} alt="Error" className="error-image mb-6" />
+            <h1 className="display-1 fw-bold">{errorTitle}</h1>
+            <h2 className="mb-3">{errorMessage}</h2>
+            <p className="lead mb-4 text-center text-wrap" style={{ maxWidth: '800px' }}>
+                Regresa a la página de inicio para reintentar. Estamos trabajando para resolver cualquier inconveniente lo antes posible.
+            </p>
+            <button
+                onClick={() => navigate('/')}
+                className="btn btn-primary btn-lg"
+            >
+                Volver al inicio
+            </button>
         </div>
     );
-}
+};
 
 export default NoConnection;

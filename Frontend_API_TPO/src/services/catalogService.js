@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 
+
+
 class CatalogService {
   constructor(
       catalogUrl = 'http://localhost:8080/api/v1/gestionCatalogo'
@@ -68,7 +70,7 @@ class CatalogService {
         message: 'Ocurrió un error inesperado al procesar tu solicitud'
       }
     };
-  
+    
     
     if (error.code === 'ERR_NETWORK') {
       window.location.href = `/error/${error.code}?title=${encodeURIComponent(errorMessages.ERR_NETWORK.title)}&message=${encodeURIComponent(errorMessages.ERR_NETWORK.message)}`;
