@@ -65,6 +65,11 @@ const CartEnvio = () => {
     return validationErrors;
   };
 
+  const isFormValid = () => {
+    const validationErrors = validateForm();
+    return Object.keys(validationErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -99,7 +104,7 @@ const CartEnvio = () => {
                       <Form.Label>Nombre</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Nombre"
+                        placeholder="Ingresa tu nombre"
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
@@ -116,7 +121,7 @@ const CartEnvio = () => {
                       <Form.Label>Apellido</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Apellido"
+                        placeholder="Ingresa tu apellido"
                         name="apellido"
                         value={formData.apellido}
                         onChange={handleChange}
@@ -136,7 +141,7 @@ const CartEnvio = () => {
                       <Form.Label>Calle</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Calle"
+                        placeholder="Ingresa una calle"
                         name="direccionCalle"
                         value={formData.direccionCalle}
                         onChange={handleChange}
@@ -152,8 +157,8 @@ const CartEnvio = () => {
                     <Form.Group controlId="formDireccionNumero">
                       <Form.Label>Número</Form.Label>
                       <Form.Control
-                        type="text"
-                        placeholder="Número"
+                        type="number"
+                        placeholder="Ingresa un número"
                         name="direccionNumero"
                         value={formData.direccionNumero}
                         onChange={handleChange}
@@ -173,7 +178,7 @@ const CartEnvio = () => {
                       <Form.Label>Localidad</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Localidad"
+                        placeholder="Ingresa una localidad"
                         name="localidad"
                         value={formData.localidad}
                         onChange={handleChange}
@@ -190,7 +195,7 @@ const CartEnvio = () => {
                       <Form.Label>Provincia</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Provincia"
+                        placeholder="Ingresa una provincia"
                         name="provincia"
                         value={formData.provincia}
                         onChange={handleChange}
@@ -207,10 +212,10 @@ const CartEnvio = () => {
                 <Row className='mb-4'>
                   <Col sm={6}>
                     <Form.Group controlId="formCodigoPostal">
-                      <Form.Label>Código Postal</Form.Label>
+                      <Form.Label>Código postal</Form.Label>
                       <Form.Control
-                        type="text"
-                        placeholder="Código Postal"
+                        type="number"
+                        placeholder="Ingresa código postal"
                         name="codigoPostal"
                         value={formData.codigoPostal}
                         onChange={handleChange}
@@ -226,8 +231,8 @@ const CartEnvio = () => {
                     <Form.Group controlId="formTelefono">
                       <Form.Label>Teléfono</Form.Label>
                       <Form.Control
-                        type="text"
-                        placeholder="Teléfono"
+                        type="number"
+                        placeholder="Ingresa tu teléfono"
                         name="telefono"
                         value={formData.telefono}
                         onChange={handleChange}
@@ -244,7 +249,7 @@ const CartEnvio = () => {
                 <Row className='mb-4'>
                   <Col sm={12}>
                     <Form.Group controlId="formNotaPedido">
-                      <Form.Label>Nota de Pedido</Form.Label>
+                      <Form.Label>Nota de pedido</Form.Label>
                       <Form.Control
                         as="textarea"
                         placeholder="¿Deseas añadir alguna nota a tu pedido?"
@@ -256,7 +261,7 @@ const CartEnvio = () => {
                   </Col>
                 </Row>
                 
-                <Button className="mt-4 full-width-button1" variant="primary" type="submit" disabled={loading}>
+                <Button className="mt-4 full-width-button1" variant="primary" type="submit" disabled={!isFormValid()}>
                   Siguiente
                 </Button>
 
@@ -268,7 +273,7 @@ const CartEnvio = () => {
                 </div>
 
                 <Button variant="outline-secondary " className=" mt-4 mb-1 full-width-button1 .custom-outline-button" onClick={() => navigate('/cart')} >
-                  Modificar Pedido            
+                  Modificar pedido            
                 </Button>
                 
               </Form>

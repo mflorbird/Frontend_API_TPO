@@ -180,7 +180,7 @@ const Cart = () => {
                                         value={discountCode}
                                         onChange={(e) => setDiscountCode(e.target.value)}
                                     />
-                                    <button onClick={applyDiscount}>Aplicar Descuento</button>
+                                    <button onClick={applyDiscount}>Aplicar descuento</button>
                                 </div>
                                 <button
                                     onClick={() => navigate("/cartEnvio")}
@@ -201,7 +201,7 @@ const Cart = () => {
                                     style={{marginLeft: "15px", marginTop: "15px"}}
                                     disabled={cartItemsWithAvailability.length === 0}
                                 >
-                                    Vaciar Carrito
+                                    Vaciar carrito
                                 </button>
                             </>
                         ) : (

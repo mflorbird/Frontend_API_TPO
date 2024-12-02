@@ -85,20 +85,21 @@ const Checkout = () => {
       <div className="checkout-container-body">
         <h1 className='mt-4 mb-4'>Detalle de facturación</h1>
         
-        {/* Stepper */}
+        
         <BootstrapStepper steps={steps} currentStep={2} />
 
         <div className="checkout-content">
-          {/* Formulario de Facturación */}
+          
           <div className="checkout-items">
             <h3 className='mb-4'>Completa la información de facturación</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name">Nombre Completo</label>
+                <label htmlFor="name">Nombre completo</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
+                  placeholder="Ingresa tu/s nombre/s y apellido/s"
                   value={billingDetails.name}
                   onChange={handleInputChange}
                   required
@@ -112,6 +113,7 @@ const Checkout = () => {
                   type="text"
                   id="address"
                   name="address"
+                  placeholder="Ingresa una dirección de facturación"
                   value={billingDetails.address}
                   onChange={handleInputChange}
                   required
@@ -125,6 +127,7 @@ const Checkout = () => {
                   type="text"
                   id="phone"
                   name="phone"
+                  placeholder="Ingresa tu teléfono"
                   value={billingDetails.phone}
                   onChange={handleInputChange}
                   required
@@ -133,11 +136,12 @@ const Checkout = () => {
                 {errors.phone && <div className="error-text">{errors.phone}</div>}
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Correo electrónico</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  placeholder="Ingresa tu correo electrónico"
                   value={billingDetails.email}
                   onChange={handleInputChange}
                   required
@@ -148,7 +152,7 @@ const Checkout = () => {
             </form>
           </div>
 
-          {/* Resumen de Compra */}
+          
           <div className="cart-summary">
             <OrderSummary
               subtotal={cart?.precioTotal || 0}
@@ -156,7 +160,7 @@ const Checkout = () => {
               totalAmount={cart?.precioDiscount || 0}
             />
 
-            {/* Botón dentro del contenedor de resumen de compra */}
+            
             <Button
               className="checkout-next-btn mt-4"
               onClick={handleSubmit}
@@ -176,7 +180,7 @@ const Checkout = () => {
               className="mt-4 mb-1 full-width-button1 .custom-outline-button" 
               onClick={() => navigate('/cart')}
             >
-              Modificar Pedido
+              Modificar pedido
             </Button>
           </div>
         </div>

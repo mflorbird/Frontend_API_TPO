@@ -139,7 +139,7 @@ const UserInfoDisplay = ({ user }) => (
     <>
       <p><strong>Nombre:</strong> {user.nombre}</p>
       <p><strong>Apellido:</strong> {user.apellido}</p>
-      <p><strong>Email:</strong> {user.email}</p>
+      <p><strong>Correo electrónico:</strong> {user.email}</p>
     </>
 );
 
@@ -152,10 +152,10 @@ const PaymentMethodSelector = ({
   return (
       <>
         <select value={metodoPago} onChange={onMetodoPagoChange}>
-          <option value="">Selecciona un método</option>
-          <option value={PAYMENT_METHODS.CREDIT_CARD}>Tarjeta de Crédito</option>
-          <option value={PAYMENT_METHODS.DIGITAL_WALLET}>Billetera Digital</option>
-          <option value={PAYMENT_METHODS.BANK_TRANSFER}>Transferencia Bancaria</option>
+          <option value="">Selecciona un método de pago</option>
+          <option value={PAYMENT_METHODS.CREDIT_CARD}>Tarjeta de crédito</option>
+          <option value={PAYMENT_METHODS.DIGITAL_WALLET}>Billetera digital</option>
+          <option value={PAYMENT_METHODS.BANK_TRANSFER}>Transferencia bancaria</option>
         </select>
 
         <div className="mt-4">
@@ -186,7 +186,7 @@ const CheckoutActionButtons = ({
           disabled={!formularioValido}
           onClick={onConfirmPurchase}
       >
-        Confirmar Compra
+        Confirmar compra
       </Button>
 
       <div className="d-flex align-items-center justify-content-center mt-4">
@@ -200,10 +200,12 @@ const CheckoutActionButtons = ({
           className="mt-4 mb-1 full-width-button1 custom-outline-button"
           onClick={onModifyOrder}
       >
-        Modificar Pedido
+        Modificar pedido
       </Button>
     </>
 );
+
+
 
 
 const CreditCardForm = ({ onValid }) => {
@@ -221,66 +223,109 @@ const CreditCardForm = ({ onValid }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+
+    if (name === 'numeroTarjeta') {
+      
+      let newValue = value.replace(/[^\d]/g, '').slice(0, 16);
+
+      
+      newValue = newValue.replace(/(.{4})(?=.)/g, '$1 ');
+
+      setFormData(prev => ({ ...prev, [name]: newValue }));
+    } else if (name === 'fechaVencimiento') {
+      
+      let newValue = value.replace(/[^0-9]/g, '').slice(0, 4); 
+      
+      if (newValue.length > 2) {
+        
+        const month = parseInt(newValue.slice(0, 2), 10);
+        
+        
+        if (month > 12) {
+          newValue = '12' + newValue.slice(2);
+        } else if (month < 1) {
+          newValue = '01' + newValue.slice(2);
+        }
+        
+        
+        newValue = newValue.slice(0, 2) + '/' + newValue.slice(2, 4);
+      }
+
+      setFormData(prev => ({ ...prev, [name]: newValue }));
+    } else if (name === 'codigoSeguridad') {
+      
+      const newValue = value.replace(/\D/g, '').slice(0, 3);
+      setFormData(prev => ({ ...prev, [name]: newValue }));
+    } else {
+      
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
-      <Form>
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="numeroTarjeta">
-              <Form.Label>Número de Tarjeta</Form.Label>
-              <Form.Control
-                  type="text"
-                  name="numeroTarjeta"
-                  value={formData.numeroTarjeta}
-                  onChange={handleChange}
-                  placeholder="Ej. 1234 5678 9012 3456"
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="fechaVencimiento">
-              <Form.Label>Fecha de Vencimiento</Form.Label>
-              <Form.Control
-                  type="text"
-                  name="fechaVencimiento"
-                  value={formData.fechaVencimiento}
-                  onChange={handleChange}
-                  placeholder="MM/AA"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="codigoSeguridad">
-              <Form.Label>Código de Seguridad</Form.Label>
-              <Form.Control
-                  type="text"
-                  name="codigoSeguridad"
-                  value={formData.codigoSeguridad}
-                  onChange={handleChange}
-                  placeholder="Ej. 123"
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group controlId="nombreApellido">
-              <Form.Label>Nombre y Apellido</Form.Label>
-              <Form.Control
-                  type="text"
-                  name="nombreApellido"
-                  value={formData.nombreApellido}
-                  onChange={handleChange}
-                  placeholder="Ej. Juan Pérez"
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
+    <Form>
+      <Row>
+        <Col md={6}>
+          <Form.Group controlId="numeroTarjeta">
+            <Form.Label>Número de tarjeta</Form.Label>
+            <Form.Control
+              type="text"
+              name="numeroTarjeta"
+              value={formData.numeroTarjeta}
+              onChange={handleChange}
+              placeholder="Ej. 1234 5678 9012 3456"
+              maxLength="19"  
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group controlId="fechaVencimiento">
+            <Form.Label>Fecha de vencimiento</Form.Label>
+            <Form.Control
+              type="text"
+              name="fechaVencimiento"
+              value={formData.fechaVencimiento}
+              onChange={handleChange}
+              placeholder="MM/AA"
+              maxLength="5"
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          <Form.Group controlId="codigoSeguridad">
+            <Form.Label>Código de seguridad</Form.Label>
+            <Form.Control
+              type="text"
+              name="codigoSeguridad"
+              value={formData.codigoSeguridad}
+              onChange={handleChange}
+              placeholder="Ej. 123"
+              maxLength="3"
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6}>
+          <Form.Group controlId="nombreApellido">
+            <Form.Label>Nombre y apellido</Form.Label>
+            <Form.Control
+              type="text"
+              name="nombreApellido"
+              value={formData.nombreApellido}
+              onChange={handleChange}
+              placeholder="Ingresa tu nombre completo"
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+    </Form>
   );
 };
+
+
+
+
 
 
 const DigitalWalletForm = ({ onValid }) => {
