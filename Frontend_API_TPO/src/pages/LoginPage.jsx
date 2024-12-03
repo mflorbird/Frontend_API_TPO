@@ -44,7 +44,9 @@ const LoginPage = () => {
     <Container fluid className="mt-0 p-0">
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
-          <BackButton text="Volver a Inicio" />
+          <Link to="/" className="text-decoration-none text-dark mb-4 d-block">
+              &larr; Volver a Inicio
+          </Link>
           <img src="/naikii.svg" alt="Logo" style={{ width: '80px', height: '80px', marginBottom: '20px' }} />
 
           <h2 className="text-start mb-4">Te damos la bienvenida</h2>
