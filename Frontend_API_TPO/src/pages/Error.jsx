@@ -1,13 +1,23 @@
 import { useLocation } from 'react-router-dom';
-import React from "react";
-import "../styles/Error.css"; 
-import errorImage from "../assets/Error.svg"; 
+import { AppContext } from '../context/AppContext';
+import "../styles/Error.css";
+import errorImage from "../assets/Error.svg";
+import {useContext, useEffect} from "react";
 
 const Error = () => {
+    const { logout } = useContext(AppContext);
     const location = useLocation();
     const params = new URLSearchParams(location.search);
-    
-    
+
+
+    useEffect(() => {
+        if (errorTitle === "401") {
+            logout();
+        }
+    }
+    , [errorTitle, logout]);
+
+
     const errorTitle = params.get('title') || 'Error';  
     const errorMessage = params.get('message') || 'Ocurrió un error inesperado al procesar tu solicitud'; 
 
