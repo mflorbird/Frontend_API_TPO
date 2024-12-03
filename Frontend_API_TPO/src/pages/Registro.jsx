@@ -62,7 +62,7 @@ const RegistroPage = () => {
       <Row>
         <Col md={6} className="p-5 bg-light shadow-sm rounded">
         <Link to="/" className="text-decoration-none text-dark mb-4 d-block">
-            &larr; Volver
+            &larr; Volver a Inicio
         </Link>
           <img
             src="/naikii.svg"

@@ -8,7 +8,7 @@ const BackButton = () => {
 
   
   const handleBackClick = () => {
-    navigate(-1), { state: null };; 
+    navigate("/"), { state: null };; 
   };
 
   return (
@@ -18,7 +18,7 @@ const BackButton = () => {
       onClick={handleBackClick}
     >
       <FaArrowLeft className="me-2" />
-      Volver 
+      Volver a Inicio
     </Button>
   );
 };
