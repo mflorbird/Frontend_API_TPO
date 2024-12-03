@@ -7,9 +7,9 @@ const OrderSummary = ({ subtotal, discountAmount, totalAmount }) => {
             <div className="summary-item">
                 <p>Subtotal: ${subtotal.toFixed(2)}</p>
             </div>
-            <div className="summary-item">
+            {/* <div className="summary-item">
                 <p>Descuento: %{(discountAmount * 100).toFixed(2)}</p>
-            </div>
+            </div> */}
             <div className="summary-item">
                 <p>Total: ${totalAmount.toFixed(2)}</p>
             </div>

@@ -10,12 +10,12 @@ const Error = () => {
     const params = new URLSearchParams(location.search);
 
 
-    useEffect(() => {
-        if (errorTitle === "401") {
-            logout();
-        }
-    }
-    , [errorTitle, logout]);
+    // useEffect(() => {
+    //     if (errorTitle === "401") {
+    //         logout();
+    //     }
+    // }
+    // , [errorTitle, logout]);
 
 
     const errorTitle = params.get('title') || 'Error';  

@@ -174,13 +174,13 @@ const Cart = () => {
                                     totalAmount={cart.precioDiscount || 0}
                                 />
                                 <div className="summary-item">
-                                    <input
+                                    {/* <input
                                         type="text"
                                         placeholder="Código de descuento"
                                         value={discountCode}
                                         onChange={(e) => setDiscountCode(e.target.value)}
                                     />
-                                    <button onClick={applyDiscount}>Aplicar descuento</button>
+                                    <button onClick={applyDiscount}>Aplicar descuento</button> */}
                                 </div>
                                 <button 
                                     onClick={() => navigate("/cartEnvio")}
