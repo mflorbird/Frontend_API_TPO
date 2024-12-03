@@ -9,6 +9,7 @@ const Search = ({ onSearch, onSearchClick }) => {
         placeholder="Buscar producto"
         aria-label="Buscar producto"
         onChange={(e) => onSearch(e.target.value)}
+        className="mb-0"
       />
       <Button variant="outline-secondary" onClick={onSearchClick}>
         <FaSearch />

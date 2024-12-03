@@ -182,7 +182,7 @@ const Cart = () => {
                                     />
                                     <button onClick={applyDiscount}>Aplicar descuento</button>
                                 </div>
-                                <button
+                                <button 
                                     onClick={() => navigate("/cartEnvio")}
                                     disabled={
                                         cartItemsWithAvailability.length === 0 ||
@@ -195,7 +195,7 @@ const Cart = () => {
                                 >
                                     Siguiente
                                 </button>
-                                <button
+                                <button 
                                     onClick={handleClearCart}
                                     className="clear-cart-button"
                                     style={{marginLeft: "15px", marginTop: "15px"}}

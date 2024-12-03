@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';  
-import { productService} from "../services/productService.js";
+import { useNavigate } from 'react-router-dom';
+import { productService } from "../services/productService.js";
 
 const ProductRow = ({ product, onProductDeleted }) => {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const totalStock = product?.stockTotal?.length > 0
     ? product?.stockTotal?.reduce((acc, stock) => acc + parseInt(stock.stock, 10), 0)
@@ -25,9 +25,9 @@ const ProductRow = ({ product, onProductDeleted }) => {
     }
   };
 
- 
+
   const handleEditProduct = () => {
-    navigate(`/add-product?productId=${product.id}`); 
+    navigate(`/add-product?productId=${product.id}`);
   };
 
   return (
@@ -42,8 +42,8 @@ const ProductRow = ({ product, onProductDeleted }) => {
         <td>${product.price}</td>
         <td>{totalStock}</td>
         <td>
-          <Button variant="outline-primary" className="me-2" onClick={handleEditProduct}><FaEdit /></Button> 
-          <Button variant="outline-danger" onClick={handleShowModal}><FaTrash /></Button>
+          <Button variant="outline-primary mb-1" onClick={handleEditProduct} style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FaEdit /></Button>
+          <Button variant="outline-danger" onClick={handleShowModal} style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FaTrash /></Button>
         </td>
       </tr>
 

@@ -195,9 +195,10 @@ const ProductDetail = () => {
                                         <div
                                             className="d-flex align-items-center"
                                             style={{ color: 'green' }}
+                                            
                                         >
                                             <BsCheckCircleFill  size={30} />
-                                            <p className="mb-0 ms-2"></p>
+                                            <p className="mb-0 ms-2">Se agregó</p>
                                         </div>
                                     )}
                                 </>

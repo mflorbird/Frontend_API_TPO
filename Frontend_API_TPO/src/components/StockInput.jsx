@@ -48,7 +48,7 @@ const StockInput = ({ stockItems, handleStockChange }) => {
             />
           </div>
           <div className="col-md-1 d-flex justify-content-end">
-            <Button variant="outline-danger" onClick={() => removeStockField(index)}>
+            <Button variant="outline-danger" onClick={() => removeStockField(index)} style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <FaTrash />
             </Button>
           </div>
