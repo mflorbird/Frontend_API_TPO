@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
     <>
       <Navbar />
 
-      <div className="privacy-policy container my-5">
+      <div className="terms-and-conditions container my-5">
         <h1 className="text-center">Política de Privacidad</h1>
         <p className="text-uppercase text-center font-weight-bold mt-4">
           POR FAVOR LEA ESTE DOCUMENTO CUIDADOSAMENTE Y NO UTILICE LA PÁGINA WEB WWW.NAIKII.COM.AR SI NO ESTÁ DE ACUERDO CON NUESTRA POLÍTICA DE PRIVACIDAD.
